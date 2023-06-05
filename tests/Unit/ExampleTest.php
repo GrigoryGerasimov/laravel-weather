@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Tests\Unit;
 
-use Orchestra\Testbench\TestCase;
+use GrigoryGerasimov\Weather\Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    public function test_example_truthy()
+    /** @test */
+    public function test_example_truthy(): void
     {
         $this->assertTrue(true);
     }
 
-    public function test_example_falsy()
+    /** @test */
+    public function test_example_falsy(): void
     {
         $this->assertFalse(false);
     }

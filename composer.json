@@ -1,33 +1,34 @@
 {
-    "name": "grigorygerasimov/laravel-weather",
-    "description": "Laravel package based on WeatherAPI",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "GrigoryGerasimov\\Weather\\": "src/"
-        }
-    },
-    "authoload-dev": {
-        "psr-4": {
-            "GrigoryGerasimov\\Weather\\Tests": "tests/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Grigory Gerasimov"
-        }
-    ],
-    "require": {
-        "php": "^8.2"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^8.5"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "GrigoryGerasimov\\Weather\\Providers\\WeatherServiceProvider"
-            ]
-        }
+  "name": "grigorygerasimov/laravel-weather",
+  "description": "Laravel package based on WeatherAPI",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "GrigoryGerasimov\\Weather\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GrigoryGerasimov\\Weather\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Grigory Gerasimov"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "ext-curl": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.5"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Illuminate\\Support\\ServiceProvider\\WeatherServiceProvider"
+      ]
+    }
+  }
 }
