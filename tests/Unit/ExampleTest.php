@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GrigoryGerasimov\Weather\Test\Unit;
+namespace GrigoryGerasimov\Weather\Tests\Unit;
 
 use Orchestra\Testbench\TestCase;
 

@@ -9,7 +9,7 @@
     },
     "authoload-dev": {
         "psr-4": {
-            "GrigoryGerasimov\\Weather\\Test": "tests/"
+            "GrigoryGerasimov\\Weather\\Tests": "tests/"
         }
     },
     "authors": [
