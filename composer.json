@@ -1,0 +1,26 @@
+{
+    "name": "grigorygerasimov/laravel-weather",
+    "description": "Laravel package based on WeatherAPI",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "GrigoryGerasimov\\Weather\\": "src/"
+        }
+    },
+    "authoload-dev": {
+        "psr-4": {
+            "GrigoryGerasimov\\Weather\\Test": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Grigory Gerasimov"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.5"
+    }
+}
