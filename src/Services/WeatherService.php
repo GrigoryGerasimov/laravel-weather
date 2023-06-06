@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Services;
 
-use GrigoryGerasimov\Weather\Models\CurrentWeather;
+use GrigoryGerasimov\Weather\Models\Weather;
 
 class WeatherService
 {
@@ -351,7 +351,7 @@ class WeatherService
         return $this;
     }
 
-    public function get(): ?CurrentWeather
+    public function get(): ?Weather
     {
         /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
             throw new 'error'
@@ -359,7 +359,7 @@ class WeatherService
 
         $response = $this->getData();
 
-        return !is_null($response) ? new CurrentWeather($response) : null;
+        return !is_null($response) ? new Weather($response) : null;
     }
 
     private function isApiMethodFieldPresent(): bool
