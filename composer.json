@@ -1,5 +1,6 @@
 {
   "name": "grigorygerasimov/laravel-weather",
+  "version": "1.0.0",
   "description": "Laravel package based on WeatherAPI",
   "license": "MIT",
   "autoload": {
@@ -27,7 +28,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Illuminate\\Support\\ServiceProvider\\WeatherServiceProvider"
+        "GrigoryGerasimov\\Weather\\Providers\\WeatherServiceProvider"
       ]
     }
   }

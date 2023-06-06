@@ -19,9 +19,9 @@ class CurrentWeatherTest extends TestCase
 
         $currentWeather = Weather::apiKey('52bc4de23bad4639861233754230306')->location('London');
 
-        $this->assertNotNull($currentWeather->getLocationMark());
-        $this->assertIsArray($currentWeather->getLocationMark());
-        $this->assertEquals(['London', 'United Kingdom'], $currentWeather->getLocationMark());
+        $this->assertNotNull($currentWeather?->getLocationMark());
+        $this->assertIsArray($currentWeather?->getLocationMark());
+        $this->assertEquals(['London', 'United Kingdom'], $currentWeather?->getLocationMark());
     }
 
     /** @test */
@@ -29,9 +29,9 @@ class CurrentWeatherTest extends TestCase
     {
         $currentWeather = Weather::apiKey('52bc4de23bad4639861233754230306')->location('Prague');
 
-        $this->assertNotNull($currentWeather->getLocationMark());
-        $this->assertIsArray($currentWeather->getLocationMark());
-        $this->assertNotEquals(['London', 'United Kingdom'], $currentWeather->getLocationMark());
+        $this->assertNotNull($currentWeather?->getLocationMark());
+        $this->assertIsArray($currentWeather?->getLocationMark());
+        $this->assertNotEquals(['London', 'United Kingdom'], $currentWeather?->getLocationMark());
     }
 
     /** @test */
@@ -42,7 +42,7 @@ class CurrentWeatherTest extends TestCase
         $currentWeather = Weather::apiKey('52bc4de23bad4639861233754230306')->location('China');
 
         $this->assertNotNull($currentWeather);
-        $this->assertIsFloat($currentWeather->getCelsius());
+        $this->assertIsFloat($currentWeather?->getCelsius());
     }
 
     /** @test */
@@ -53,7 +53,7 @@ class CurrentWeatherTest extends TestCase
         $currentWeather = Weather::apiKey('52bc4de23bad4639861233754230306')->location('France');
 
         $this->assertNotNull($currentWeather);
-        $this->assertIsFloat($currentWeather->getFahrenheit());
+        $this->assertIsFloat($currentWeather?->getFahrenheit());
     }
 
     /** @test */
@@ -63,7 +63,7 @@ class CurrentWeatherTest extends TestCase
 
         $currentWeather = Weather::apiKey('52bc4de23bad4639861233754230306')->location('Prague');
 
-        $this->assertNotNull($currentWeather->getLocalCoords());
-        $this->assertEquals([50.08, 14.47], $currentWeather->getLocalCoords());
+        $this->assertNotNull($currentWeather?->getLocalCoords());
+        $this->assertEquals([50.08, 14.47], $currentWeather?->getLocalCoords());
     }
 }
