@@ -6,9 +6,11 @@ namespace GrigoryGerasimov\Weather\Objects;
 
 final readonly class Location
 {
-    public function __construct(
-        private \stdClass $data
-    ) {}
+    private \stdClass $data;
+
+    public function __construct(\stdClass $weatherData) {
+        $this->data = $weatherData->location;
+    }
 
     public function getCity(): ?string
     {
