@@ -369,7 +369,7 @@ class WeatherService
 
     private function isApiKeyFieldPresent(): bool
     {
-        return (bool) preg_match('\?key=', $this->requestUri);
+        return (bool) preg_match('/\?key=/', $this->requestUri);
     }
 
     private function getData(): ?\stdClass
