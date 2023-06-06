@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GrigoryGerasimov\Weather\Services;
 
 use GrigoryGerasimov\Weather\Models\CurrentWeather;
+use GuzzleHttp\Psr7\AppendStream;
 use Illuminate\Http\JsonResponse;
 
 class WeatherService
@@ -27,12 +28,12 @@ class WeatherService
     {
         $this->requestUri = $this->requestUri . '&q=' . $location;
 
-        $response = $this->getJsonResponse();
+        $response = $this->getData();
 
         return !is_null($response) ? new CurrentWeather($response) : null;
     }
 
-    private function getJsonResponse(): ?\stdClass
+    private function getData(): ?\stdClass
     {
         $curl = curl_init($this->requestUri);
 
@@ -42,6 +43,6 @@ class WeatherService
 
         curl_close($curl);
 
-        return json_decode($response);
+        return $response ? json_decode($response) : null;
     }
 }
