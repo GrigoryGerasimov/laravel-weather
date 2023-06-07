@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects;
 
-final readonly class Location
+use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
+
+final readonly class Location implements WeatherObjectInterface
 {
     private \stdClass $data;
 
