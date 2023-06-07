@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Exceptions;
 
-class MissingApiMethodFieldException extends \Exception
+class MissingApiMethodFieldException extends WeatherException
 {
     protected string $defaultMsg = 'Api method field missing';
 
