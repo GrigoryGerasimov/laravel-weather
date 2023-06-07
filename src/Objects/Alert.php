@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects;
 
-final readonly class Alert
+use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
+
+final readonly class Alert implements WeatherObjectInterface
 {
     public function __construct(
         private \stdClass $alert
