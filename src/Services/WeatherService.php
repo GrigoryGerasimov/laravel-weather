@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Services;
 
+use GrigoryGerasimov\Weather\Exceptions\{
+    InvalidApiTypeException,
+    InvalidArgumentValueException,
+    MissingApiKeyFieldException,
+    MissingApiMethodFieldException
+};
 use GrigoryGerasimov\Weather\Models\Weather;
+use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 
-class WeatherService
+class WeatherService implements WeatherServiceInterface
 {
     private const DEFAULT_API_KEY = '52bc4de23bad4639861233754230306';
 
@@ -39,22 +46,33 @@ class WeatherService
      */
     public function apiType(string $type = 'current'): self
     {
-        /*if (!in_array($type, self::API_METHOD_TYPES, true)) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "/$type.json";
+        try {
+            if (!in_array($type, self::API_METHOD_TYPES, true)) {
+                throw new InvalidApiTypeException();
+            }
+            $this->requestUri = $this->requestUri . "/$type.json";
+        } catch (InvalidApiTypeException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+        }
 
         return $this;
     }
 
     public function apiKey(string $key = self::DEFAULT_API_KEY): self
     {
-        /*if (!$this->isApiMethodFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "?key=$key";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            }
+            $this->requestUri = $this->requestUri . "?key=$key";
+        } catch (MissingApiMethodFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -64,22 +82,38 @@ class WeatherService
      */
     public function coords(string $lat, string $lon): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&q=$lat,$lon";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&q=$lat,$lon";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
 
     public function city(string $city): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&q=$city";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&q=$city";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -89,11 +123,19 @@ class WeatherService
      */
     public function zip(string $zipCode): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&p=$zipCode";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&p=$zipCode";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -104,11 +146,19 @@ class WeatherService
      */
     public function metar(string $metarCode): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&p=metar:$metarCode";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&p=metar:$metarCode";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -119,49 +169,86 @@ class WeatherService
      */
     public function iata(string $iataCode): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&p=iata:$iataCode";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&p=iata:$iataCode";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
 
     public function autoIp(string $ip): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&p=auto:$ip";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&p=auto:$ip";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
 
     public function ip(string $ip): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&p=$ip";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
-        $this->requestUri = $this->requestUri . "&p=$ip";
         return $this;
     }
 
     /*
      * Required only with forecast API method.
+     *
+     * Forecast days range: 1-14.
      */
     public function forecastDays(int $days = 1): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
 
-        /*if ($days < 1 || $days > 14) {
-            return 'error';
-        }*/
-        $this->requestUri = $this->requestUri . "&days=$days";
+            if ($days < 1 || $days > 14) {
+                throw new InvalidArgumentValueException();
+            }
+
+            $this->requestUri = $this->requestUri . "&days=$days";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException | InvalidArgumentValueException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -177,11 +264,19 @@ class WeatherService
      */
     public function forecastHistoryDate(string $date): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&dt=$date";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&dt=$date";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -198,11 +293,19 @@ class WeatherService
      */
     public function historyDate(string $date): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&end_dt=$date";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&end_dt=$date";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -217,11 +320,19 @@ class WeatherService
      */
     public function forecastHistoryTimestamp(string|int $timestamp): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&unixdt=$timestamp";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&unixdt=$timestamp";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -236,11 +347,19 @@ class WeatherService
      */
     public function historyTimestamp(string|int $timestamp): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&unixend_dt=$timestamp";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&unixend_dt=$timestamp";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -254,15 +373,24 @@ class WeatherService
      */
     public function forecastHistoryHour(int $hour): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
 
-        /*if ($hour > 24) {
-            return 'error'
-        }*/
+            if ($hour < 0 || $hour > 24) {
+                throw new InvalidArgumentValueException();
+            }
 
-        $this->requestUri = $this->requestUri . "&hour=$hour";
+            $this->requestUri = $this->requestUri . "&hour=$hour";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException | InvalidArgumentValueException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -274,13 +402,20 @@ class WeatherService
      */
     public function requireAlerts(bool $shouldAlert): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $shouldAlert = $shouldAlert ? 'yes' : 'no';
-
-        $this->requestUri = $this->requestUri . "&alerts=$shouldAlert";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $shouldAlert = $shouldAlert ? 'yes' : 'no';
+            $this->requestUri = $this->requestUri . "&alerts=$shouldAlert";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -292,13 +427,20 @@ class WeatherService
      */
     public function requireAQI(bool $ifAqi): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $ifAqi = $ifAqi ? 'yes' : 'no';
-
-        $this->requestUri = $this->requestUri . "&aqi=$$ifAqi";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $ifAqi = $ifAqi ? 'yes' : 'no';
+            $this->requestUri = $this->requestUri . "&aqi=$$ifAqi";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -308,13 +450,20 @@ class WeatherService
      */
     public function requireTides(bool $ifTides): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $ifTides = $ifTides ? 'yes' : 'no';
-
-        $this->requestUri = $this->requestUri . "&tides=$ifTides";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $ifTides = $ifTides ? 'yes' : 'no';
+            $this->requestUri = $this->requestUri . "&tides=$ifTides";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -326,11 +475,19 @@ class WeatherService
      */
     public function withInterval(): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&tp=15";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&tp=15";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
@@ -342,34 +499,50 @@ class WeatherService
      */
     public function lang(string $langCode): self
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $this->requestUri = $this->requestUri . "&lang=$langCode";
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $this->requestUri = $this->requestUri . "&lang=$langCode";
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return $this;
     }
 
     public function get(): ?Weather
     {
-        /*if (!$this->isApiMethodFieldPresent() || !$this->isApiKeyFieldPresent()) {
-            throw new 'error'
-        }*/
-
-        $response = $this->getData();
+        try {
+            if (!$this->isApiMethodFieldPresent()) {
+                throw new MissingApiMethodFieldException();
+            } elseif (!$this->isApiKeyFieldPresent()) {
+                throw new MissingApiKeyFieldException();
+            }
+            $response = $this->getData();
+        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+            die($e->getMessage());
+        } catch (\Throwable $e) {
+            error_log($e->getTraceAsString());
+            die($e->getMessage());
+        }
 
         return !is_null($response) ? new Weather($response) : null;
     }
 
     private function isApiMethodFieldPresent(): bool
     {
-        return (bool) preg_match('/\/[a-zA-Z0-9]+\.json/', $this->requestUri);
+        return (bool)preg_match('/\/[a-zA-Z0-9]+\.json/', $this->requestUri);
     }
 
     private function isApiKeyFieldPresent(): bool
     {
-        return (bool) preg_match('/\?key=/', $this->requestUri);
+        return (bool)preg_match('/\?key=/', $this->requestUri);
     }
 
     private function getData(): ?\stdClass
