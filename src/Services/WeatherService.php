@@ -10,7 +10,7 @@ use GrigoryGerasimov\Weather\Exceptions\{
     MissingApiKeyFieldException,
     MissingApiMethodFieldException
 };
-use GrigoryGerasimov\Weather\Models\Weather;
+use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
 use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 
 class WeatherService implements WeatherServiceInterface
@@ -112,13 +112,13 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Here you are free to provide any types of zip/post/postal codes.
+     * Here you are free to provide any types of US zip / UK post / Canada postal codes.
      */
     public function zip(string $zipCode): self
     {
         try {
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&p=$zipCode";
+                $this->requestUri = $this->requestUri . "&q=$zipCode";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -137,7 +137,7 @@ class WeatherService implements WeatherServiceInterface
     {
         try {
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&p=metar:$metarCode";
+                $this->requestUri = $this->requestUri . "&q=metar:$metarCode";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -156,7 +156,7 @@ class WeatherService implements WeatherServiceInterface
     {
         try {
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&p=iata:$iataCode";
+                $this->requestUri = $this->requestUri . "&q=iata:$iataCode";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -171,7 +171,7 @@ class WeatherService implements WeatherServiceInterface
     {
         try {
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&p=auto:$ip";
+                $this->requestUri = $this->requestUri . "&q=auto:$ip";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -186,7 +186,7 @@ class WeatherService implements WeatherServiceInterface
     {
         try {
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&p=$ip";
+                $this->requestUri = $this->requestUri . "&q=$ip";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -441,7 +441,7 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    public function get(): ?Weather
+    public function get(): ?WeatherModel
     {
         try {
             if ($this->queryStructureValidated()) {
@@ -453,7 +453,7 @@ class WeatherService implements WeatherServiceInterface
             $this->handleThrowable($e);
         }
 
-        return isset($response) ? new Weather($response) : null;
+        return isset($response) ? new WeatherModel($response) : null;
     }
 
     /**

@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Marine;
 
+use GrigoryGerasimov\Weather\Contracts\WeatherMarineInterface;
 use GrigoryGerasimov\Weather\Objects\Forecast\ForecastHour;
 
-final readonly class MarineHour extends Marine
+final readonly class MarineHour implements WeatherMarineInterface
 {
     private \stdClass $forecastMarineHour;
 
-    public function __construct(
-        protected \stdClass $forecast
-    ) {
-        parent::__construct($forecast);
-
-        $this->forecastMarineHour = $forecast->hour;
+    public function __construct(\stdClass $forecast)
+    {
+        $this->forecastMarineHour = $forecast;
     }
 
     public function getCommonForecastHourParams(): ForecastHour
