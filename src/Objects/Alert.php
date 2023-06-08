@@ -20,7 +20,7 @@ final readonly class Alert implements WeatherObjectInterface
     {
         return $this->alert->msgType;
     }
-    public function getSeverity(): string
+    public function getSeverity(): ?string
     {
         return $this->alert->severity;
     }

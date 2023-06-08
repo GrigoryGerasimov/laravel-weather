@@ -4,60 +4,94 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Models;
 
-use GrigoryGerasimov\Weather\Objects\GPS\Location;
+use GrigoryGerasimov\Weather\Objects\{
+    AirQuality,
+    Alert,
+    Astronomy,
+    Current,
+    Sports,
+    Timezone
+};
+use GrigoryGerasimov\Weather\Objects\Forecast\{
+    Forecast,
+    ForecastDay,
+    ForecastAstro,
+    ForecastHour
+};
+use GrigoryGerasimov\Weather\Objects\Marine\{
+    Marine,
+    MarineHour,
+    MarineTides
+};
+use GrigoryGerasimov\Weather\Objects\GPS\{IpLookup, Location, Search};
 
 class Weather
 {
-    private Location $location;
-
     public function __construct(
         protected \stdClass $weatherData
-    ) {
-        $this->location = new Location($this->weatherData);
+    ) {}
+
+    public function current(): Current
+    {
+        return new Current($this->weatherData);
     }
 
-    /** @return array<?string> */
-    public function getLocation(): array
+    /** @return array<Forecast> */
+    public function forecast(): array
     {
         return [
-            'city' => $this->location->getCity(),
-            'region' => $this->location->getRegion(),
-            'country' => $this->location->getCountry()
+            new ForecastDay($this->weatherData),
+            new ForecastAstro($this->weatherData),
+            new ForecastHour($this->weatherData)
         ];
     }
 
-    /** @return array<?float> */
-    public function getGeoCoords(): array
+    /** @return array<Marine> */
+    public function marine(): array
     {
         return [
-            'latitude' => $this->location->getLatitude(),
-            'longitude' => $this->location->getLongitude()
+            new MarineHour($this->weatherData),
+            new MarineTides($this->weatherData)
         ];
     }
 
-    public function getLocalTimezone(): ?string
+    public function timezone(): Timezone
     {
-        return $this->location->getTimezoneName();
+        return new Timezone($this->weatherData);
     }
 
-    /** @return array<?int, ?string> */
-    public function getLocalTime(): array
+    public function ipLookup(): IpLookup
     {
-        return [
-            'timestamp' => $this->location->getTimestamp(),
-            'datetime' => $this->location?->getDateTime()
-        ];
+        return new IpLookup($this->weatherData);
     }
 
-
-
-    public function getCelsius(): int|float
+    public function search(): Search
     {
-        return $this->weatherData->current?->temp_c;
+        return new Search($this->weatherData);
     }
 
-    public function getFahrenheit(): int|float
+    public function location(): Location
     {
-        return $this->weatherData->current?->temp_f;
+        return new Location($this->weatherData);
+    }
+
+    public function airQuality(): AirQuality
+    {
+        return new AirQuality($this->weatherData);
+    }
+
+    public function alerts(): Alert
+    {
+        return new Alert($this->weatherData);
+    }
+
+    public function astro(): Astronomy
+    {
+        return new Astronomy($this->weatherData);
+    }
+
+    public function sports(): Sports
+    {
+        return new Sports($this->weatherData);
     }
 }
