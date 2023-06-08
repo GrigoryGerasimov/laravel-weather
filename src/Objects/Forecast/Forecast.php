@@ -12,12 +12,12 @@ readonly class Forecast implements WeatherObjectInterface
         protected \stdClass $forecast
     ) {}
 
-    public function getDate(): string
+    public function getDate(): ?string
     {
         return $this->forecast->date;
     }
 
-    public function getDateTimestamp(): int
+    public function getDateTimestamp(): ?int
     {
         return $this->forecast->date_epoch;
     }
