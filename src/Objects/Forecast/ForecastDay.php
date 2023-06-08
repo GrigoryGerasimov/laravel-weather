@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-use GrigoryGerasimov\Weather\Contracts\WeatherConditionInterface;
+use GrigoryGerasimov\Weather\Contracts\{
+    WeatherForecastInterface,
+    WeatherObjectInterface,
+    WeatherConditionInterface
+};
 
-final readonly class ForecastDay extends Forecast implements WeatherConditionInterface
+final readonly class ForecastDay implements WeatherForecastInterface, WeatherObjectInterface, WeatherConditionInterface
 {
     private \stdClass $forecastDay;
 
-    public function __construct(
-        protected \stdClass $forecast
-    ) {
-        parent::__construct($forecast);
-
+    public function __construct(\stdClass $forecast)
+    {
         $this->forecastDay = $forecast->day;
     }
     public function getMaxCelsius(): ?float

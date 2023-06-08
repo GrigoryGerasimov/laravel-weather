@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Marine;
 
-final readonly class MarineTides extends Marine
+use GrigoryGerasimov\Weather\Contracts\WeatherMarineInterface;
+
+final readonly class MarineTide implements WeatherMarineInterface
 {
     private \stdClass $forecastMarineTides;
 
-    public function __construct(
-        protected \stdClass $forecast
-    ) {
-        parent::__construct($forecast);
-
-        $this->forecastMarineTides = $forecast->tides;
+    public function __construct(\stdClass $forecast)
+    {
+        $this->forecastMarineTides = $forecast;
     }
 
     public function getLocalTideTime(): ?string

@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-use GrigoryGerasimov\Weather\Contracts\{WeatherCommonInterface, WeatherConditionInterface};
+use GrigoryGerasimov\Weather\Contracts\{
+    WeatherForecastInterface,
+    WeatherCommonInterface,
+    WeatherConditionInterface,
+    WeatherObjectInterface
+};
 
-final readonly class ForecastHour extends Forecast implements WeatherCommonInterface, WeatherConditionInterface
+final readonly class ForecastHour implements WeatherForecastInterface, WeatherObjectInterface, WeatherCommonInterface, WeatherConditionInterface
 {
     private \stdClass $forecastHour;
 
-    public function __construct(
-        protected \stdClass $forecast
-    ) {
-        parent::__construct($forecast);
-
-        $this->forecastHour = $forecast->hour;
+    public function __construct(\stdClass $forecast)
+    {
+        $this->forecastHour = $forecast;
     }
 
     public function getTimestamp(): ?int

@@ -4,21 +4,26 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
+use GrigoryGerasimov\Weather\Contracts\{WeatherForecastInterface, WeatherObjectInterface};
 
-readonly class Forecast implements WeatherObjectInterface
+final readonly class Forecast implements WeatherObjectInterface, WeatherForecastInterface
 {
-    public function __construct(
-        protected \stdClass $forecast
-    ) {}
+    private string $forecastDate;
+    private int $forecastTimestamp;
+
+    public function __construct(\stdClass $forecast)
+    {
+        $this->forecastDate = $forecast->date;
+        $this->forecastTimestamp = $forecast->date_epoch;
+    }
 
     public function getDate(): ?string
     {
-        return $this->forecast->date;
+        return $this->forecastDate;
     }
 
     public function getDateTimestamp(): ?int
     {
-        return $this->forecast->date_epoch;
+        return $this->forecastTimestamp;
     }
 }
