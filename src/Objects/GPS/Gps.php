@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace GrigoryGerasimov\Weather\Objects;
+namespace GrigoryGerasimov\Weather\Objects\GPS;
 
 use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 
-final readonly class Location implements WeatherObjectInterface
+abstract readonly class Gps implements WeatherObjectInterface
 {
     private \stdClass $data;
 
     public function __construct(\stdClass $weatherData) {
-        $this->data = $weatherData->location;
+        $this->data = $weatherData;
     }
 
     public function getCity(): ?string
@@ -37,20 +37,5 @@ final readonly class Location implements WeatherObjectInterface
     public function getLongitude(): ?float
     {
         return $this->data->lon;
-    }
-
-    public function getTimezoneName(): ?string
-    {
-        return $this->data->tz_id;
-    }
-
-    public function getTimestamp(): ?int
-    {
-        return $this->data->localtime_epoch;
-    }
-
-    public function getDateTime(): ?string
-    {
-        return $this->data->localtime;
     }
 }

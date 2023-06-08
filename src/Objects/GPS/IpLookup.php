@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace GrigoryGerasimov\Weather\Objects;
+namespace GrigoryGerasimov\Weather\Objects\GPS;
 
-use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
-
-final readonly class IpLookup implements WeatherObjectInterface
+final readonly class IpLookup extends Gps
 {
     public function __construct(
         private \stdClass $ipLookup
-    ) {}
+    ) {
+        parent::__construct($ipLookup);
+    }
 
     public function getIp(): ?string
     {
@@ -27,7 +27,7 @@ final readonly class IpLookup implements WeatherObjectInterface
         return $this->ipLookup->continent_code;
     }
 
-    public function getContinentName(): ?string
+    public function getContinent(): ?string
     {
         return $this->ipLookup->continent_name;
     }
@@ -37,12 +37,12 @@ final readonly class IpLookup implements WeatherObjectInterface
         return $this->ipLookup->country_code;
     }
 
-    public function getCountryName(): ?string
+    public function getCountry(): ?string
     {
         return $this->ipLookup->country_name;
     }
 
-    public function ifInEU(): ?bool
+    public function isInEU(): ?bool
     {
         return $this->ipLookup->is_eu;
     }
@@ -50,26 +50,6 @@ final readonly class IpLookup implements WeatherObjectInterface
     public function getGeonameID(): ?string
     {
         return $this->ipLookup->geoname_id;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->ipLookup->name;
-    }
-
-    public function getRegion(): ?string
-    {
-        return $this->ipLookup->region;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->ipLookup->lat;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->ipLookup->lon;
     }
 
     public function getTimezoneName(): ?string

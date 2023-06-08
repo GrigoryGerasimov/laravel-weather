@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GrigoryGerasimov\Weather\Objects;
+namespace GrigoryGerasimov\Weather\Objects\GPS;
 
 use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 

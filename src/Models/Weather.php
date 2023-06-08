@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Models;
 
-use GrigoryGerasimov\Weather\Objects\Location;
+use GrigoryGerasimov\Weather\Objects\GPS\Location;
 
 class Weather
 {
