@@ -16,22 +16,22 @@ final readonly class ForecastAstro extends Forecast
         $this->forecastAstro = $forecast->astro;
     }
 
-    public function getSunriseTime(): string
+    public function getSunriseTime(): ?string
     {
         return $this->forecastAstro->sunrise;
     }
 
-    public function getSunsetTime(): string
+    public function getSunsetTime(): ?string
     {
         return $this->forecastAstro->sunset;
     }
 
-    public function getMoonriseTime(): string
+    public function getMoonriseTime(): ?string
     {
         return $this->forecastAstro->moonrise;
     }
 
-    public function getMoonsetTime(): string
+    public function getMoonsetTime(): ?string
     {
         return $this->forecastAstro->moonset;
     }
@@ -51,12 +51,12 @@ final readonly class ForecastAstro extends Forecast
      *
      * More details here:https://www.weatherapi.com/docs/
      */
-    public function getMoonPhase(): string
+    public function getMoonPhase(): ?string
     {
         return $this->forecastAstro->moon_phase;
     }
 
-    public function getMoonIllumination(): float
+    public function getMoonIllumination(): ?float
     {
         return $this->forecastAstro->moon_illumination;
     }

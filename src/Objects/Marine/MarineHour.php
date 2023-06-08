@@ -23,22 +23,22 @@ final readonly class MarineHour extends Marine
         return new ForecastHour($this->forecastMarineHour);
     }
 
-    public function	getSignificantWaveHeight(): float
+    public function	getSignificantWaveHeight(): ?float
     {
         return $this->forecastMarineHour->sig_ht_mt;
     }
 
-    public function	getSwellWaveHeightInMetres(): float
+    public function	getSwellWaveHeightInMetres(): ?float
     {
         return $this->forecastMarineHour->swell_ht_mt;
     }
 
-    public function	getSwellWaveHeightInFeet(): float
+    public function	getSwellWaveHeightInFeet(): ?float
     {
         return $this->forecastMarineHour->swell_ht_ft;
     }
 
-    public function getSwellDirection(): float
+    public function getSwellDirection(): ?float
     {
         return $this->forecastMarineHour->swell_dir;
     }
@@ -46,22 +46,22 @@ final readonly class MarineHour extends Marine
     /*
      * Swell direction in 16 point compass.
      */
-    public function getSwellDirectionInPoints(): float
+    public function getSwellDirectionInPoints(): ?float
     {
         return $this->forecastMarineHour->swell_dir_16_point;
     }
 
-    public function getSwellPeriod(): float
+    public function getSwellPeriod(): ?float
     {
         return $this->forecastMarineHour->swell_period_secs;
     }
 
-    public function getWaterTemperatureInCelsius(): float
+    public function getWaterTemperatureInCelsius(): ?float
     {
         return $this->forecastMarineHour->water_temp_c;
     }
 
-    public function getWaterTemperatureInFahrenheit(): float
+    public function getWaterTemperatureInFahrenheit(): ?float
     {
         return $this->forecastMarineHour->water_temp_f;
     }
