@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-final readonly class ForecastDay extends Forecast
+use GrigoryGerasimov\Weather\Contracts\WeatherConditionInterface;
+
+final readonly class ForecastDay extends Forecast implements WeatherConditionInterface
 {
     private \stdClass $forecastDay;
 
