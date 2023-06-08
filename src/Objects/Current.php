@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects;
 
-use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
+use GrigoryGerasimov\Weather\Contracts\{WeatherCommonInterface, WeatherConditionInterface, WeatherObjectInterface};
 
-final readonly class Current implements WeatherObjectInterface
+final readonly class Current implements WeatherObjectInterface, WeatherCommonInterface, WeatherConditionInterface
 {
     public function __construct(
         private \stdClass $current

@@ -58,6 +58,7 @@ final readonly class AirQuality implements WeatherObjectInterface
 
     /*
      * UK Defra Index.
+     *
      * 1-3 mean Low
      * 4-6 mean Moderate
      * 7-9 mean High
