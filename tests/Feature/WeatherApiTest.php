@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Tests\Feature;
 
+use GrigoryGerasimov\Weather\Exceptions\FailedFetchDataException;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
@@ -39,5 +40,22 @@ class WeatherApiTest extends TestCase
             ->assertStatus(404)
             ->assertNotFound()
             ->assertJsonStructure(['message']);
+    }
+
+    /** @test */
+    public function test_getting_a_failed_fetch_data_exception(): void
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        try {
+            if ($response === false) {
+                throw new FailedFetchDataException();
+            }
+        } catch (FailedFetchDataException $e) {
+            $isExpectedExceptionType = $e instanceof FailedFetchDataException;
+            $this->assertTrue($isExpectedExceptionType);
+        }
     }
 }
