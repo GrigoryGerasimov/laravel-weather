@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Services;
 
-use GrigoryGerasimov\Weather\Exceptions\{
+use GrigoryGerasimov\Weather\Exceptions\{FailedFetchDataException,
     InvalidApiTypeException,
     InvalidArgumentValueException,
     MissingApiKeyFieldException,
-    MissingApiMethodFieldException
-};
+    MissingApiMethodFieldException};
 use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
 use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 
@@ -481,7 +480,7 @@ class WeatherService implements WeatherServiceInterface
         return (bool)preg_match('/\?key=/', $this->requestUri);
     }
 
-    private function getData(): ?\stdClass
+    private function getData(): \stdClass
     {
         $curl = curl_init($this->requestUri);
 
@@ -491,6 +490,17 @@ class WeatherService implements WeatherServiceInterface
 
         curl_close($curl);
 
-        return $response ? json_decode($response) : null;
+        try {
+            if ($response === false) {
+                throw new FailedFetchDataException();
+            }
+            $decodedResponse = json_decode($response);
+        } catch (FailedFetchDataException $e) {
+            $this->handleWeatherException($e);
+        } catch (\Throwable $e) {
+            $this->handleThrowable($e);
+        }
+
+        return $decodedResponse;
     }
 }
