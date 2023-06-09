@@ -4,26 +4,12 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Models;
 
-use GrigoryGerasimov\Weather\Contracts\{WeatherForecastInterface, WeatherMarineInterface};
-use GrigoryGerasimov\Weather\Objects\{
-    AirQuality,
-    Alert,
-    Astronomy,
-    Current,
-    Sports,
-    Timezone
-};
-use GrigoryGerasimov\Weather\Objects\Forecast\{
-    Forecast,
-    ForecastDay,
-    ForecastAstro,
-    ForecastHour
-};
-use GrigoryGerasimov\Weather\Objects\Marine\{
-    MarineHour,
-    MarineTide
-};
+use GrigoryGerasimov\Weather\Contracts\{WeatherCollection\WeatherMarineInterface};
+use GrigoryGerasimov\Weather\Objects\{AirQuality, Alert, Astronomy, Current, Sports, Timezone};
+use GrigoryGerasimov\Weather\Objects\Forecast\{Forecast, ForecastAstro, ForecastCommon, ForecastDay};
 use GrigoryGerasimov\Weather\Objects\GPS\{IpLookup, Location, Search};
+use GrigoryGerasimov\Weather\Objects\Marine\{Marine, MarineHour, MarineTide};
+use Illuminate\Support\Collection;
 
 class Weather
 {
@@ -36,47 +22,14 @@ class Weather
         return new Current($this->weatherData);
     }
 
-    /** @return array<WeatherForecastInterface> */
-    public function forecast(): array
+    public function forecast(): Collection
     {
-        $result = [];
-
-        foreach($this->weatherData->forecast->forecastday as $forecastItem) {
-            $result['forecast_common'] = new Forecast($forecastItem);
-            $result['forecast_day'] = new ForecastDay($forecastItem);
-            $result['forecast_astro'] = new ForecastAstro($forecastItem);
-
-            foreach($forecastItem->hour as $forecastHour) {
-                $result['forecast_hour'][] = new ForecastHour($forecastHour);
-            }
-        }
-
-        return $result;
+        return collect($this->weatherData->forecast->forecastday)->map(fn($forecastItem) => new Forecast($forecastItem));
     }
 
-    /** @return array<WeatherMarineInterface> */
-    public function marine(): array
+    public function marine(): Collection
     {
-        $result = [];
-
-        foreach($this->weatherData->forecast->forecastday as $forecastMarineItem) {
-            $result['marine_common'] = new Forecast($forecastMarineItem);
-            $result['marine_day'] = new ForecastDay($forecastMarineItem);
-
-            foreach($forecastMarineItem->day->tides as $tideSet) {
-                foreach($tideSet->tide as $tide) {
-                    $result['marine_tides'] = new MarineTide($tide);
-                }
-            }
-
-            $result['marine_astro'] = new ForecastAstro($forecastMarineItem);
-
-            foreach($forecastMarineItem->hour as $forecastMarineHour) {
-                $result['marine_hour'][] = new MarineHour($forecastMarineHour);
-            }
-        }
-
-        return $result;
+        return collect($this->weatherData->forecast->forecastday)->map(fn($forecastMarineItem) => new Marine($forecastMarineItem));
     }
 
     public function timezone(): Timezone

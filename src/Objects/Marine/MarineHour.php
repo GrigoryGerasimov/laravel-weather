@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Marine;
 
-use GrigoryGerasimov\Weather\Contracts\WeatherMarineInterface;
+use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 use GrigoryGerasimov\Weather\Objects\Forecast\ForecastHour;
 
-final readonly class MarineHour implements WeatherMarineInterface
+final readonly class MarineHour implements WeatherObjectInterface
 {
     private \stdClass $forecastMarineHour;
 

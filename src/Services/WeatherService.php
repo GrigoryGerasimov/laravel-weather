@@ -200,7 +200,7 @@ class WeatherService implements WeatherServiceInterface
     /*
      * Required only with forecast API method.
      *
-     * Forecast days range: 1-14.
+     * ForecastCommon days range: 1-14.
      */
     public function forecastDays(int $days = 1): self
     {
@@ -221,7 +221,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Restricts date output for Forecast and History API method.
+     * Restricts date output for ForecastCommon and History API method.
      *
      * For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01).
      * For forecast API 'dt' should be between today and next 14 day in yyyy-MM-dd format (i.e. dt=2010-01-01).
@@ -270,7 +270,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Unix Timestamp used by Forecast and History API method.
+     * Unix Timestamp used by ForecastCommon and History API method.
      *
      * unixdt has same restriction as 'dt' parameter.
      * Please either pass 'dt' or 'unixdt' and not both in same request.
@@ -402,7 +402,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Get 15 min interval data for Forecast and History API.
+     * Get 15 min interval data for ForecastCommon and History API.
      *
      * Please note that this option is available for Enterprise plan only.
      */
