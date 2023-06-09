@@ -4,26 +4,39 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-use GrigoryGerasimov\Weather\Contracts\{WeatherForecastInterface, WeatherObjectInterface};
+use GrigoryGerasimov\Weather\Contracts\WeatherCollection\WeatherForecastInterface;
+use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
+use Illuminate\Support\Collection;
 
 final readonly class Forecast implements WeatherObjectInterface, WeatherForecastInterface
 {
-    private string $forecastDate;
-    private int $forecastTimestamp;
+    public function __construct(
+        private \stdClass $forecastItem
+    ) {}
 
-    public function __construct(\stdClass $forecast)
+    public function common(): ForecastCommon
     {
-        $this->forecastDate = $forecast->date;
-        $this->forecastTimestamp = $forecast->date_epoch;
+        return new ForecastCommon($this->forecastItem);
     }
 
-    public function getDate(): ?string
+    public function day(): ForecastDay
     {
-        return $this->forecastDate;
+        return new ForecastDay($this->forecastItem);
     }
 
-    public function getDateTimestamp(): ?int
+    public function astro(): ForecastAstro
     {
-        return $this->forecastTimestamp;
+        return new ForecastAstro($this->forecastItem);
+    }
+
+    public function hour(): Collection
+    {
+        $collection['forecast_hours'] = [];
+
+        foreach($this->forecastItem->hour as $forecastHour) {
+            $collection['forecast_hours'][] = new ForecastHour($forecastHour);
+        }
+
+        return collect($collection['forecast_hours']);
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Marine;
 
-use GrigoryGerasimov\Weather\Contracts\WeatherMarineInterface;
+use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 
-final readonly class MarineTide implements WeatherMarineInterface
+final readonly class MarineTide implements WeatherObjectInterface
 {
     private \stdClass $forecastMarineTides;
 

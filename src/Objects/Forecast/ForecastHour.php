@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
 use GrigoryGerasimov\Weather\Contracts\{
-    WeatherForecastInterface,
     WeatherCommonInterface,
     WeatherConditionInterface,
     WeatherObjectInterface
 };
 
-final readonly class ForecastHour implements WeatherForecastInterface, WeatherObjectInterface, WeatherCommonInterface, WeatherConditionInterface
+final readonly class ForecastHour implements WeatherObjectInterface, WeatherCommonInterface, WeatherConditionInterface
 {
     private \stdClass $forecastHour;
 
