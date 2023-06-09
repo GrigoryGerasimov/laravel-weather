@@ -35,7 +35,7 @@ class WeatherTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $forecastWeather = Weather::apiType('forecast')->apiKey()->ip('89.102.230.88')->get();
+        $forecastWeather = Weather::apiType('forecast')->apiKey()->ip('89.102.230.88')->forecastDays(3)->get();
 
         $this->assertNotNull($forecastWeather);
         $this->assertTrue($forecastWeather instanceof WeatherModel);
@@ -43,8 +43,7 @@ class WeatherTest extends TestCase
 
         $forecastArray = $forecastWeather->forecast()->toArray();
 
-        $this->assertCount(4, $forecastArray);
-        $this->assertArrayHasKey('forecast_common', $forecastArray);
+        $this->assertCount(3, $forecastArray);
     }
 
     /** @test */
@@ -52,7 +51,7 @@ class WeatherTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $forecastWeather = Weather::apiType('marine')->apiKey()->zip('40011')->get();
+        $forecastWeather = Weather::apiType('marine')->apiKey()->zip('40011')->forecastDays(5)->get();
 
         $this->assertNotNull($forecastWeather);
         $this->assertTrue($forecastWeather instanceof WeatherModel);
@@ -61,7 +60,6 @@ class WeatherTest extends TestCase
         $marineArray = $forecastWeather->marine()->toArray();
 
         $this->assertCount(5, $marineArray);
-        $this->assertArrayHasKey('marine_tides', $marineArray);
     }
 
     /** @test */
@@ -72,12 +70,7 @@ class WeatherTest extends TestCase
         $weather = Weather::apiType('search')->apiKey('52bc4de23bad4639861233754230306')->city('Prague')->get();
 
         $this->assertNotNull($weather);
-        $this->assertTrue($weather instanceof WeatherModel);
-
-        $search = $weather->search();
-
-        $this->assertNotNull($search);
-        $this->assertisObject($search);
+        $this->assertTrue($weather->search() instanceof Collection);
     }
 
     /** @test */
@@ -106,7 +99,7 @@ class WeatherTest extends TestCase
         $this->assertNotNull($weather);
         $this->assertTrue($weather instanceof WeatherModel);
 
-        $sports = $weather->timezone();
+        $sports = $weather->sports();
 
         $this->assertNotNull($sports);
         $this->assertisObject($sports);
@@ -122,7 +115,7 @@ class WeatherTest extends TestCase
         $this->assertNotNull($weather);
         $this->assertTrue($weather instanceof WeatherModel);
 
-        $astronomy = $weather->timezone();
+        $astronomy = $weather->astro();
 
         $this->assertNotNull($astronomy);
         $this->assertisObject($astronomy);
@@ -138,7 +131,7 @@ class WeatherTest extends TestCase
         $this->assertNotNull($weather);
         $this->assertTrue($weather instanceof WeatherModel);
 
-        $ipLookup = $weather->timezone();
+        $ipLookup = $weather->ipLookup();
 
         $this->assertNotNull($ipLookup);
         $this->assertisObject($ipLookup);

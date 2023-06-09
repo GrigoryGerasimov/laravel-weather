@@ -480,7 +480,7 @@ class WeatherService implements WeatherServiceInterface
         return (bool)preg_match('/\?key=/', $this->requestUri);
     }
 
-    private function getData(): \stdClass
+    private function getData(): \stdClass|array
     {
         $curl = curl_init($this->requestUri);
 

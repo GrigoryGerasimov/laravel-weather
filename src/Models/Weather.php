@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Models;
 
-use GrigoryGerasimov\Weather\Contracts\{WeatherCollection\WeatherMarineInterface};
 use GrigoryGerasimov\Weather\Objects\{AirQuality, Alert, Astronomy, Current, Sports, Timezone};
-use GrigoryGerasimov\Weather\Objects\Forecast\{Forecast, ForecastAstro, ForecastCommon, ForecastDay};
+use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
 use GrigoryGerasimov\Weather\Objects\GPS\{IpLookup, Location, Search};
-use GrigoryGerasimov\Weather\Objects\Marine\{Marine, MarineHour, MarineTide};
+use GrigoryGerasimov\Weather\Objects\Marine\Marine;
 use Illuminate\Support\Collection;
 
 class Weather
 {
     public function __construct(
-        protected \stdClass $weatherData
+        protected \stdClass|array $weatherData
     ) {}
 
     public function current(): Current
@@ -24,12 +23,12 @@ class Weather
 
     public function forecast(): Collection
     {
-        return collect($this->weatherData->forecast->forecastday)->map(fn($forecastItem) => new Forecast($forecastItem));
+        return collect($this->weatherData->forecast->forecastday)->keyBy('date')->mapInto(Forecast::class);
     }
 
     public function marine(): Collection
     {
-        return collect($this->weatherData->forecast->forecastday)->map(fn($forecastMarineItem) => new Marine($forecastMarineItem));
+        return collect($this->weatherData->forecast->forecastday)->keyBy('date')->mapInto(Marine::class);
     }
 
     public function timezone(): Timezone
@@ -42,9 +41,9 @@ class Weather
         return new IpLookup($this->weatherData);
     }
 
-    public function search(): Search
+    public function search(): Collection
     {
-        return new Search($this->weatherData);
+        return collect($this->weatherData)->keyBy('id')->mapInto(Search::class);
     }
 
     public function location(): Location
@@ -67,8 +66,14 @@ class Weather
         return new Astronomy($this->weatherData);
     }
 
-    public function sports(): Sports
+    public function sports(): Collection
     {
-        return new Sports($this->weatherData);
+        $sportsData = [];
+
+        foreach(get_object_vars($this->weatherData) as $sportsType => $sportsDetails) {
+            $sportsData[$sportsType] = collect($this->weatherData->$sportsType)->mapInto(Sports::class);
+        }
+
+        return collect($sportsData);
     }
 }
