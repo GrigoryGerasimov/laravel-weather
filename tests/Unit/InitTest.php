@@ -6,7 +6,7 @@ namespace GrigoryGerasimov\Weather\Tests\Unit;
 
 use GrigoryGerasimov\Weather\Tests\TestCase;
 
-class ExampleTest extends TestCase
+class InitTest extends TestCase
 {
     /** @test */
     public function test_example_truthy(): void

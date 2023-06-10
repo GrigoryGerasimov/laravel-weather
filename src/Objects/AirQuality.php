@@ -8,38 +8,40 @@ use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 
 final readonly class AirQuality implements WeatherObjectInterface
 {
-    public function __construct(
-        private \stdClass $aqi
-    ) {}
+    private array $aqi;
+
+    public function __construct(\stdClass $data) {
+        $this->aqi = (array) $data->air_quality;
+    }
 
     public function getCarbonMonoxide(): ?float
     {
-        return $this->aqi->co;
+        return $this->aqi['co'];
     }
 
     public function getOzone(): ?float
     {
-        return $this->aqi->o3;
+        return $this->aqi['o3'];
     }
 
     public function getNitrogenDioxide(): ?float
     {
-        return $this->aqi->no2;
+        return $this->aqi['no2'];
     }
 
     public function getSulphurDioxide(): ?float
     {
-        return $this->aqi->so2;
+        return $this->aqi['so2'];
     }
 
     public function getPM2_5(): ?float
     {
-        return $this->aqi->pm2_5;
+        return $this->aqi['pm2_5'];
     }
 
     public function getPM10(): ?float
     {
-        return $this->aqi->pm10;
+        return $this->aqi['pm10'];
     }
 
     /*
@@ -53,7 +55,7 @@ final readonly class AirQuality implements WeatherObjectInterface
      */
     public function getUSEPAStandard(): ?int
     {
-        return $this->aqi->usEpaIndex;
+        return $this->aqi['us-epa-index'];
     }
 
     /*
@@ -68,6 +70,6 @@ final readonly class AirQuality implements WeatherObjectInterface
      */
     public function getUKDefraIndex(): ?int
     {
-        return $this->aqi->gbDefraIndex;
+        return $this->aqi['gb-defra-index'];
     }
 }

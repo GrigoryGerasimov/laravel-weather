@@ -12,7 +12,7 @@ interface WeatherServiceInterface
 
     public function apiKey(string $key): self;
 
-    public function coords(string $lat, string $lon): self;
+    public function coords(float $lat, float $lon): self;
 
     public function city(string $city): self;
 
@@ -22,7 +22,7 @@ interface WeatherServiceInterface
 
     public function iata(string $iataCode): self;
 
-    public function autoIp(string $ip): self;
+    public function autoIp(): self;
 
     public function ip(string $ip): self;
 
