@@ -11,11 +11,11 @@ final readonly class Location extends Gps
     public function __construct(
         private \stdClass $location
     ) {
-        parent::__construct($location);
+        parent::__construct($location->location);
     }
 
     public function getCommonTimezoneParams(): Timezone
     {
-        return new Timezone($this->location);
+        return new Timezone($this->location->location);
     }
 }

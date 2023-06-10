@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Services;
 
-use GrigoryGerasimov\Weather\Exceptions\{FailedFetchDataException,
+use GrigoryGerasimov\Weather\Exceptions\{
+    FailedFetchDataException,
     InvalidApiTypeException,
     InvalidArgumentValueException,
     MissingApiKeyFieldException,
-    MissingApiMethodFieldException};
+    MissingApiMethodFieldException
+};
 use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
 use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 
 class WeatherService implements WeatherServiceInterface
 {
-    use ExceptionHandler;
+    use WithExceptionHandler;
 
     private const DEFAULT_API_KEY = '52bc4de23bad4639861233754230306';
 
@@ -42,7 +44,9 @@ class WeatherService implements WeatherServiceInterface
 
     /*
      * Type of your request to the API which defines the appropriate API method.
+     *
      * You can find the list of the available types in the constant API_METHOD_TYPES.
+     *
      * The default value is "current" for current weather data requests.
      */
     public function apiType(string $type = 'current'): self
@@ -80,7 +84,7 @@ class WeatherService implements WeatherServiceInterface
     /*
      * GPS coordinates in decimal degree (as latitude and longitude).
      */
-    public function coords(string $lat, string $lon): self
+    public function coords(float $lat, float $lon): self
     {
         try {
             if ($this->queryStructureValidated()) {
@@ -166,11 +170,11 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    public function autoIp(string $ip): self
+    public function autoIp(): self
     {
         try {
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&q=auto:$ip";
+                $this->requestUri = $this->requestUri . "&q=auto:ip";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -220,7 +224,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Restricts date output for ForecastCommon and History API method.
+     * Restricts date output for Forecast and History API method.
      *
      * For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01).
      * For forecast API 'dt' should be between today and next 14 day in yyyy-MM-dd format (i.e. dt=2010-01-01).
@@ -269,7 +273,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Unix Timestamp used by ForecastCommon and History API method.
+     * Unix Timestamp used by Forecast and History API method.
      *
      * unixdt has same restriction as 'dt' parameter.
      * Please either pass 'dt' or 'unixdt' and not both in same request.
@@ -370,7 +374,7 @@ class WeatherService implements WeatherServiceInterface
         try {
             $ifAqi = $ifAqi ? 'yes' : 'no';
             if ($this->queryStructureValidated()) {
-                $this->requestUri = $this->requestUri . "&aqi=$$ifAqi";
+                $this->requestUri = $this->requestUri . "&aqi=$ifAqi";
             }
         } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
             $this->handleWeatherException($e);
@@ -401,7 +405,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /*
-     * Get 15 min interval data for ForecastCommon and History API.
+     * Get 15 min interval data for Forecast and History API.
      *
      * Please note that this option is available for Enterprise plan only.
      */
@@ -494,7 +498,7 @@ class WeatherService implements WeatherServiceInterface
             if ($response === false) {
                 throw new FailedFetchDataException();
             }
-            $decodedResponse = json_decode($response);
+            $decodedResponse = json_decode($response, null, 512, JSON_THROW_ON_ERROR);
         } catch (FailedFetchDataException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {

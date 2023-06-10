@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
+use GrigoryGerasimov\Weather\Objects\AirQuality;
 use GrigoryGerasimov\Weather\Contracts\{
     WeatherCommonInterface,
     WeatherConditionInterface,
@@ -207,5 +208,10 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
     public function getUVIndex(): ?float
     {
         return $this->forecastHour->uv;
+    }
+
+    public function getAirQuality(): ?AirQuality
+    {
+        return new AirQuality($this->forecastHour);
     }
 }

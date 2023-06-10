@@ -45,17 +45,20 @@ class WeatherApiTest extends TestCase
     /** @test */
     public function test_getting_a_failed_fetch_data_exception(): void
     {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        try {
+        function mockDataFetch()
+        {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            curl_close($curl);
             if ($response === false) {
                 throw new FailedFetchDataException();
             }
-        } catch (FailedFetchDataException $e) {
-            $isExpectedExceptionType = $e instanceof FailedFetchDataException;
-            $this->assertTrue($isExpectedExceptionType);
         }
+
+        $this->expectException(FailedFetchDataException::class);
+        $this->expectExceptionMessage('Failed to fetch data');
+
+        mockDataFetch();
     }
 }

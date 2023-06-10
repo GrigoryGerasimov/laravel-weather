@@ -7,19 +7,19 @@ namespace GrigoryGerasimov\Weather\Services;
 use GrigoryGerasimov\Weather\Exceptions\WeatherException;
 use Illuminate\Support\Facades\Log;
 
-trait ExceptionHandler
+trait WithExceptionHandler
 {
     protected function handleWeatherException(WeatherException $exception): never
     {
-        Log::error($exception->getMessage(), $exception->getTrace());
+        Log::error("The following Weather exception has occurred on line {$exception->getLine()}:\ncode: {$exception->getCode()},\nmessage: {$exception->getMessage()}", $exception->getTrace());
 
-        die("The following Weather exception has occurred on line {$exception->getLine()} : {$exception->getMessage()}");
+        throw $exception;
     }
 
     protected function handleThrowable(\Throwable $exception): never
     {
-        Log::error($exception->getTraceAsString());
+        Log::error($exception->getMessage(), $exception->getTrace());
 
-        die($exception->getMessage());
+        throw $exception;
     }
 }

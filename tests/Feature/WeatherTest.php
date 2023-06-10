@@ -126,7 +126,7 @@ class WeatherTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('ip')->apiKey('52bc4de23bad4639861233754230306')->city('Prague')->get();
+        $weather = Weather::apiType('ip')->apiKey('52bc4de23bad4639861233754230306')->ip('126.0.0.1')->get();
 
         $this->assertNotNull($weather);
         $this->assertTrue($weather instanceof WeatherModel);
