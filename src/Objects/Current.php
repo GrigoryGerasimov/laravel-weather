@@ -15,54 +15,54 @@ final readonly class Current implements WeatherObjectInterface, WeatherCommonInt
         $this->current = $data->current;
     }
 
-    public function getLastUpdated(): string
+    public function getLastUpdated(): ?string
     {
-        return $this->current->last_updated;
+        return $this->current->last_updated ?? null;
     }
 
     public function getLastUpdatedTimestamp(): ?int
     {
-        return $this->current->last_updated_epoch;
+        return $this->current->last_updated_epoch ?? null;
     }
 
     public function getActualCelsius(): ?float
     {
-        return $this->current->temp_c;
+        return $this->current->temp_c ?? null;
     }
 
     public function getActualFahrenheit(): ?float
     {
-        return $this->current->temp_f;
+        return $this->current->temp_f ?? null;
     }
 
     public function getFeelsLikeCelsius(): ?float
     {
-        return $this->current->feelslike_c;
+        return $this->current->feelslike_c ?? null;
     }
 
     public function getFeelsLikeFahrenheit(): ?float
     {
-        return $this->current->feelslike_f;
+        return $this->current->feelslike_f ?? null;
     }
 
     public function getWeatherCondition(): ?Condition
     {
-        return new Condition($this->current->condition);
+        return isset($this->current->condition) ? new Condition($this->current->condition) : null;
     }
 
     public function getWindSpeedInMiles(): ?float
     {
-        return $this->current->wind_mph;
+        return $this->current->wind_mph ?? null;
     }
 
     public function getWindSpeedInKm(): ?float
     {
-        return $this->current->wind_kph;
+        return $this->current->wind_kph ?? null;
     }
 
     public function getWindDirectionInDegrees(): ?int
     {
-        return $this->current->wind_degree;
+        return $this->current->wind_degree ?? null;
     }
 
     /*
@@ -70,37 +70,37 @@ final readonly class Current implements WeatherObjectInterface, WeatherCommonInt
      */
     public function getWindDirectionInPoints(): ?string
     {
-        return $this->current->wind_dir;
+        return $this->current->wind_dir ?? null;
     }
 
     public function getPressureInMillibars(): ?float
     {
-        return $this->current->pressure_mb;
+        return $this->current->pressure_mb ?? null;
     }
 
     public function getPressureInInches(): ?float
     {
-        return $this->current->pressure_in;
+        return $this->current->pressure_in ?? null;
     }
 
     public function getPrecipitationInMm(): ?float
     {
-        return $this->current->precip_mm;
+        return $this->current->precip_mm ?? null;
     }
 
     public function getPrecipitationInInches(): ?float
     {
-        return $this->current->precip_in;
+        return $this->current->precip_in ?? null;
     }
 
     public function getHumidity(): ?int
     {
-        return $this->current->humidity;
+        return $this->current->humidity ?? null;
     }
 
     public function getCloudCover(): ?int
     {
-        return $this->current->cloud;
+        return $this->current->cloud ?? null;
     }
 
     /*
@@ -109,21 +109,21 @@ final readonly class Current implements WeatherObjectInterface, WeatherCommonInt
      */
     public function getDayNightConditionIcon(): ?int
     {
-        return $this->current->is_day;
+        return $this->current->is_day ?? null;
     }
 
     public function getUVIndex(): ?float
     {
-        return $this->current->uv;
+        return $this->current->uv ?? null;
     }
 
     public function getWindGustInMiles(): ?float
     {
-        return $this->current->gust_mph;
+        return $this->current->gust_mph ?? null;
     }
 
     public function getWindGustInKm(): ?float
     {
-        return $this->current->gust_kph;
+        return $this->current->gust_kph ?? null;
     }
 }

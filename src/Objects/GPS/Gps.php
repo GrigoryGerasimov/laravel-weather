@@ -16,26 +16,26 @@ abstract readonly class Gps implements WeatherObjectInterface
 
     public function getCity(): ?string
     {
-        return $this->data->name;
+        return $this->data->name ?? null;
     }
 
     public function getRegion(): ?string
     {
-        return $this->data->region;
+        return $this->data->region ?? null;
     }
 
     public function getCountry(): ?string
     {
-        return $this->data->country;
+        return $this->data->country ?? null;
     }
 
     public function getLatitude(): ?float
     {
-        return $this->data->lat;
+        return $this->data->lat ?? null;
     }
 
     public function getLongitude(): ?float
     {
-        return $this->data->lon;
+        return $this->data->lon ?? null;
     }
 }

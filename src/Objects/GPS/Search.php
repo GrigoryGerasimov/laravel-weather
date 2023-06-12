@@ -14,11 +14,11 @@ final readonly class Search extends Gps
 
     public function getId(): ?int
     {
-        return $this->search->id;
+        return $this->search->id ?? null;
     }
 
     public function getUrl(): ?string
     {
-        return $this->search->url;
+        return $this->search->url ?? null;
     }
 }

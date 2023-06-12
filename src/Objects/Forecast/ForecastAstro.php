@@ -16,8 +16,8 @@ final readonly class ForecastAstro implements WeatherObjectInterface
         $this->forecastAstro = $forecast->astro;
     }
 
-    public function getCommonAstronomyParams(): Astronomy
+    public function getCommonAstronomyParams(): ?Astronomy
     {
-        return new Astronomy($this->forecastAstro);
+        return isset($this->forecastAstro) ? new Astronomy($this->forecastAstro) : null;
     }
 }

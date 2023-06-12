@@ -14,8 +14,8 @@ final readonly class Location extends Gps
         parent::__construct($location->location);
     }
 
-    public function getCommonTimezoneParams(): Timezone
+    public function getCommonTimezoneParams(): ?Timezone
     {
-        return new Timezone($this->location->location);
+        return isset($this->location->location) ? new Timezone($this->location->location) : null;
     }
 }

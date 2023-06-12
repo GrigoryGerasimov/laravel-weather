@@ -22,7 +22,7 @@ class Weather
 
     public function current(): ?Current
     {
-        if (!$this->validateWeatherData()) {
+        if (!$this->validateWeatherData('current')) {
             return null;
         }
 
@@ -31,10 +31,7 @@ class Weather
 
     public function forecast(): ?Collection
     {
-        if (
-            !$this->validateWeatherData() ||
-            !isset($this->weatherData->forecast, $this->weatherData->forecast->forecastday)
-        ) {
+        if (!$this->validateWeatherData('forecast', 'forecastday')) {
             return null;
         }
 
@@ -43,10 +40,7 @@ class Weather
 
     public function marine(): ?Collection
     {
-        if (
-            !$this->validateWeatherData() ||
-            !isset($this->weatherData->forecast, $this->weatherData->forecast->forecastday)
-        ) {
+        if (!$this->validateWeatherData('forecast', 'forecastday')) {
             return null;
         }
 
@@ -55,10 +49,7 @@ class Weather
 
     public function timezone(): ?Timezone
     {
-        if (
-            !$this->validateWeatherData() ||
-            !isset($this->weatherData->location)
-        ) {
+        if (!$this->validateWeatherData('location')) {
             return null;
         }
 
@@ -80,24 +71,25 @@ class Weather
             return null;
         }
 
-        return collect($this->weatherData)->keyBy('id')->mapInto(Search::class);
+        return is_array($this->weatherData) ? collect($this->weatherData)->keyBy('id')->mapInto(Search::class) : null;
     }
 
     public function location(): ?Location
     {
-        if (!$this->validateWeatherData()) {
+        if (!$this->validateWeatherData('location')) {
             return null;
         }
 
         return new Location($this->weatherData);
     }
 
+    /*
+     * The Weather model airQuality method serves for the Current API method only.
+     * For Forecast API please use the appropriate ForecastDay and ForecastHour getAirQuality method.
+     */
     public function airQuality(): ?AirQuality
     {
-        if (
-            !$this->validateWeatherData() ||
-            !isset($this->weatherData->current)
-        ) {
+        if (!$this->validateWeatherData('current')) {
             return null;
         }
 
@@ -106,10 +98,7 @@ class Weather
 
     public function alerts(): ?Collection
     {
-        if (
-            !$this->validateWeatherData() ||
-            !isset($this->weatherData->alerts, $this->weatherData->alerts->alert)
-        ) {
+        if (!$this->validateWeatherData('alerts', 'alert')) {
             return null;
         }
 
@@ -118,7 +107,7 @@ class Weather
 
     public function astro(): ?Astronomy
     {
-        if (!$this->validateWeatherData()) {
+        if (!$this->validateWeatherData('astronomy', 'astro')) {
             return null;
         }
 
@@ -144,13 +133,17 @@ class Weather
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    private function validateWeatherData(): bool
+    private function validateWeatherData(?string $outerKey = null, ?string $innerKey = null): bool
     {
         try {
             if (isset($this->weatherData->error)) {
                 throw new ReceivedApiErrorCodeException($this->weatherData->error);
             }
-            if (!isset($this->weatherData)) {
+            if (
+                !isset($this->weatherData) ||
+                !is_null($outerKey) && !isset($this->weatherData->$outerKey) ||
+                !is_null($innerKey) && !isset($this->weatherData->$outerKey->$innerKey)
+            ) {
                 return false;
             }
         } catch (ReceivedApiErrorCodeException $e) {

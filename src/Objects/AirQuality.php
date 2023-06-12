@@ -16,32 +16,32 @@ final readonly class AirQuality implements WeatherObjectInterface
 
     public function getCarbonMonoxide(): ?float
     {
-        return $this->aqi['co'];
+        return $this->aqi['co'] ?? null;
     }
 
     public function getOzone(): ?float
     {
-        return $this->aqi['o3'];
+        return $this->aqi['o3'] ?? null;
     }
 
     public function getNitrogenDioxide(): ?float
     {
-        return $this->aqi['no2'];
+        return $this->aqi['no2'] ?? null;
     }
 
     public function getSulphurDioxide(): ?float
     {
-        return $this->aqi['so2'];
+        return $this->aqi['so2'] ?? null;
     }
 
     public function getPM2_5(): ?float
     {
-        return $this->aqi['pm2_5'];
+        return $this->aqi['pm2_5'] ?? null;
     }
 
     public function getPM10(): ?float
     {
-        return $this->aqi['pm10'];
+        return $this->aqi['pm10'] ?? null;
     }
 
     /*
@@ -55,7 +55,7 @@ final readonly class AirQuality implements WeatherObjectInterface
      */
     public function getUSEPAStandard(): ?int
     {
-        return $this->aqi['us-epa-index'];
+        return $this->aqi['us-epa-index'] ?? null;
     }
 
     /*
@@ -70,6 +70,6 @@ final readonly class AirQuality implements WeatherObjectInterface
      */
     public function getUKDefraIndex(): ?int
     {
-        return $this->aqi['gb-defra-index'];
+        return $this->aqi['gb-defra-index'] ?? null;
     }
 }

@@ -17,77 +17,77 @@ final readonly class ForecastDay implements WeatherObjectInterface
     }
     public function getMaxCelsius(): ?float
     {
-        return $this->forecastDay->maxtemp_c;
+        return $this->forecastDay->maxtemp_c ?? null;
     }
 
     public function getMaxFahrenheit(): ?float
     {
-        return $this->forecastDay->maxtemp_f;
+        return $this->forecastDay->maxtemp_f ?? null;
     }
 
     public function getMinCelsius(): ?float
     {
-        return $this->forecastDay->mintemp_c;
+        return $this->forecastDay->mintemp_c ?? null;
     }
 
     public function getMinFahrenheit(): ?float
     {
-        return $this->forecastDay->mintemp_f;
+        return $this->forecastDay->mintemp_f ?? null;
     }
 
     public function getAvgCelsius(): ?float
     {
-        return $this->forecastDay->avgtemp_c;
+        return $this->forecastDay->avgtemp_c ?? null;
     }
 
     public function getAvgFahrenheit(): ?float
     {
-        return $this->forecastDay->avgtemp_f;
+        return $this->forecastDay->avgtemp_f ?? null;
     }
 
     public function getMaxWindSpeedInMiles(): ?float
     {
-        return $this->forecastDay->maxwind_mph;
+        return $this->forecastDay->maxwind_mph ?? null;
     }
 
     public function getMaxWindSpeedInKm(): ?float
     {
-        return $this->forecastDay->maxwind_kph;
+        return $this->forecastDay->maxwind_kph ?? null;
     }
 
     public function getTotalPrecipitationInMm(): ?float
     {
-        return $this->forecastDay->totalprecip_mm;
+        return $this->forecastDay->totalprecip_mm ?? null;
     }
 
     public function getTotalPrecipitationInInches(): ?float
     {
-        return $this->forecastDay->totalprecip_in;
+        return $this->forecastDay->totalprecip_in ?? null;
     }
 
     public function getAvgVisibilityInKm(): ?float
     {
-        return $this->forecastDay->avgvis_km;
+        return $this->forecastDay->avgvis_km ?? null;
     }
 
     public function getAvgVisibilityInMiles(): ?float
     {
-        return $this->forecastDay->avgvis_miles;
+        return $this->forecastDay->avgvis_miles ?? null;
     }
 
     public function getAvgHumidity(): ?int
     {
-        return $this->forecastDay->avghumidity;
+        return $this->forecastDay->avghumidity ?? null;
     }
 
     public function getWeatherCondition(): ?Condition
     {
-        return new Condition($this->forecastDay->condition);
+        return isset($this->forecastDay->condition) ? new Condition($this->forecastDay->condition) : null;
     }
 
     public function getUVIndex(): ?float
     {
-        return $this->forecastDay->uv;
+        return $this->forecastDay->uv ?? null;
     }
 
     public function getAirQuality(): ?AirQuality
