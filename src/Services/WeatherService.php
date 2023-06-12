@@ -7,7 +7,7 @@ namespace GrigoryGerasimov\Weather\Services;
 use GrigoryGerasimov\Weather\Exceptions\{FailedFetchDataException,
     InvalidApiTypeException,
     InvalidArgumentValueException,
-    InvalidJsonResponse,
+    InvalidJsonResponseException,
     MissingApiKeyFieldException,
     MissingApiMethodFieldException};
 use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
@@ -495,12 +495,12 @@ class WeatherService implements WeatherServiceInterface
 
         try {
             if ($response === '') {
-                throw new InvalidJsonResponse();
+                throw new InvalidJsonResponseException();
             } elseif ($response === false) {
                 throw new FailedFetchDataException();
             }
             $decodedResponse = json_decode($response, null, 512, JSON_THROW_ON_ERROR);
-        } catch (InvalidJsonResponse | FailedFetchDataException $e) {
+        } catch (InvalidJsonResponseException | FailedFetchDataException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);

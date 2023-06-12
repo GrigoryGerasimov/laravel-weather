@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Tests\Unit;
 
-use GrigoryGerasimov\Weather\Exceptions\InvalidJsonResponse;
+use GrigoryGerasimov\Weather\Exceptions\InvalidJsonResponseException;
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
 use GrigoryGerasimov\Weather\Objects\AirQuality;
@@ -243,7 +243,7 @@ class WeatherServiceTest extends TestCase
 
     public function test_getting_an_invalid_json_response_exception_due_to_invalid_request_syntax(): void
     {
-        $this->expectException(InvalidJsonResponse::class);
+        $this->expectException(InvalidJsonResponseException::class);
         $this->expectExceptionMessage('Invalid json response. Please kindly check the request syntax');
 
         Weather::apiType()->apiKey()->city('Děčín')->lang('en')->get();

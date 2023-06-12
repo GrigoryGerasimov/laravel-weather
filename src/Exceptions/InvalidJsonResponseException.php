@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Exceptions;
 
-class InvalidJsonResponse extends WeatherException
+class InvalidJsonResponseException extends WeatherException
 {
     protected string $defaultMsg = 'Invalid json response. Please kindly check the request syntax';
 
