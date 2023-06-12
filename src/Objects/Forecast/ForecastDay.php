@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-use GrigoryGerasimov\Weather\Objects\AirQuality;
-use GrigoryGerasimov\Weather\Contracts\{
-    WeatherConditionInterface,
-    WeatherObjectInterface
-};
+use GrigoryGerasimov\Weather\Objects\{AirQuality, Condition};
+use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 
-final readonly class ForecastDay implements WeatherObjectInterface, WeatherConditionInterface
+final readonly class ForecastDay implements WeatherObjectInterface
 {
     private \stdClass $forecastDay;
 
@@ -83,19 +80,9 @@ final readonly class ForecastDay implements WeatherObjectInterface, WeatherCondi
         return $this->forecastDay->avghumidity;
     }
 
-    public function getWeatherConditionText(): ?string
+    public function getWeatherCondition(): ?Condition
     {
-        return $this->forecastDay['condition:text'];
-    }
-
-    public function getWeatherConditionIconUrl(): ?string
-    {
-        return $this->forecastDay['condition:icon'];
-    }
-
-    public function getWeatherConditionCode(): ?int
-    {
-        return $this->forecastDay['condition:code'];
+        return new Condition($this->forecastDay->condition);
     }
 
     public function getUVIndex(): ?float
@@ -105,6 +92,6 @@ final readonly class ForecastDay implements WeatherObjectInterface, WeatherCondi
 
     public function getAirQuality(): ?AirQuality
     {
-        return new AirQuality($this->forecastDay);
+        return isset($this->forecastDay->air_quality) ? new AirQuality($this->forecastDay) : null;
     }
 }

@@ -40,26 +40,23 @@ final readonly class Marine implements WeatherMarineInterface
         return collect($collection['marine_hours']);
     }
 
-    public function tides(): Collection
+    public function tides(): ?Collection
     {
+        if (!isset($this->forecastMarineItem->day->tides)) {
+            return null;
+        }
+
         $tidesArray = $this->forecastMarineItem->day->tides;
         $collection['marine_tides'] = [];
 
-        array_walk_recursive($tidesArray, function($value) {
-            return is_object($value) && isset($value->tide) ? $value->tide : $value;
-        });
+        foreach($tidesArray as $forecastMarineTideKey => $forecastMarineTideObject) {
+            if (!isset($forecastMarineTideObject->tide)) {
+                return null;
+            }
 
-        foreach($tidesArray as $forecastMarineTide) {
-            $collection['marine_tides'][] = new MarineTide($forecastMarineTide);
+            $collection['marine_tides'][] = collect($forecastMarineTideObject->tide)->mapInto(MarineTide::class);;
         }
 
-        return collect($collection['marine_tides']);
-
-
-        /*foreach($this->forecastMarineItem->day->tides as $tideSet) {
-            foreach($tideSet->tide as $tide) {
-                $result['marine_tides'] = new MarineTide($tide);
-            }
-        }*/
+        return collect($collection['marine_tides'])->flatten();
     }
 }

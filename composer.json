@@ -23,7 +23,8 @@
     "ext-curl": "*"
   },
   "require-dev": {
-    "orchestra/testbench": "^8.5"
+    "orchestra/testbench": "^8.5",
+    "patrickschur/language-detection": "^5.2"
   },
   "extra": {
     "laravel": {

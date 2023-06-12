@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Tests\Unit;
 
+use GrigoryGerasimov\Weather\Exceptions\InvalidJsonResponse;
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
 use GrigoryGerasimov\Weather\Objects\AirQuality;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 use Illuminate\Support\Collection;
+use LanguageDetection\Language;
 
 class WeatherServiceTest extends TestCase
 {
@@ -190,11 +192,60 @@ class WeatherServiceTest extends TestCase
 
         $forecastAQI = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecastAQI);
-        $this->assertEquals(1, $forecastAQI->get('2023-06-11')->day()->getAirQuality()->getUSEPAStandard());
-        $this->assertEquals(1, $forecastAQI->get('2023-06-11')->hour()->first()->getAirQuality()->getUKDefraIndex());
+        $this->assertEquals(1, $forecastAQI->get(date('Y-m-d', time()))->day()->getAirQuality()->getUSEPAStandard());
+        $this->assertEquals(1, $forecastAQI->get(date('Y-m-d', time()))->hour()->get(17)->getAirQuality()->getUKDefraIndex());
     }
 
     public function test_receiving_forecast_weather_object_requiring_tides_data(): void
     {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('marine')->apiKey()->city('Marseilles')->requireTides(true)->forecastDays(4)->get();
+
+        $marineTidesData = $weather->marine();
+
+        $this->assertInstanceOf(Collection::class, $marineTidesData);
+        $this->assertEquals(4, $marineTidesData->get(date('Y-m-d', time()))->tides()->count());
+        $this->assertNotNull($marineTidesData->get(date('Y-m-d', time()))->tides()->first()->getLocalTideTime());
+    }
+
+    public function test_receiving_current_weather_object_condition_text_in_Czech_lang(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $expectedLang = new Language(['cs']);
+        $expectedLangThreshold = 0.4;
+
+        $weather = Weather::apiType()->apiKey()->city('Usti-nad-Labem')->lang('cs')->get();
+
+        $currentWeatherConditionText = $weather->current()->getWeatherCondition()->getText();
+
+        $this->assertIsString($currentWeatherConditionText);
+        $this->assertNotNull($expectedLang->detect($currentWeatherConditionText)['cs']);
+        $this->assertTrue(round($expectedLang->detect($currentWeatherConditionText)['cs'], 1) >= $expectedLangThreshold);
+    }
+
+    public function test_receiving_forecast_weather_object_condition_text_in_German_lang(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $expectedLang = new Language(['de']);
+        $expectedLangThreshold = 0.5;
+
+        $weather = Weather::apiType('forecast')->apiKey()->city('Stockholm')->forecastDays(5)->lang('de')->get();
+
+        $forecastWeatherConditionText = $weather->forecast()->get(date('Y-m-d', time()))->day()->getWeatherCondition()->getText();
+
+        $this->assertIsString($forecastWeatherConditionText);
+        $this->assertNotNull($expectedLang->detect($forecastWeatherConditionText)['de']);
+        $this->assertTrue(round($expectedLang->detect($forecastWeatherConditionText)['de'], 1) >= $expectedLangThreshold);
+    }
+
+    public function test_getting_an_invalid_json_response_exception_due_to_invalid_request_syntax(): void
+    {
+        $this->expectException(InvalidJsonResponse::class);
+        $this->expectExceptionMessage('Invalid json response. Please kindly check the request syntax');
+
+        Weather::apiType()->apiKey()->city('Děčín')->lang('en')->get();
     }
 }
