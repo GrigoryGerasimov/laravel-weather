@@ -38,7 +38,7 @@ class Weather
             return null;
         }
 
-        return collect($this->weatherData->forecast?->forecastday)->keyBy('date')->mapInto(Forecast::class);
+        return collect($this->weatherData->forecast->forecastday)->keyBy('date')->mapInto(Forecast::class);
     }
 
     public function marine(): ?Collection

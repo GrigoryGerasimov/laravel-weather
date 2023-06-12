@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects;
 
-use GrigoryGerasimov\Weather\Contracts\{WeatherCommonInterface, WeatherConditionInterface, WeatherObjectInterface};
+use GrigoryGerasimov\Weather\Contracts\{WeatherCommonInterface, WeatherObjectInterface};
 
-final readonly class Current implements WeatherObjectInterface, WeatherCommonInterface, WeatherConditionInterface
+final readonly class Current implements WeatherObjectInterface, WeatherCommonInterface
 {
-    public function __construct(
-        private \stdClass $current
-    ) {}
+    private \stdClass $current;
+
+    public function __construct(\stdClass $data)
+    {
+        $this->current = $data->current;
+    }
 
     public function getLastUpdated(): string
     {
@@ -42,19 +45,9 @@ final readonly class Current implements WeatherObjectInterface, WeatherCommonInt
         return $this->current->feelslike_f;
     }
 
-    public function getWeatherConditionText(): ?string
+    public function getWeatherCondition(): ?Condition
     {
-        return $this->current['condition:text'];
-    }
-
-    public function getWeatherConditionIconUrl(): ?string
-    {
-        return $this->current['condition:icon'];
-    }
-
-    public function getWeatherConditionCode(): ?int
-    {
-        return $this->current['condition:code'];
+        return new Condition($this->current->condition);
     }
 
     public function getWindSpeedInMiles(): ?float

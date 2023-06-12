@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\Forecast;
 
-use GrigoryGerasimov\Weather\Objects\AirQuality;
+use GrigoryGerasimov\Weather\Objects\{AirQuality, Condition};
 use GrigoryGerasimov\Weather\Contracts\{
     WeatherCommonInterface,
-    WeatherConditionInterface,
     WeatherObjectInterface
 };
 
-final readonly class ForecastHour implements WeatherObjectInterface, WeatherCommonInterface, WeatherConditionInterface
+final readonly class ForecastHour implements WeatherObjectInterface, WeatherCommonInterface
 {
     private \stdClass $forecastHour;
 
@@ -40,19 +39,9 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
         return $this->forecastHour->temp_f;
     }
 
-    public function getWeatherConditionText(): ?string
+    public function getWeatherCondition(): ?Condition
     {
-        return $this->forecastHour['condition:text'];
-    }
-
-    public function getWeatherConditionIconUrl(): ?string
-    {
-        return $this->forecastHour['condition:icon'];
-    }
-
-    public function getWeatherConditionCode(): ?int
-    {
-        return $this->forecastHour['condition:code'];
+        return new Condition($this->forecastHour->condition);
     }
 
     public function getWindSpeedInMiles(): ?float

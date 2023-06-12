@@ -14,6 +14,8 @@ interface WeatherCommonInterface
 
     public function getFeelsLikeFahrenheit();
 
+    public function getWeatherCondition();
+
     public function getWindSpeedInMiles();
 
     public function getWindSpeedInKm();
