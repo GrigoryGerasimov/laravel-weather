@@ -19,11 +19,11 @@ final readonly class ForecastCommon implements WeatherObjectInterface
 
     public function getDate(): ?string
     {
-        return $this->forecastDate;
+        return $this->forecastDate ?? null;
     }
 
     public function getDateTimestamp(): ?int
     {
-        return $this->forecastTimestamp;
+        return $this->forecastTimestamp ?? null;
     }
 }

@@ -14,27 +14,31 @@ final readonly class Forecast implements WeatherObjectInterface, WeatherForecast
         private \stdClass $forecastItem
     ) {}
 
-    public function common(): ForecastCommon
+    public function common(): ?ForecastCommon
     {
-        return new ForecastCommon($this->forecastItem);
+        return isset($this->forecastItem->date) && isset($this->forecastItem->date_epoch) ? new ForecastCommon($this->forecastItem) : null;
     }
 
-    public function day(): ForecastDay
+    public function day(): ?ForecastDay
     {
-        return new ForecastDay($this->forecastItem);
+        return isset($this->forecastItem->day) ? new ForecastDay($this->forecastItem) : null;
     }
 
-    public function astro(): ForecastAstro
+    public function astro(): ?ForecastAstro
     {
-        return new ForecastAstro($this->forecastItem);
+        return isset($this->forecastItem->astro) ? new ForecastAstro($this->forecastItem) : null;
     }
 
-    public function hour(): Collection
+    public function hour(): ?Collection
     {
         $collection['forecast_hours'] = [];
 
         foreach($this->forecastItem->hour as $forecastHour) {
-            $collection['forecast_hours'][] = new ForecastHour($forecastHour);
+            if (!isset($forecastHour)) {
+                return null;
+            }
+
+            $collection['forecast_hours'][] =  new ForecastHour($forecastHour);
         }
 
         return collect($collection['forecast_hours']);

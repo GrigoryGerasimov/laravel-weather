@@ -14,26 +14,30 @@ final readonly class Marine implements WeatherMarineInterface
         private \stdClass $forecastMarineItem
     ) {}
 
-    public function common(): ForecastCommon
+    public function common(): ?ForecastCommon
     {
-        return new ForecastCommon($this->forecastMarineItem);
+        return isset($this->forecastMarineItem->date) && isset($this->forecastMarineItem->date_epoch) ? new ForecastCommon($this->forecastMarineItem) : null;
     }
 
-    public function day(): ForecastDay
+    public function day(): ?ForecastDay
     {
-        return new ForecastDay($this->forecastMarineItem);
+        return isset($this->forecastMarineItem->day) ? new ForecastDay($this->forecastMarineItem) : null;
     }
 
-    public function astro(): ForecastAstro
+    public function astro(): ?ForecastAstro
     {
-        return new ForecastAstro($this->forecastMarineItem);
+        return isset($this->forecastItem->astro) ? new ForecastAstro($this->forecastMarineItem) : null;
     }
 
-    public function hour(): Collection
+    public function hour(): ?Collection
     {
         $collection['marine_hours'] = [];
 
         foreach($this->forecastMarineItem->hour as $forecastMarineHour) {
+            if (!isset($forecastMarineHour)) {
+                return null;
+            }
+
             $collection['marine_hours'][] = new MarineHour($forecastMarineHour);
         }
 

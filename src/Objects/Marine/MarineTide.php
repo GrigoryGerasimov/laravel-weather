@@ -17,16 +17,16 @@ final readonly class MarineTide implements WeatherObjectInterface
 
     public function getLocalTideTime(): ?string
     {
-        return $this->forecastMarineTides->tide_time;
+        return $this->forecastMarineTides->tide_time ?? null;
     }
 
-    public function getTideHeight(): ?float
+    public function getTideHeight(): float|string|null
     {
-        return $this->forecastMarineTides->tide_height_mt;
+        return $this->forecastMarineTides->tide_height_mt ?? null;
     }
 
     public function getTideType(): ?string
     {
-        return $this->forecastMarineTides->tide_type;
+        return $this->forecastMarineTides->tide_type ?? null;
     }
 }

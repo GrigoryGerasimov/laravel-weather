@@ -14,16 +14,16 @@ final readonly class Timezone implements WeatherObjectInterface
 
     public function getTimezoneName(): ?string
     {
-        return $this->timezone->tz_id;
+        return $this->timezone->tz_id ?? null;
     }
 
     public function getTimestamp(): ?int
     {
-        return $this->timezone->localtime_epoch;
+        return $this->timezone->localtime_epoch ?? null;
     }
 
     public function getDateTime(): ?string
     {
-        return $this->timezone->localtime;
+        return $this->timezone->localtime ?? null;
     }
 }

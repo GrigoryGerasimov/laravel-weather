@@ -14,22 +14,22 @@ final readonly class Astronomy implements WeatherObjectInterface
 
     public function getSunriseTime(): ?string
     {
-        return $this->astronomy->sunrise;
+        return $this->astronomy->sunrise ?? null;
     }
 
     public function getSunsetTime(): ?string
     {
-        return $this->astronomy->sunset;
+        return $this->astronomy->sunset ?? null;
     }
 
     public function getMoonriseTime(): ?string
     {
-        return $this->astronomy->moonrise;
+        return $this->astronomy->moonrise ?? null;
     }
 
     public function getMoonsetTime(): ?string
     {
-        return $this->astronomy->moonset;
+        return $this->astronomy->moonset ?? null;
     }
 
     /*
@@ -49,11 +49,21 @@ final readonly class Astronomy implements WeatherObjectInterface
      */
     public function getMoonPhase(): ?string
     {
-        return $this->astronomy->moon_phase;
+        return $this->astronomy->moon_phase ?? null;
     }
 
-    public function getMoonIllumination(): ?float
+    public function getMoonIllumination(): int|string|null
     {
-        return $this->astronomy->moon_illumination;
+        return $this->astronomy->moon_illumination ?? null;
+    }
+
+    public function isMoonUp(): ?int
+    {
+        return $this->astronomy->is_moon_up ?? null;
+    }
+
+    public function isSunUp(): ?int
+    {
+        return $this->astronomy->is_sun_up ?? null;
     }
 }

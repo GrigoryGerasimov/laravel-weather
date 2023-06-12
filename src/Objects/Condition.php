@@ -14,16 +14,16 @@ final readonly class Condition implements WeatherObjectInterface
 
     public function getText(): ?string
     {
-        return $this->condition->text;
+        return $this->condition->text ?? null;
     }
 
     public function getIconUrl(): ?string
     {
-        return $this->condition->icon;
+        return $this->condition->icon ?? null;
     }
 
     public function getCode(): ?int
     {
-        return $this->condition->code;
+        return $this->condition->code ?? null;
     }
 }

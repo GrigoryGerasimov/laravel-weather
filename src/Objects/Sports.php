@@ -14,31 +14,31 @@ final readonly class Sports implements WeatherObjectInterface
 
     public function getStadium(): ?string
     {
-        return $this->sports->stadium;
+        return $this->sports->stadium ?? null;
     }
 
     public function getCountry(): ?int
     {
-        return $this->sports->country;
+        return $this->sports->country ?? null;
     }
 
     public function getRegion(): ?string
     {
-        return $this->sports->region;
+        return $this->sports->region ?? null;
     }
 
     public function getTournament(): ?string
     {
-        return $this->sports->tournament;
+        return $this->sports->tournament ?? null;
     }
 
     public function getStartDateTime(): ?string
     {
-        return $this->sports->start;
+        return $this->sports->start ?? null;
     }
 
     public function getMatch(): ?string
     {
-        return $this->sports->match;
+        return $this->sports->match ?? null;
     }
 }

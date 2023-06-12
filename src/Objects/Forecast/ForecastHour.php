@@ -21,42 +21,42 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
 
     public function getTimestamp(): ?int
     {
-        return $this->forecastHour->time_epoch;
+        return $this->forecastHour->time_epoch ?? null;
     }
 
     public function getDateTime(): ?string
     {
-        return $this->forecastHour->time;
+        return $this->forecastHour->time ?? null;
     }
 
     public function getActualCelsius(): ?float
     {
-        return $this->forecastHour->temp_c;
+        return $this->forecastHour->temp_c ?? null;
     }
 
     public function getActualFahrenheit(): ?float
     {
-        return $this->forecastHour->temp_f;
+        return $this->forecastHour->temp_f ?? null;
     }
 
     public function getWeatherCondition(): ?Condition
     {
-        return new Condition($this->forecastHour->condition);
+        return isset($this->forecastHour->condition) ? new Condition($this->forecastHour->condition) : null;
     }
 
     public function getWindSpeedInMiles(): ?float
     {
-        return $this->forecastHour->wind_mph;
+        return $this->forecastHour->wind_mph ?? null;
     }
 
     public function getWindSpeedInKm(): ?float
     {
-        return $this->forecastHour->wind_kph;
+        return $this->forecastHour->wind_kph ?? null;
     }
 
     public function getWindDirectionInDegrees(): ?int
     {
-        return $this->forecastHour->wind_degree;
+        return $this->forecastHour->wind_degree ?? null;
     }
 
     /*
@@ -64,77 +64,77 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
      */
     public function getWindDirectionInPoints(): ?string
     {
-        return $this->forecastHour->wind_dir;
+        return $this->forecastHour->wind_dir ?? null;
     }
 
     public function getPressureInMillibars(): ?float
     {
-        return $this->forecastHour->pressure_mb;
+        return $this->forecastHour->pressure_mb ?? null;
     }
 
     public function getPressureInInches(): ?float
     {
-        return $this->forecastHour->pressure_in;
+        return $this->forecastHour->pressure_in ?? null;
     }
 
     public function getPrecipitationInMm(): ?float
     {
-        return $this->forecastHour->precip_mm;
+        return $this->forecastHour->precip_mm ?? null;
     }
 
     public function getPrecipitationInInches(): ?float
     {
-        return $this->forecastHour->precip_in;
+        return $this->forecastHour->precip_in ?? null;
     }
 
     public function getHumidity(): ?int
     {
-        return $this->forecastHour->humidity;
+        return $this->forecastHour->humidity ?? null;
     }
 
     public function getCloudCover(): ?int
     {
-        return $this->forecastHour->cloud;
+        return $this->forecastHour->cloud ?? null;
     }
 
     public function getFeelsLikeCelsius(): ?float
     {
-        return $this->forecastHour->feelslike_c;
+        return $this->forecastHour->feelslike_c ?? null;
     }
 
     public function getFeelsLikeFahrenheit(): ?float
     {
-        return $this->forecastHour->feelslike_f;
+        return $this->forecastHour->feelslike_f ?? null;
     }
 
     public function getWindchillInCelsius(): ?float
     {
-        return $this->forecastHour->windchill_c;
+        return $this->forecastHour->windchill_c ?? null;
     }
 
     public function getWindchillInFahrenheit(): ?float
     {
-        return $this->forecastHour->windchill_f;
+        return $this->forecastHour->windchill_f ?? null;
     }
 
     public function getHeatIndexInCelsius(): ?float
     {
-        return $this->forecastHour->heatindex_c;
+        return $this->forecastHour->heatindex_c ?? null;
     }
 
     public function getHeatIndexInFahrenheit(): ?float
     {
-        return $this->forecastHour->heatindex_f;
+        return $this->forecastHour->heatindex_f ?? null;
     }
 
     public function getDewPointInCelsius(): ?float
     {
-        return $this->forecastHour->dewpoint_c;
+        return $this->forecastHour->dewpoint_c ?? null;
     }
 
     public function getDewPointInFahrenheit(): ?float
     {
-        return $this->forecastHour->dewpoint_f;
+        return $this->forecastHour->dewpoint_f ?? null;
     }
 
     /*
@@ -143,7 +143,7 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
      */
     public function shallItRain(): ?int
     {
-        return $this->forecastHour->will_it_rain;
+        return $this->forecastHour->will_it_rain ?? null;
     }
 
     /*
@@ -152,7 +152,7 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
      */
     public function shallItSnow(): ?int
     {
-        return $this->forecastHour->will_it_snow;
+        return $this->forecastHour->will_it_snow ?? null;
     }
 
     /*
@@ -161,46 +161,46 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
      */
     public function getDayNightConditionIcon(): ?int
     {
-        return $this->forecastHour->is_day;
+        return $this->forecastHour->is_day ?? null;
     }
 
     public function getVisibilityInKm(): ?float
     {
-        return $this->forecastHour->vis_km;
+        return $this->forecastHour->vis_km ?? null;
     }
 
     public function getVisibilityInMiles(): ?float
     {
-        return $this->forecastHour->vis_miles;
+        return $this->forecastHour->vis_miles ?? null;
     }
 
     public function getRainChance(): ?int
     {
-        return $this->forecastHour->chance_of_rain;
+        return $this->forecastHour->chance_of_rain ?? null;
     }
 
     public function getSnowChance(): ?int
     {
-        return $this->forecastHour->chance_of_snow;
+        return $this->forecastHour->chance_of_snow ?? null;
     }
 
     public function getWindGustInMiles(): ?float
     {
-        return $this->forecastHour->gust_mph;
+        return $this->forecastHour->gust_mph ?? null;
     }
 
     public function getWindGustInKm(): ?float
     {
-        return $this->forecastHour->gust_kph;
+        return $this->forecastHour->gust_kph ?? null;
     }
 
     public function getUVIndex(): ?float
     {
-        return $this->forecastHour->uv;
+        return $this->forecastHour->uv ?? null;
     }
 
     public function getAirQuality(): ?AirQuality
     {
-        return new AirQuality($this->forecastHour);
+        return isset($this->forecastHour->air_quality) ? new AirQuality($this->forecastHour) : null;
     }
 }

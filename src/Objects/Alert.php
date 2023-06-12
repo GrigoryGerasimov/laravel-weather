@@ -14,56 +14,56 @@ final readonly class Alert implements WeatherObjectInterface
 
     public function getHeadline(): ?string
     {
-        return $this->alert->headline;
+        return $this->alert->headline ?? null;
     }
     public function getAlertType(): ?string
     {
-        return $this->alert->msgType;
+        return $this->alert->msgType ?? null;
     }
     public function getSeverity(): ?string
     {
-        return $this->alert->severity;
+        return $this->alert->severity ?? null;
     }
     public function getUrgency(): ?string
     {
-        return $this->alert->urgency;
+        return $this->alert->urgency ?? null;
     }
     public function getAreas(): ?string
     {
-        return $this->alert->areas;
+        return $this->alert->areas ?? null;
     }
     public function getCategory(): ?string
     {
-        return $this->alert->category;
+        return $this->alert->category ?? null;
     }
     public function getCertainty(): ?string
     {
-        return $this->alert->certainty;
+        return $this->alert->certainty ?? null;
     }
     public function getEvent(): ?string
     {
-        return $this->alert->event;
+        return $this->alert->event ?? null;
     }
     public function getNote(): ?string
     {
-        return $this->alert->note;
+        return $this->alert->note ?? null;
     }
     public function getEffective(): mixed
     {
-        return $this->alert->effective;
+        return $this->alert->effective ?? null;
     }
     public function getExpires(): ?string
     {
-        return $this->alert->expires;
+        return $this->alert->expires ?? null;
     }
 
     public function getDescription(): ?string
     {
-        return $this->alert->desc;
+        return $this->alert->desc ?? null;
     }
 
     public function getInstruction(): ?string
     {
-        return $this->alert->instruction;
+        return $this->alert->instruction ?? null;
     }
 }
