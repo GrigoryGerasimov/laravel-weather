@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method self autoIp()
  * @method self ip(string $ip)
  * @method self forecastDays(int $days = 1)
- * @method self forecastHistoryDate(string $date)
+ * @method self historyFutureDate(string $date)
  * @method self historyDate(string $date)
  * @method self forecastHistoryTimestamp(string|int $timestamp)
  * @method self historyTimestamp(string|int $timestamp)

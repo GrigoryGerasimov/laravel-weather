@@ -119,9 +119,9 @@ final readonly class ForecastDay implements WeatherObjectInterface
     }
 
     /**
-     * @return int|null
+     * @return int|float|null
      */
-    public function getAvgHumidity(): ?int
+    public function getAvgHumidity(): int|float|null
     {
         return $this->forecastDay->avghumidity ?? null;
     }

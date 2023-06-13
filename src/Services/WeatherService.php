@@ -281,6 +281,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
+     * Required for History and Future API method.
      * Restricts date output for Forecast and History API method.
      *
      * For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01).
@@ -294,7 +295,7 @@ class WeatherService implements WeatherServiceInterface
      * @throws WeatherException
      * @throws \Throwable
      */
-    public function forecastHistoryDate(string $date): self
+    public function historyFutureDate(string $date): self
     {
         try {
             if ($this->queryStructureValidated()) {
@@ -423,7 +424,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Should receive alerts in forecast API output.
+     * Should receive alerts in Forecast API output.
      * Further details to alerts can be found in the official WeatherApi doc: https://www.weatherapi.com/docs/
      *
      * @param bool $shouldAlert
@@ -448,7 +449,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Should receive the Air Quality data in forecast API output.
+     * Should receive the Air Quality data in Forecast API output.
      * Further details to AQI can be found in the official WeatherApi doc: https://www.weatherapi.com/docs/
      *
      * @param bool $ifAqi
