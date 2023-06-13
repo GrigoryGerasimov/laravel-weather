@@ -42,7 +42,7 @@ final readonly class Forecast implements WeatherObjectInterface, WeatherForecast
     }
 
     /**
-     * @return Collection|null
+     * @return Collection<ForecastHour>|null
      */
     public function hour(): ?Collection
     {
