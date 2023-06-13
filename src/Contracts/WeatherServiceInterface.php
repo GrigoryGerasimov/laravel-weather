@@ -72,7 +72,7 @@ interface WeatherServiceInterface
      * @param string $date
      * @return self
      */
-    public function forecastHistoryDate(string $date): self;
+    public function historyFutureDate(string $date): self;
 
     /**
      * @param string $date

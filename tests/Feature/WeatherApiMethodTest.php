@@ -6,11 +6,15 @@ namespace GrigoryGerasimov\Weather\Tests\Feature;
 
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
+use GrigoryGerasimov\Weather\Objects\AirQuality;
+use GrigoryGerasimov\Weather\Objects\Condition;
 use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
+use GrigoryGerasimov\Weather\Objects\Forecast\ForecastDay;
 use GrigoryGerasimov\Weather\Objects\GPS\Search;
 use GrigoryGerasimov\Weather\Objects\Marine\Marine;
 use GrigoryGerasimov\Weather\Objects\Marine\MarineHour;
 use GrigoryGerasimov\Weather\Objects\Marine\MarineTide;
+use GrigoryGerasimov\Weather\Objects\Timezone;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 use Illuminate\Support\Collection;
@@ -108,7 +112,7 @@ class WeatherApiMethodTest extends TestCase
     {
         $this->expectException(ReceivedApiErrorCodeException::class);
 
-        $weather = Weather::apiType('history')->apiKey()->city('Riga')->forecastHistoryDate('2011-02-11')->get();
+        $weather = Weather::apiType('history')->apiKey()->city('Riga')->historyFutureDate('2011-02-11')->get();
 
         $weather->forecast();
     }
@@ -157,8 +161,70 @@ class WeatherApiMethodTest extends TestCase
 
     public function test_receiving_null_insteadof_invalid_marine_weather_data(): void
     {
-        $weather = Weather::apiType('marine')->apiKey()->city('Dover')->forecastHistoryDate('2012-02-12')->get();
+        $weather = Weather::apiType('marine')->apiKey()->city('Dover')->historyFutureDate('2012-02-12')->get();
 
         $this->assertEmpty($weather->marine());
+    }
+
+    public function test_receiving_future_forecast_weather_data(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('future')->apiKey()->city('Vilnius')->historyFutureDate('2024-02-25')->requireAQI(true)->get();
+
+        $forecastFuture = $weather->forecast();
+
+        $this->assertNotNull($forecastFuture);
+        $this->assertInstanceOf(Collection::class, $forecastFuture);
+        $this->assertContainsOnlyInstancesOf(Forecast::class, $forecastFuture);
+
+        $forecastFutureDay = $forecastFuture->last()->day();
+
+        $this->assertNotNull($forecastFutureDay);
+        $this->assertIsFloat($forecastFutureDay->getMaxCelsius());
+        $this->assertIsFloat($forecastFutureDay->getMaxFahrenheit());
+        $this->assertIsFloat($forecastFutureDay->getMinCelsius());
+        $this->assertIsFloat($forecastFutureDay->getMinFahrenheit());
+        $this->assertIsFloat($forecastFutureDay->getAvgCelsius());
+        $this->assertIsFloat($forecastFutureDay->getAvgFahrenheit());
+        $this->assertIsFloat($forecastFutureDay->getMaxWindSpeedInMiles());
+        $this->assertIsFloat($forecastFutureDay->getMaxWindSpeedInKm());
+        $this->assertIsFloat($forecastFutureDay->getTotalPrecipitationInMm());
+        $this->assertIsFloat($forecastFutureDay->getTotalPrecipitationInInches());
+        $this->assertIsFloat($forecastFutureDay->getAvgVisibilityInKm());
+        $this->assertIsFloat($forecastFutureDay->getAvgVisibilityInMiles());
+        $this->assertIsFloat($forecastFutureDay->getAvgHumidity());
+        $this->assertInstanceOf(Condition::class, $forecastFutureDay->getWeatherCondition());
+        $this->assertIsFloat($forecastFutureDay->getUVIndex());
+
+        $forecastFutureLocation = $weather->location();
+        $this->assertNotNull($forecastFutureLocation);
+        $this->assertEquals('Vilnius', $forecastFutureLocation->getCity());
+        $this->assertEquals('Vilniaus Apskritis', $forecastFutureLocation->getRegion());
+        $this->assertEquals('Lithuania', $forecastFutureLocation->getCountry());
+        $this->assertEquals(25.32, $forecastFutureLocation->getLongitude());
+        $this->assertEquals(54.68, $forecastFutureLocation->getLatitude());
+        $this->assertInstanceOf(Timezone::class, $forecastFutureLocation->getCommonTimezoneParams());
+    }
+
+    public function test_receiving_null_insteadof_invalid_future_forecast_weather_data(): void
+    {
+        $weather = Weather::apiType('search')->apiKey()->city('Vilnius')->historyFutureDate('2024-03-18')->get();
+
+        $this->assertEmpty($weather->forecast());
+    }
+
+    /*
+     * Retrieving AirQuality data is only feasible for Forecast API method.
+     */
+    public function test_receiving_null_air_quality_while_requesting_future_forecast_weather_data(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('future')->apiKey()->city('Vilnius')->historyFutureDate('2024-02-25')->requireAQI(true)->get();
+
+        $forecastFuture = $weather->forecast();
+
+        $this->assertNull($forecastFuture->first()->day()->getAirQuality());
     }
 }

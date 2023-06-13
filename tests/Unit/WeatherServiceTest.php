@@ -109,7 +109,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Manchester')->forecastHistoryDate('2023-06-20')->get();
+        $weather = Weather::apiType('forecast')->apiKey()->city('Manchester')->historyFutureDate('2023-06-20')->get();
 
         $forecast = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecast);
@@ -122,7 +122,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('history')->apiKey('52bc4de23bad4639861233754230306')->city('Manchester')->forecastHistoryDate('2010-01-01')->get();
+        $weather = Weather::apiType('history')->apiKey('52bc4de23bad4639861233754230306')->city('Manchester')->historyFutureDate('2010-01-01')->get();
 
         $this->assertThrows(fn() => $weather->forecast(), ReceivedApiErrorCodeException::class);
     }
