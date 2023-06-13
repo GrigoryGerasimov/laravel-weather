@@ -14,6 +14,7 @@ use GrigoryGerasimov\Weather\Objects\GPS\Search;
 use GrigoryGerasimov\Weather\Objects\Marine\Marine;
 use GrigoryGerasimov\Weather\Objects\Marine\MarineHour;
 use GrigoryGerasimov\Weather\Objects\Marine\MarineTide;
+use GrigoryGerasimov\Weather\Objects\Sports;
 use GrigoryGerasimov\Weather\Objects\Timezone;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
@@ -248,5 +249,34 @@ class WeatherApiMethodTest extends TestCase
         $weather = Weather::apiType('sports')->apiKey()->city('Madrid')->get();
 
         $this->assertNull($weather->timezone());
+    }
+
+    public function test_receiving_sports_data(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('sports')->apiKey()->city('Barcelona')->get();
+
+        $sports = $weather->sports();
+
+        $this->assertNotNull($sports);
+        $this->assertInstanceOf(Collection::class, $sports);
+
+        $football = $sports->get('football');
+
+        $this->assertContainsOnlyInstancesOf(Sports::class, $football);
+        $this->assertIsString($football->first()->getStadium());
+        $this->assertIsString($football->get(2)->getCountry());
+        $this->assertIsString($football->last()->getRegion());
+        $this->assertIsString($football->get(3)->getTournament());
+        $this->assertIsString($football->get(1)->getStartDateTime());
+        $this->assertIsString($football->first()->getMatch());
+    }
+
+    public function test_receiving_null_insteadof_invalid_sports_data(): void
+    {
+        $weather = Weather::apiType('search')->apiKey()->city('Barcelona')->get();
+
+        $this->assertNull($weather->sports());
     }
 }

@@ -190,14 +190,17 @@ class Weather
      */
     public function sports(): ?Collection
     {
-        if (!$this->validateWeatherData()) {
+        if (
+            !$this->validateWeatherData() ||
+            !is_object($this->weatherData)
+        ) {
             return null;
         }
 
         $sportsData = [];
 
         foreach(get_object_vars($this->weatherData) as $sportsType => $sportsDetails) {
-            $sportsData[$sportsType] = isset($this->weatherData->$sportsType) ? collect($this->weatherData->$sportsType)->mapInto(Sports::class) : null;
+            $sportsData[$sportsType] = isset($this->weatherData->$sportsType) ? collect($sportsDetails)->mapInto(Sports::class) : null;
         }
 
         return collect($sportsData);

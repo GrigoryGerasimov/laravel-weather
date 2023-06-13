@@ -24,9 +24,9 @@ final readonly class Sports implements WeatherObjectInterface
     }
 
     /**
-     * @return int|null
+     * @return int|string|null
      */
-    public function getCountry(): ?int
+    public function getCountry(): int|string|null
     {
         return $this->sports->country ?? null;
     }
