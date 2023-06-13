@@ -4,13 +4,30 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Contracts\WeatherCollection;
 
+use GrigoryGerasimov\Weather\Objects\Forecast\ForecastAstro;
+use GrigoryGerasimov\Weather\Objects\Forecast\ForecastCommon;
+use GrigoryGerasimov\Weather\Objects\Forecast\ForecastDay;
+use Illuminate\Support\Collection;
+
 interface WeatherCollectionInterface
 {
-    public function common();
+    /**
+     * @return ForecastCommon|null
+     */
+    public function common(): ?ForecastCommon;
 
-    public function day();
+    /**
+     * @return ForecastDay|null
+     */
+    public function day(): ?ForecastDay;
 
-    public function astro();
+    /**
+     * @return ForecastAstro|null
+     */
+    public function astro(): ?ForecastAstro;
 
-    public function hour();
+    /**
+     * @return Collection|null
+     */
+    public function hour(): ?Collection;
 }

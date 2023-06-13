@@ -4,43 +4,102 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Contracts;
 
+use GrigoryGerasimov\Weather\Objects\Condition;
+
 interface WeatherCommonInterface
 {
-    public function getActualCelsius();
+    /**
+     * @return float|null
+     */
+    public function getActualCelsius(): ?float;
 
-    public function getActualFahrenheit();
+    /**
+     * @return float|null
+     */
+    public function getActualFahrenheit(): ?float;
 
-    public function getFeelsLikeCelsius();
+    /**
+     * @return float|null
+     */
+    public function getFeelsLikeCelsius(): ?float;
 
-    public function getFeelsLikeFahrenheit();
+    /**
+     * @return float|null
+     */
+    public function getFeelsLikeFahrenheit(): ?float;
 
-    public function getWeatherCondition();
+    /**
+     * @return Condition|null
+     */
+    public function getWeatherCondition(): ?Condition;
 
-    public function getWindSpeedInMiles();
+    /**
+     * @return float|null
+     */
+    public function getWindSpeedInMiles(): ?float;
 
-    public function getWindSpeedInKm();
+    /**
+     * @return float|null
+     */
+    public function getWindSpeedInKm(): ?float;
 
-    public function getWindDirectionInDegrees();
+    /**
+     * @return int|null
+     */
+    public function getWindDirectionInDegrees(): ?int;
 
-    public function getWindDirectionInPoints();
+    /**
+     * @return string|null
+     */
+    public function getWindDirectionInPoints(): ?string;
 
-    public function getPressureInMillibars();
+    /**
+     * @return float|null
+     */
+    public function getPressureInMillibars(): ?float;
 
-    public function getPressureInInches();
+    /**
+     * @return float|null
+     */
+    public function getPressureInInches(): ?float;
 
-    public function getPrecipitationInMm();
+    /**
+     * @return float|null
+     */
+    public function getPrecipitationInMm(): ?float;
 
-    public function getPrecipitationInInches();
+    /**
+     * @return float|null
+     */
+    public function getPrecipitationInInches(): ?float;
 
-    public function getHumidity();
+    /**
+     * @return int|null
+     */
+    public function getHumidity(): ?int;
 
-    public function getCloudCover();
+    /**
+     * @return int|null
+     */
+    public function getCloudCover(): ?int;
 
-    public function getDayNightConditionIcon();
+    /**
+     * @return int|null
+     */
+    public function getDayNightConditionIcon(): ?int;
 
-    public function getWindGustInMiles();
+    /**
+     * @return float|null
+     */
+    public function getWindGustInMiles(): ?float;
 
-    public function getWindGustInKm();
+    /**
+     * @return float|null
+     */
+    public function getWindGustInKm(): ?float;
 
-    public function getUVIndex();
+    /**
+     * @return float|null
+     */
+    public function getUVIndex(): ?float;
 }

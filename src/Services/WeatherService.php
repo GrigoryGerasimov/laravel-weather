@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Services;
 
-use GrigoryGerasimov\Weather\Exceptions\{FailedFetchDataException,
+use GrigoryGerasimov\Weather\Exceptions\{
+    FailedFetchDataException,
     InvalidApiTypeException,
     InvalidArgumentValueException,
     InvalidJsonResponseException,
     MissingApiKeyFieldException,
-    MissingApiMethodFieldException};
+    MissingApiMethodFieldException,
+    WeatherException
+};
 use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
 use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 
@@ -34,6 +37,9 @@ class WeatherService implements WeatherServiceInterface
         'ip'
     ];
 
+    /**
+     * @var string
+     */
     private string $requestUri;
 
     public function __construct()
@@ -41,12 +47,16 @@ class WeatherService implements WeatherServiceInterface
         $this->requestUri = self::BASE_URL;
     }
 
-    /*
+    /**
      * Type of your request to the API which defines the appropriate API method.
-     *
      * You can find the list of the available types in the constant API_METHOD_TYPES.
+     * The default value is "current" which is used for current weather data requests.
+     * More details on various API method types can be found here: https://www.weatherapi.com/docs/
      *
-     * The default value is "current" for current weather data requests.
+     * @param string $type
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function apiType(string $type = 'current'): self
     {
@@ -64,6 +74,12 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
+    /**
+     * @param string $key
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
+     */
     public function apiKey(string $key = self::DEFAULT_API_KEY): self
     {
         try {
@@ -80,8 +96,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * GPS coordinates in decimal degree (as latitude and longitude).
+     *
+     * @param float $lat
+     * @param float $lon
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function coords(float $lat, float $lon): self
     {
@@ -98,6 +120,12 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
+    /**
+     * @param string $city
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
+     */
     public function city(string $city): self
     {
         try {
@@ -113,8 +141,13 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
-     * Here you are free to provide any types of US zip / UK post / Canada postal codes.
+    /**
+     * Here you are free to provide any US zip / UK post / Canada postal codes.
+     *
+     * @param string $zipCode
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function zip(string $zipCode): self
     {
@@ -131,9 +164,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * The METAR code provides the direction of the wind relative to true north,
      * as well as the average wind speed expressed in knots.
+     *
+     * @param string $metarCode
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function metar(string $metarCode): self
     {
@@ -150,9 +188,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * An IATA airport code is a three-letter geocode designating many airports and metropolitan areas
      * around the world, defined by the International Air Transport Association (IATA).
+     *
+     * @param string $iataCode
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function iata(string $iataCode): self
     {
@@ -169,6 +212,11 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
+     */
     public function autoIp(): self
     {
         try {
@@ -184,6 +232,12 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
+    /**
+     * @param string $ip
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
+     */
     public function ip(string $ip): self
     {
         try {
@@ -199,10 +253,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Required only with forecast API method.
-     *
      * ForecastCommon days range: 1-14.
+     *
+     * @param int $days
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function forecastDays(int $days = 1): self
     {
@@ -222,7 +280,7 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Restricts date output for Forecast and History API method.
      *
      * For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01).
@@ -230,6 +288,11 @@ class WeatherService implements WeatherServiceInterface
      * For future API 'dt' should be between 14 days and 300 days from today in the future in yyyy-MM-dd format (i.e. dt=2023-01-01).
      *
      * More details here: https://www.weatherapi.com/docs/
+     *
+     * @param string $date
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function forecastHistoryDate(string $date): self
     {
@@ -246,15 +309,19 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Restrict date output for History API method.
      *
      * For history API 'end_dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01),
      * 'end_dt' should be greater than 'dt' parameter and difference should not be more than 30 days between the two dates.
-     *
-     * For this query option, your api key should refer to only Pro plan and above.
+     * For this query option, your API key should refer to only Pro plan and above.
      *
      * More details here: https://www.weatherapi.com/docs/
+     *
+     * @param string $date
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function historyDate(string $date): self
     {
@@ -271,13 +338,18 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Unix Timestamp used by Forecast and History API method.
      *
      * unixdt has same restriction as 'dt' parameter.
      * Please either pass 'dt' or 'unixdt' and not both in same request.
      *
      * More details here: https://www.weatherapi.com/docs/
+     *
+     * @param string|int $timestamp
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function forecastHistoryTimestamp(string|int $timestamp): self
     {
@@ -294,13 +366,18 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Unix Timestamp used by History API method.
      *
      * unixend_dt has same restriction as 'end_dt' parameter.
      * Please either pass 'end_dt' or 'unixend_dt' and not both in same request.
      *
      * More details here: https://www.weatherapi.com/docs/
+     *
+     * @param string|int $timestamp
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function historyTimestamp(string|int $timestamp): self
     {
@@ -317,12 +394,15 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Restricting forecast or history output to a specific hour in a given day.
-     *
      * Must be in 24 hour. For example 5 pm should be hour=17, 6 am as hour=6
-     *
      * More details here: https://www.weatherapi.com/docs/
+     *
+     * @param int $hour
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function forecastHistoryHour(int $hour): self
     {
@@ -342,10 +422,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Should receive alerts in forecast API output.
-     *
      * Further details to alerts can be found in the official WeatherApi doc: https://www.weatherapi.com/docs/
+     *
+     * @param bool $shouldAlert
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function requireAlerts(bool $shouldAlert = false): self
     {
@@ -363,10 +447,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Should receive the Air Quality data in forecast API output.
-     *
      * Further details to AQI can be found in the official WeatherApi doc: https://www.weatherapi.com/docs/
+     *
+     * @param bool $ifAqi
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function requireAQI(bool $ifAqi = false): self
     {
@@ -384,8 +472,13 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Should receive the Tide data in Marine API output.
+     *
+     * @param bool $ifTides
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function requireTides(bool $ifTides = false): self
     {
@@ -403,10 +496,13 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Get 15 min interval data for Forecast and History API.
-     *
      * Please note that this option is available for Enterprise plan only.
+     *
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function withInterval(): self
     {
@@ -423,10 +519,14 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
-    /*
+    /**
      * Returns 'condition:text' field in API in the desired language.
-     *
      * For the precise lang codes list please refer to the official WeatherApi doc: https://www.weatherapi.com/docs/
+     *
+     * @param string $langCode
+     * @return $this
+     * @throws WeatherException
+     * @throws \Throwable
      */
     public function lang(string $langCode): self
     {
@@ -443,6 +543,11 @@ class WeatherService implements WeatherServiceInterface
         return $this;
     }
 
+    /**
+     * @return WeatherModel|null
+     * @throws WeatherException
+     * @throws \Throwable
+     */
     public function get(): ?WeatherModel
     {
         try {
@@ -473,16 +578,27 @@ class WeatherService implements WeatherServiceInterface
         return true;
     }
 
+    /**
+     * @return bool
+     */
     private function isApiMethodFieldPresent(): bool
     {
         return (bool)preg_match('/\/[a-zA-Z0-9]+\.json/', $this->requestUri);
     }
 
+    /**
+     * @return bool
+     */
     private function isApiKeyFieldPresent(): bool
     {
         return (bool)preg_match('/\?key=/', $this->requestUri);
     }
 
+    /**
+     * @return \stdClass|array
+     * @throws WeatherException
+     * @throws \Throwable
+     */
     private function getData(): \stdClass|array
     {
         $curl = curl_init($this->requestUri);

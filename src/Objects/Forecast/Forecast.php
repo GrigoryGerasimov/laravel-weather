@@ -10,25 +10,40 @@ use Illuminate\Support\Collection;
 
 final readonly class Forecast implements WeatherObjectInterface, WeatherForecastInterface
 {
+    /**
+     * @param \stdClass $forecastItem
+     */
     public function __construct(
         private \stdClass $forecastItem
     ) {}
 
+    /**
+     * @return ForecastCommon|null
+     */
     public function common(): ?ForecastCommon
     {
         return isset($this->forecastItem->date) && isset($this->forecastItem->date_epoch) ? new ForecastCommon($this->forecastItem) : null;
     }
 
+    /**
+     * @return ForecastDay|null
+     */
     public function day(): ?ForecastDay
     {
         return isset($this->forecastItem->day) ? new ForecastDay($this->forecastItem) : null;
     }
 
+    /**
+     * @return ForecastAstro|null
+     */
     public function astro(): ?ForecastAstro
     {
         return isset($this->forecastItem->astro) ? new ForecastAstro($this->forecastItem) : null;
     }
 
+    /**
+     * @return Collection|null
+     */
     public function hour(): ?Collection
     {
         $collection['forecast_hours'] = [];

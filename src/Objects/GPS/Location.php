@@ -8,12 +8,18 @@ use GrigoryGerasimov\Weather\Objects\Timezone;
 
 final readonly class Location extends Gps
 {
+    /**
+     * @param \stdClass $location
+     */
     public function __construct(
         private \stdClass $location
     ) {
         parent::__construct($location->location);
     }
 
+    /**
+     * @return Timezone|null
+     */
     public function getCommonTimezoneParams(): ?Timezone
     {
         return isset($this->location->location) ? new Timezone($this->location->location) : null;

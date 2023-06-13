@@ -10,6 +10,9 @@ use Illuminate\Support\ServiceProvider;
 
 class WeatherServiceProvider extends ServiceProvider
 {
+    /**
+     * @return void
+     */
     public function register(): void
     {
         $this->app->singleton(WeatherServiceInterface::class, function() {
@@ -17,6 +20,9 @@ class WeatherServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @return void
+     */
     public function boot(): void
     {}
 }
