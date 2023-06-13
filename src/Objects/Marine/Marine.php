@@ -42,7 +42,7 @@ final readonly class Marine implements WeatherMarineInterface
     }
 
     /**
-     * @return Collection|null
+     * @return Collection<MarineHour>|null
      */
     public function hour(): ?Collection
     {
@@ -60,7 +60,7 @@ final readonly class Marine implements WeatherMarineInterface
     }
 
     /**
-     * @return Collection|null
+     * @return Collection<MarineTide>|null
      */
     public function tides(): ?Collection
     {
@@ -71,7 +71,7 @@ final readonly class Marine implements WeatherMarineInterface
         $tidesArray = $this->forecastMarineItem->day->tides;
         $collection['marine_tides'] = [];
 
-        foreach($tidesArray as $forecastMarineTideKey => $forecastMarineTideObject) {
+        foreach($tidesArray as $forecastMarineTideObject) {
             if (!isset($forecastMarineTideObject->tide)) {
                 return null;
             }

@@ -41,7 +41,7 @@ class Weather
     }
 
     /**
-     * @return Collection|null
+     * @return Collection<Forecast>|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
@@ -55,7 +55,7 @@ class Weather
     }
 
     /**
-     * @return Collection|null
+     * @return Collection<Marine>|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
@@ -103,7 +103,7 @@ class Weather
      * The Weather model Search method serves for the Search API method only
      * and cannot be combined with any other API method.
      *
-     * @return Collection|null
+     * @return Collection<Search>|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
@@ -149,7 +149,7 @@ class Weather
     }
 
     /**
-     * @return Collection|null
+     * @return Collection<Alert>|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
@@ -184,7 +184,7 @@ class Weather
      * The Weather model Sports method serves for the Sport API method only
      * and cannot be combined with any other API method.
      *
-     * @return Collection|null
+     * @return Collection<Sports>|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */

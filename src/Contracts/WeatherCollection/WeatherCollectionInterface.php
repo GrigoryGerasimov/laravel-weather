@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Contracts\WeatherCollection;
 
-use GrigoryGerasimov\Weather\Objects\Forecast\ForecastAstro;
-use GrigoryGerasimov\Weather\Objects\Forecast\ForecastCommon;
-use GrigoryGerasimov\Weather\Objects\Forecast\ForecastDay;
+use GrigoryGerasimov\Weather\Objects\Forecast\{
+    ForecastCommon,
+    ForecastDay,
+    ForecastAstro,
+    ForecastHour
+};
 use Illuminate\Support\Collection;
 
 interface WeatherCollectionInterface
@@ -27,7 +30,7 @@ interface WeatherCollectionInterface
     public function astro(): ?ForecastAstro;
 
     /**
-     * @return Collection|null
+     * @return Collection<ForecastHour>|null
      */
     public function hour(): ?Collection;
 }
