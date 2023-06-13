@@ -227,4 +227,26 @@ class WeatherApiMethodTest extends TestCase
 
         $this->assertNull($forecastFuture->first()->day()->getAirQuality());
     }
+
+    public function test_receiving_timezone_data(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('timezone')->apiKey()->city('Madrid')->get();
+
+        $timezone = $weather->timezone();
+
+        $this->assertNotNull($timezone);
+        $this->assertInstanceOf(Timezone::class, $timezone);
+        $this->assertIsString($timezone->getTimezoneName());
+        $this->assertIsInt($timezone->getTimestamp());
+        $this->assertIsString($timezone->getDateTime());
+    }
+
+    public function test_receiving_null_insteadof_invalid_timezone_data(): void
+    {
+        $weather = Weather::apiType('sports')->apiKey()->city('Madrid')->get();
+
+        $this->assertNull($weather->timezone());
+    }
 }
