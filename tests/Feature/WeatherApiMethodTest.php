@@ -6,7 +6,7 @@ namespace GrigoryGerasimov\Weather\Tests\Feature;
 
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
-use GrigoryGerasimov\Weather\Objects\{Astronomy, Condition, Sports, Timezone};
+use GrigoryGerasimov\Weather\Objects\{Astronomy, Condition, GPS\IpLookup, Sports, Timezone};
 use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
 use GrigoryGerasimov\Weather\Objects\GPS\Search;
 use GrigoryGerasimov\Weather\Objects\Marine\{Marine, MarineHour, MarineTide};
@@ -36,9 +36,11 @@ class WeatherApiMethodTest extends TestCase
 
     public function test_receiving_null_insteadof_invalid_current_weather_data(): void
     {
-        $weather = Weather::apiType('marine')->apiKey()->city('Warsaw')->get();
+        $forecastMarine = Weather::apiType('marine')->apiKey()->city('Warsaw')->get();
+        $this->assertNull($forecastMarine->current());
 
-        $this->assertNull($weather->current());
+        $search = Weather::apiType('search')->apiKey()->city('Warsaw')->get();
+        $this->assertNull($search->current());
     }
 
     public function test_receiving_forecast_weather_data(): void
@@ -67,9 +69,11 @@ class WeatherApiMethodTest extends TestCase
 
     public function test_receiving_null_insteadof_invalid_forecast_weather_data(): void
     {
-        $weather = Weather::apiType('sports')->apiKey()->ip('137.1.255.255')->get();
+        $sports = Weather::apiType('sports')->apiKey()->ip('137.1.255.255')->get();
+        $this->assertNull($sports->forecast());
 
-        $this->assertNull($weather->forecast());
+        $search = Weather::apiType('search')->apiKey()->ip('137.1.255.255')->get();
+        $this->assertNull($search->forecast());
     }
 
     public function test_receiving_search_weather_data(): void
@@ -95,9 +99,11 @@ class WeatherApiMethodTest extends TestCase
 
     public function test_receiving_null_insteadof_invalid_search_weather_data(): void
     {
-        $weather = Weather::apiType('sports')->apiKey()->city('Tallinn')->get();
+        $sports = Weather::apiType('sports')->apiKey()->city('Tallinn')->get();
+        $this->assertNull($sports->search());
 
-        $this->assertNull($weather->search());
+        $future = Weather::apiType('future')->apiKey()->city('Tallinn')->historyFutureDate('2024-05-01')->get();
+        $this->assertNull($future->search());
     }
 
     /*
@@ -205,8 +211,10 @@ class WeatherApiMethodTest extends TestCase
     public function test_receiving_null_insteadof_invalid_future_forecast_weather_data(): void
     {
         $weather = Weather::apiType('search')->apiKey()->city('Vilnius')->historyFutureDate('2024-03-18')->get();
-
         $this->assertEmpty($weather->forecast());
+
+        $ip = Weather::apiType('ip')->apiKey()->autoIp()->get();
+        $this->assertNull($ip->forecast());
     }
 
     /*
@@ -241,8 +249,10 @@ class WeatherApiMethodTest extends TestCase
     public function test_receiving_null_insteadof_invalid_timezone_data(): void
     {
         $weather = Weather::apiType('sports')->apiKey()->city('Madrid')->get();
-
         $this->assertNull($weather->timezone());
+
+        $search = Weather::apiType('search')->apiKey()->city('Madrid')->get();
+        $this->assertNull($search->timezone());
     }
 
     public function test_receiving_sports_data(): void
@@ -297,7 +307,45 @@ class WeatherApiMethodTest extends TestCase
     public function test_receiving_null_insteadof_invalid_astronomy_data(): void
     {
         $weather = Weather::apiType('forecast')->apiKey()->city('Roznov')->get();
-
         $this->assertNull($weather->astro());
+
+        $search = Weather::apiType('search')->apiKey()->city('Roznov')->get();
+        $this->assertNull($search->astro());
+    }
+
+    public function test_receiving_iplookup_data(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('ip')->apiKey()->ip('46.13.156.111')->get();
+
+        $ipLookup = $weather->ipLookup();
+
+        $this->assertNotNull($ipLookup);
+        $this->assertInstanceOf(IpLookup::class, $ipLookup);
+        $this->assertIsString($ipLookup->getIp());
+        $this->assertIsString($ipLookup->getIpType());
+        $this->assertIsString($ipLookup->getContinentCode());
+        $this->assertIsString($ipLookup->getContinent());
+        $this->assertIsString($ipLookup->getCountryCode());
+        $this->assertIsString($ipLookup->getCountry());
+        $this->assertIsString($ipLookup->isInEU());
+        $this->assertIsInt($ipLookup->getGeonameID());
+        $this->assertIsString($ipLookup->getCity());
+        $this->assertIsString($ipLookup->getRegion());
+        $this->assertIsFloat($ipLookup->getLatitude());
+        $this->assertIsFloat($ipLookup->getLongitude());
+        $this->assertIsString($ipLookup->getCommonTimezoneParams()->getTimezoneName());
+        $this->assertIsString($ipLookup->getCommonTimezoneParams()->getDateTime());
+        $this->assertIsInt($ipLookup->getCommonTimezoneParams()->getTimestamp());
+    }
+
+    public function test_receiving_null_insteadof_invalid_iplookup_data(): void
+    {
+        $weather = Weather::apiType('search')->apiKey()->ip('46.13.156.111')->get();
+        $this->assertNull($weather->ipLookup());
+
+        $sports = Weather::apiType('sports')->apiKey()->city('Oslo')->get();
+        $this->assertNull($sports->ipLookup());
     }
 }
