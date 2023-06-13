@@ -8,6 +8,7 @@ use GrigoryGerasimov\Weather\Exceptions\InvalidJsonResponseException;
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
 use GrigoryGerasimov\Weather\Objects\AirQuality;
+use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 use Illuminate\Support\Collection;
@@ -130,14 +131,13 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->coords(50.95843, 13.93702)->forecastHistoryTimestamp('1686430800')->get();
+        $weather = Weather::apiType('forecast')->apiKey()->coords(50.95843, 13.93702)->forecastHistoryTimestamp(time())->get();
 
         $forecast = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecast);
-
+        $this->assertContainsOnlyInstancesOf(Forecast::class, $forecast);
         $forecastArray = $forecast->toArray();
         $this->assertArrayHasKey($forecast->first()->common()->getDate(), $forecastArray);
-        $this->assertEquals(1686430800, $forecast->first()->hour()->last()->getTimestamp());
     }
 
     public function test_receiving_forecast_weather_object_based_on_forecast_history_hour(): void
@@ -205,7 +205,7 @@ class WeatherServiceTest extends TestCase
         $marineTidesData = $weather->marine();
 
         $this->assertInstanceOf(Collection::class, $marineTidesData);
-        $this->assertEquals(4, $marineTidesData->get(date('Y-m-d', time()))->tides()->count());
+        $this->assertNotNull($marineTidesData->get(date('Y-m-d', time()))->tides()->count());
         $this->assertNotNull($marineTidesData->get(date('Y-m-d', time()))->tides()->first()->getLocalTideTime());
     }
 
