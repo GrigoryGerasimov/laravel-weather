@@ -10,25 +10,40 @@ use Illuminate\Support\Collection;
 
 final readonly class Marine implements WeatherMarineInterface
 {
+    /**
+     * @param \stdClass $forecastMarineItem
+     */
     public function __construct(
         private \stdClass $forecastMarineItem
     ) {}
 
+    /**
+     * @return ForecastCommon|null
+     */
     public function common(): ?ForecastCommon
     {
         return isset($this->forecastMarineItem->date) && isset($this->forecastMarineItem->date_epoch) ? new ForecastCommon($this->forecastMarineItem) : null;
     }
 
+    /**
+     * @return ForecastDay|null
+     */
     public function day(): ?ForecastDay
     {
         return isset($this->forecastMarineItem->day) ? new ForecastDay($this->forecastMarineItem) : null;
     }
 
+    /**
+     * @return ForecastAstro|null
+     */
     public function astro(): ?ForecastAstro
     {
         return isset($this->forecastItem->astro) ? new ForecastAstro($this->forecastMarineItem) : null;
     }
 
+    /**
+     * @return Collection|null
+     */
     public function hour(): ?Collection
     {
         $collection['marine_hours'] = [];
@@ -44,6 +59,9 @@ final readonly class Marine implements WeatherMarineInterface
         return collect($collection['marine_hours']);
     }
 
+    /**
+     * @return Collection|null
+     */
     public function tides(): ?Collection
     {
         if (!isset($this->forecastMarineItem->day->tides)) {

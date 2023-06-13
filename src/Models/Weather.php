@@ -16,10 +16,21 @@ class Weather
 {
     use WithExceptionHandler;
 
+    /**
+     * @param \stdClass|array $weatherData
+     */
     public function __construct(
         protected \stdClass|array $weatherData
     ) {}
 
+    /**
+     * The Weather model Current method serves for the Current API method only
+     * and cannot be combined with any other API method.
+     *
+     * @return Current|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function current(): ?Current
     {
         if (!$this->validateWeatherData('current')) {
@@ -29,6 +40,11 @@ class Weather
         return new Current($this->weatherData);
     }
 
+    /**
+     * @return Collection|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function forecast(): ?Collection
     {
         if (!$this->validateWeatherData('forecast', 'forecastday')) {
@@ -38,6 +54,11 @@ class Weather
         return collect($this->weatherData->forecast->forecastday)->keyBy('date')->mapInto(Forecast::class);
     }
 
+    /**
+     * @return Collection|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function marine(): ?Collection
     {
         if (!$this->validateWeatherData('forecast', 'forecastday')) {
@@ -47,6 +68,11 @@ class Weather
         return collect($this->weatherData->forecast->forecastday)->keyBy('date')->mapInto(Marine::class);
     }
 
+    /**
+     * @return Timezone|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function timezone(): ?Timezone
     {
         if (!$this->validateWeatherData('location')) {
@@ -56,6 +82,14 @@ class Weather
         return new Timezone($this->weatherData->location);
     }
 
+    /**
+     * The Weather model IpLookup method serves for the IP Lookup API method only
+     * and cannot be combined with any other API method.
+     *
+     * @return IpLookup|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function ipLookup(): ?IpLookup
     {
         if (!$this->validateWeatherData()) {
@@ -65,6 +99,14 @@ class Weather
         return new IpLookup($this->weatherData);
     }
 
+    /**
+     * The Weather model Search method serves for the Search API method only
+     * and cannot be combined with any other API method.
+     *
+     * @return Collection|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function search(): ?Collection
     {
         if (!$this->validateWeatherData()) {
@@ -74,6 +116,11 @@ class Weather
         return is_array($this->weatherData) ? collect($this->weatherData)->keyBy('id')->mapInto(Search::class) : null;
     }
 
+    /**
+     * @return Location|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function location(): ?Location
     {
         if (!$this->validateWeatherData('location')) {
@@ -83,9 +130,14 @@ class Weather
         return new Location($this->weatherData);
     }
 
-    /*
-     * The Weather model airQuality method serves for the Current API method only.
-     * For Forecast API please use the appropriate ForecastDay and ForecastHour getAirQuality method.
+    /**
+     * The Weather model AirQuality method serves for the Current API method only
+     * and cannot be combined with any other API method.
+     * For Forecast API please use the appropriate ForecastDay and ForecastHour GetAirQuality method.
+     *
+     * @return AirQuality|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
      */
     public function airQuality(): ?AirQuality
     {
@@ -96,6 +148,11 @@ class Weather
         return new AirQuality($this->weatherData->current);
     }
 
+    /**
+     * @return Collection|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function alerts(): ?Collection
     {
         if (!$this->validateWeatherData('alerts', 'alert')) {
@@ -105,6 +162,15 @@ class Weather
         return collect($this->weatherData->alerts->alert)->mapInto(Alert::class);
     }
 
+    /**
+     * The Weather model Astro method serves for the Astronomy API method only
+     * and cannot be combined with any other API method.
+     * For Forecast API please use the appropriate Forecast Astro method.
+     *
+     * @return Astronomy|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function astro(): ?Astronomy
     {
         if (!$this->validateWeatherData('astronomy', 'astro')) {
@@ -114,6 +180,14 @@ class Weather
         return new Astronomy($this->weatherData);
     }
 
+    /**
+     * The Weather model Sports method serves for the Sport API method only
+     * and cannot be combined with any other API method.
+     *
+     * @return Collection|null
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function sports(): ?Collection
     {
         if (!$this->validateWeatherData()) {
