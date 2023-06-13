@@ -177,14 +177,14 @@ class Weather
             return null;
         }
 
-        return new Astronomy($this->weatherData);
+        return new Astronomy($this->weatherData->astronomy->astro);
     }
 
     /**
      * The Weather model Sports method serves for the Sport API method only
      * and cannot be combined with any other API method.
      *
-     * @return Collection<Sports>|null
+     * @return Collection|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */

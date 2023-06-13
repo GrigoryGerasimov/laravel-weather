@@ -6,16 +6,10 @@ namespace GrigoryGerasimov\Weather\Tests\Feature;
 
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
-use GrigoryGerasimov\Weather\Objects\AirQuality;
-use GrigoryGerasimov\Weather\Objects\Condition;
+use GrigoryGerasimov\Weather\Objects\{Astronomy, Condition, Sports, Timezone};
 use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
-use GrigoryGerasimov\Weather\Objects\Forecast\ForecastDay;
 use GrigoryGerasimov\Weather\Objects\GPS\Search;
-use GrigoryGerasimov\Weather\Objects\Marine\Marine;
-use GrigoryGerasimov\Weather\Objects\Marine\MarineHour;
-use GrigoryGerasimov\Weather\Objects\Marine\MarineTide;
-use GrigoryGerasimov\Weather\Objects\Sports;
-use GrigoryGerasimov\Weather\Objects\Timezone;
+use GrigoryGerasimov\Weather\Objects\Marine\{Marine, MarineHour, MarineTide};
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 use Illuminate\Support\Collection;
@@ -278,5 +272,32 @@ class WeatherApiMethodTest extends TestCase
         $weather = Weather::apiType('search')->apiKey()->city('Barcelona')->get();
 
         $this->assertNull($weather->sports());
+    }
+
+    public function test_receiving_astronomy_data(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $weather = Weather::apiType('astronomy')->apiKey()->ip('46.13.156.111')->get();
+
+        $astro = $weather->astro();
+
+        $this->assertNotNull($astro);
+        $this->assertInstanceOf(Astronomy::class, $astro);
+        $this->assertIsString($astro->getSunriseTime());
+        $this->assertIsString($astro->getSunsetTime());
+        $this->assertIsString($astro->getMoonriseTime());
+        $this->assertIsString($astro->getMoonsetTime());
+        $this->assertIsString($astro->getMoonPhase());
+        $this->assertIsString($astro->getMoonIllumination());
+        $this->assertIsInt($astro->isMoonUp());
+        $this->assertIsInt($astro->isSunUp());
+    }
+
+    public function test_receiving_null_insteadof_invalid_astronomy_data(): void
+    {
+        $weather = Weather::apiType('forecast')->apiKey()->city('Roznov')->get();
+
+        $this->assertNull($weather->astro());
     }
 }
