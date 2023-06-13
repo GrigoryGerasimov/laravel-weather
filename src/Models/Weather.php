@@ -92,7 +92,10 @@ class Weather
      */
     public function ipLookup(): ?IpLookup
     {
-        if (!$this->validateWeatherData()) {
+        if (
+            !$this->validateWeatherData() ||
+            !is_object($this->weatherData)
+        ) {
             return null;
         }
 
@@ -109,11 +112,14 @@ class Weather
      */
     public function search(): ?Collection
     {
-        if (!$this->validateWeatherData()) {
+        if (
+            !$this->validateWeatherData() ||
+            !is_array($this->weatherData)
+        ) {
             return null;
         }
 
-        return is_array($this->weatherData) ? collect($this->weatherData)->keyBy('id')->mapInto(Search::class) : null;
+        return collect($this->weatherData)->keyBy('id')->mapInto(Search::class);
     }
 
     /**

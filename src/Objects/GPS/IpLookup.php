@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Objects\GPS;
 
+use GrigoryGerasimov\Weather\Objects\Timezone;
+
 final readonly class IpLookup extends Gps
 {
     /**
@@ -64,17 +66,17 @@ final readonly class IpLookup extends Gps
     }
 
     /**
-     * @return bool|null
+     * @return bool|string|null
      */
-    public function isInEU(): ?bool
+    public function isInEU(): bool|string|null
     {
         return $this->ipLookup->is_eu ?? null;
     }
 
     /**
-     * @return string|null
+     * @return string|int|null
      */
-    public function getGeonameID(): ?string
+    public function getGeonameID(): string|int|null
     {
         return $this->ipLookup->geoname_id ?? null;
     }
@@ -82,8 +84,16 @@ final readonly class IpLookup extends Gps
     /**
      * @return string|null
      */
-    public function getTimezoneName(): ?string
+    public function getCity(): ?string
     {
-        return $this->ipLookup->tz_id ?? null;
+        return $this->ipLookup->city ?? null;
+    }
+
+    /**
+     * @return Timezone|null
+     */
+    public function getCommonTimezoneParams(): ?Timezone
+    {
+        return isset($this->ipLookup) ? new Timezone($this->ipLookup) : null;
     }
 }
