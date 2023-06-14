@@ -540,6 +540,14 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
+     * @return string
+     */
+    public function uri(): string
+    {
+        return $this->requestUri;
+    }
+
+    /**
      * @throws MissingApiFieldException
      */
     private function queryStructureValidated(): bool

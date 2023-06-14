@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Facade;
  * @method self withInterval()
  * @method self lang(string $langCode)
  * @method WeatherModel get()
+ * @method string uri()
  */
 class Weather extends Facade
 {
