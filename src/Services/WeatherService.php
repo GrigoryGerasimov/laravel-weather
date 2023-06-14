@@ -9,8 +9,7 @@ use GrigoryGerasimov\Weather\Exceptions\{
     InvalidApiTypeException,
     InvalidArgumentValueException,
     InvalidJsonResponseException,
-    MissingApiKeyFieldException,
-    MissingApiMethodFieldException,
+    MissingApiFieldException,
     WeatherException
 };
 use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
@@ -19,10 +18,6 @@ use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 class WeatherService implements WeatherServiceInterface
 {
     use WithExceptionHandler;
-
-    private const DEFAULT_API_KEY = '52bc4de23bad4639861233754230306';
-
-    private const BASE_URL = 'https://api.weatherapi.com/v1';
 
     private const API_METHOD_TYPES = [
         'current',
@@ -44,7 +39,7 @@ class WeatherService implements WeatherServiceInterface
 
     public function __construct()
     {
-        $this->requestUri = self::BASE_URL;
+        $this->requestUri = config('weather.base_url') ?? 'https://api.weatherapi.com/v1';
     }
 
     /**
@@ -58,36 +53,16 @@ class WeatherService implements WeatherServiceInterface
      * @throws WeatherException
      * @throws \Throwable
      */
-    public function apiType(string $type = 'current'): self
+    public function api(string $type = 'current'): self
     {
+        $apiKey = config('weather.api_key') ?? '52bc4de23bad4639861233754230306';
+
         try {
             if (!in_array($type, self::API_METHOD_TYPES, true)) {
                 throw new InvalidApiTypeException();
             }
-            $this->requestUri = $this->requestUri . "/$type.json";
+            $this->requestUri = $this->requestUri . "/$type.json?key=$apiKey";
         } catch (InvalidApiTypeException $e) {
-            $this->handleWeatherException($e);
-        } catch (\Throwable $e) {
-            $this->handleThrowable($e);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $key
-     * @return $this
-     * @throws WeatherException
-     * @throws \Throwable
-     */
-    public function apiKey(string $key = self::DEFAULT_API_KEY): self
-    {
-        try {
-            if (!$this->isApiMethodFieldPresent()) {
-                throw new MissingApiMethodFieldException();
-            }
-            $this->requestUri = $this->requestUri . "?key=$key";
-        } catch (MissingApiMethodFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -99,19 +74,19 @@ class WeatherService implements WeatherServiceInterface
     /**
      * GPS coordinates in decimal degree (as latitude and longitude).
      *
-     * @param float $lat
-     * @param float $lon
+     * @param float|string $lat
+     * @param float|string $lon
      * @return $this
      * @throws WeatherException
      * @throws \Throwable
      */
-    public function coords(float $lat, float $lon): self
+    public function coords(float|string $lat, float|string $lon): self
     {
         try {
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=$lat,$lon";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -132,7 +107,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=$city";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -155,7 +130,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=$zipCode";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -179,7 +154,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=metar:$metarCode";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -203,7 +178,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=iata:$iataCode";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -223,7 +198,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=auto:ip";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -244,7 +219,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&q=$ip";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -271,7 +246,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&days=$days";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException | InvalidArgumentValueException $e) {
+        } catch (MissingApiFieldException | InvalidArgumentValueException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -301,7 +276,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&dt=$date";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -330,7 +305,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&end_dt=$date";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -358,7 +333,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&unixdt=$timestamp";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -386,7 +361,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&unixend_dt=$timestamp";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -414,7 +389,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&hour=$hour";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException | InvalidArgumentValueException $e) {
+        } catch (MissingApiFieldException | InvalidArgumentValueException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -439,7 +414,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&alerts=$shouldAlert";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -464,7 +439,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&aqi=$ifAqi";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -488,7 +463,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&tides=$ifTides";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -511,7 +486,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $this->requestUri = $this->requestUri . "&tp=15";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -535,7 +510,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated())  {
                 $this->requestUri = $this->requestUri . "&lang=$langCode";
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -555,7 +530,7 @@ class WeatherService implements WeatherServiceInterface
             if ($this->queryStructureValidated()) {
                 $response = $this->getData();
             }
-        } catch (MissingApiMethodFieldException | MissingApiKeyFieldException $e) {
+        } catch (MissingApiFieldException $e) {
             $this->handleWeatherException($e);
         } catch (\Throwable $e) {
             $this->handleThrowable($e);
@@ -565,15 +540,12 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * @throws MissingApiMethodFieldException
-     * @throws MissingApiKeyFieldException
+     * @throws MissingApiFieldException
      */
     private function queryStructureValidated(): bool
     {
-        if (!$this->isApiMethodFieldPresent()) {
-            throw new MissingApiMethodFieldException();
-        } elseif (!$this->isApiKeyFieldPresent()) {
-            throw new MissingApiKeyFieldException();
+        if (!$this->isApiFieldPresent()) {
+            throw new MissingApiFieldException();
         }
 
         return true;
@@ -582,17 +554,14 @@ class WeatherService implements WeatherServiceInterface
     /**
      * @return bool
      */
-    private function isApiMethodFieldPresent(): bool
+    private function isApiFieldPresent(): bool
     {
-        return (bool)preg_match('/\/[a-zA-Z0-9]+\.json/', $this->requestUri);
+        return (bool)preg_match('/\/[a-zA-Z0-9]+\.json\?key=/', $this->requestUri);
     }
 
-    /**
-     * @return bool
-     */
-    private function isApiKeyFieldPresent(): bool
+    private function isInvalidJsonResponse(bool|string $response): bool
     {
-        return (bool)preg_match('/\?key=/', $this->requestUri);
+        return $response === '' || preg_match('/(<.+>)|(<\/.+>)/', $response);
     }
 
     /**
@@ -611,7 +580,7 @@ class WeatherService implements WeatherServiceInterface
         curl_close($curl);
 
         try {
-            if ($response === '') {
+            if ($this->isInvalidJsonResponse($response)) {
                 throw new InvalidJsonResponseException();
             } elseif ($response === false) {
                 throw new FailedFetchDataException();

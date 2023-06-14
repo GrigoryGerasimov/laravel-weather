@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GrigoryGerasimov\Weather\Tests\Feature;
 
 use GrigoryGerasimov\Weather\Exceptions\FailedFetchDataException;
+use GrigoryGerasimov\Weather\Exceptions\InvalidJsonResponseException;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
@@ -45,7 +46,7 @@ class WeatherApiTest extends TestCase
     /** @test */
     public function test_getting_a_failed_fetch_data_exception(): void
     {
-        function mockDataFetch()
+        function mockDataFetch(): void
         {
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -60,5 +61,43 @@ class WeatherApiTest extends TestCase
         $this->expectExceptionMessage('Failed to fetch data');
 
         mockDataFetch();
+    }
+
+    public function test_getting_an_invalid_json_response_exception_on_empty_response(): void
+    {
+        function mockDataFetchAsEmptyString(): void
+        {
+            $curl = curl_init('https://api.weatherapi.com/&q=Penza');
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            curl_close($curl);
+            if ($response === '') {
+                throw new InvalidJsonResponseException();
+            }
+        }
+
+        $this->expectException(InvalidJsonResponseException::class);
+        $this->expectExceptionMessage('Invalid json response. Please kindly check the request syntax');
+
+        mockDataFetchAsEmptyString();
+    }
+
+    public function test_getting_an_invalid_json_response_exception_on_html_response(): void
+    {
+        function mockDataFetchAsHTML(): void
+        {
+            $curl = curl_init('https://api.weatherapi.com/?key=&q=Penza');
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            curl_close($curl);
+            if (preg_match('/(<.+>)|(<\/.+>)/', $response)) {
+                throw new InvalidJsonResponseException();
+            }
+        }
+
+        $this->expectException(InvalidJsonResponseException::class);
+        $this->expectExceptionMessage('Invalid json response. Please kindly check the request syntax');
+
+        mockDataFetchAsHTML();
     }
 }

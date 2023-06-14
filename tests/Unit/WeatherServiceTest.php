@@ -22,7 +22,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->coords(53.20066, 45.00464)->get();
+        $weather = Weather::api()->coords(53.20066, 45.00464)->get();
 
         $this->assertEquals('Penza', $weather->location()->getCity());
         $this->assertEquals('Russia', $weather->location()->getCountry());
@@ -32,7 +32,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->city('Ostrava')->get();
+        $weather = Weather::api()->city('Ostrava')->get();
 
         $this->assertEquals('Ostrava', $weather->location()->getCity());
         $this->assertEquals('Czech Republic', $weather->location()->getCountry());
@@ -42,7 +42,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->zip('L10AY')->get();
+        $weather = Weather::api()->zip('L10AY')->get();
 
         $this->assertEquals('Liverpool', $weather->location()->getCity());
         $this->assertEquals('UK', $weather->location()->getCountry());
@@ -52,7 +52,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->metar('EGLL')->get();
+        $weather = Weather::api()->metar('EGLL')->get();
 
         $this->assertEquals('London / Heathrow Airport', $weather->location()->getCity());
         $this->assertEquals('United Kingdom', $weather->location()->getCountry());
@@ -65,7 +65,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->iata('DXB')->get();
+        $weather = Weather::api()->iata('DXB')->get();
 
         $this->assertEquals('Dubai', $weather->location()->getCity());
         $this->assertEquals('United Arab Emirates', $weather->location()->getCountry());
@@ -78,7 +78,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->ip('89.102.230.88')->get();
+        $weather = Weather::api()->ip('89.102.230.88')->get();
 
         $this->assertEquals('Hostivice', $weather->location()->getCity());
         $this->assertEquals('Czech Republic', $weather->location()->getCountry());
@@ -91,7 +91,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Berlin')->forecastDays(5)->get();
+        $weather = Weather::api('forecast')->city('Berlin')->forecastDays(5)->get();
 
         $this->assertEquals('Berlin', $weather->location()->getCity());
         $this->assertEquals('Germany', $weather->location()->getCountry());
@@ -109,7 +109,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Manchester')->historyFutureDate('2023-06-20')->get();
+        $weather = Weather::api('forecast')->city('Manchester')->historyFutureDate('2023-06-20')->get();
 
         $forecast = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecast);
@@ -122,7 +122,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('history')->apiKey('52bc4de23bad4639861233754230306')->city('Manchester')->historyFutureDate('2010-01-01')->get();
+        $weather = Weather::api('history')->city('Manchester')->historyFutureDate('2010-01-01')->get();
 
         $this->assertThrows(fn() => $weather->forecast(), ReceivedApiErrorCodeException::class);
     }
@@ -131,7 +131,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->coords(50.95843, 13.93702)->forecastHistoryTimestamp(time())->get();
+        $weather = Weather::api('forecast')->coords(50.95843, 13.93702)->forecastHistoryTimestamp(time())->get();
 
         $forecast = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecast);
@@ -144,7 +144,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Dresden')->forecastHistoryHour(19)->get();
+        $weather = Weather::api('forecast')->city('Dresden')->forecastHistoryHour(19)->get();
 
         $forecast = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecast);
@@ -157,7 +157,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Decin')->requireAlerts(true)->get();
+        $weather = Weather::api('forecast')->city('Decin')->requireAlerts(true)->get();
 
         $forecastAlerts = $weather->alerts();
 
@@ -168,7 +168,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Jihlava')->requireAlerts()->get();
+        $weather = Weather::api('forecast')->city('Jihlava')->requireAlerts()->get();
 
         $this->assertNull($weather->alerts());
     }
@@ -177,7 +177,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType()->apiKey()->city('Dresden')->requireAQI(true)->get();
+        $weather = Weather::api()->city('Dresden')->requireAQI(true)->get();
 
         $currentAQI = $weather->airQuality();
         $this->assertInstanceOf(AirQuality::class, $currentAQI);
@@ -188,7 +188,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Dresden')->requireAQI(true)->forecastDays(3)->get();
+        $weather = Weather::api('forecast')->city('Dresden')->requireAQI(true)->forecastDays(3)->get();
 
         $forecastAQI = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecastAQI);
@@ -200,7 +200,7 @@ class WeatherServiceTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $weather = Weather::apiType('marine')->apiKey()->city('Marseilles')->requireTides(true)->forecastDays(4)->get();
+        $weather = Weather::api('marine')->city('Marseilles')->requireTides(true)->forecastDays(4)->get();
 
         $marineTidesData = $weather->marine();
 
@@ -216,7 +216,7 @@ class WeatherServiceTest extends TestCase
         $expectedLang = new Language(['cs']);
         $expectedLangThreshold = 0.4;
 
-        $weather = Weather::apiType()->apiKey()->city('Usti-nad-Labem')->lang('cs')->get();
+        $weather = Weather::api()->city('Usti-nad-Labem')->lang('cs')->get();
 
         $currentWeatherConditionText = $weather->current()->getWeatherCondition()->getText();
 
@@ -232,7 +232,7 @@ class WeatherServiceTest extends TestCase
         $expectedLang = new Language(['de']);
         $expectedLangThreshold = 0.5;
 
-        $weather = Weather::apiType('forecast')->apiKey()->city('Stockholm')->forecastDays(5)->lang('de')->get();
+        $weather = Weather::api('forecast')->city('Stockholm')->forecastDays(5)->lang('de')->get();
 
         $forecastWeatherConditionText = $weather->forecast()->get(date('Y-m-d', time()))->day()->getWeatherCondition()->getText();
 
@@ -246,6 +246,6 @@ class WeatherServiceTest extends TestCase
         $this->expectException(InvalidJsonResponseException::class);
         $this->expectExceptionMessage('Invalid json response. Please kindly check the request syntax');
 
-        Weather::apiType()->apiKey()->city('Děčín')->lang('en')->get();
+        Weather::api()->city('Děčín')->lang('en')->get();
     }
 }

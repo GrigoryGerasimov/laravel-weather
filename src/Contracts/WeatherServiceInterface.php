@@ -12,20 +12,14 @@ interface WeatherServiceInterface
      * @param string $type
      * @return self
      */
-    public function apiType(string $type): self;
+    public function api(string $type): self;
 
     /**
-     * @param string $key
+     * @param float|string $lat
+     * @param float|string $lon
      * @return self
      */
-    public function apiKey(string $key): self;
-
-    /**
-     * @param float $lat
-     * @param float $lon
-     * @return self
-     */
-    public function coords(float $lat, float $lon): self;
+    public function coords(float|string $lat, float|string $lon): self;
 
     /**
      * @param string $city

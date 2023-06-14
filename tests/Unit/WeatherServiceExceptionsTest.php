@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace GrigoryGerasimov\Weather\Tests\Unit;
 
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
-use GrigoryGerasimov\Weather\Exceptions\{
-    InvalidApiTypeException,
+use GrigoryGerasimov\Weather\Exceptions\{InvalidApiTypeException,
     InvalidArgumentValueException,
-    MissingApiKeyFieldException,
-    MissingApiMethodFieldException,
-    WeatherException
-};
+    MissingApiFieldException,
+    ReceivedApiErrorCodeException};
 use GrigoryGerasimov\Weather\Facades\Weather;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 
@@ -22,28 +19,16 @@ class WeatherServiceExceptionsTest extends TestCase
     /** @test */
     public function test_getting_an_invalid_api_type_exception(): void
     {
-        $this->assertThrows(fn() => Weather::apiType('some_invalid_type'), InvalidApiTypeException::class, 'Invalid type of api method provided');
+        $this->assertThrows(fn() => Weather::api('some_invalid_type'), InvalidApiTypeException::class, 'Invalid type of api method provided');
     }
 
     /** @test */
     public function test_getting_a_missing_api_type_exception(): void
     {
-        $this->expectException(MissingApiMethodFieldException::class);
+        $this->expectException(MissingApiFieldException::class);
         $this->expectExceptionMessage('Api method field missing');
 
-        Weather::apiKey()->city('Prague')->get();
-    }
-
-    /** @test */
-    public function test_getting_a_missing_api_key_exception(): void
-    {
-        $this->assertThrows(fn() => Weather::apiType('forecast')->zip('40011')->withInterval()->get(), MissingApiKeyFieldException::class, 'Api key field missing');
-    }
-
-    /** @test */
-    public function test_getting_exception_with_both_api_method_and_key_fields_missing(): void
-    {
-        $this->assertThrows(fn() => Weather::ip('89.102.230.88')->forecastDays(5)->get(), WeatherException::class);
+        Weather::city('Prague')->get();
     }
 
     /** @test */
@@ -52,9 +37,25 @@ class WeatherServiceExceptionsTest extends TestCase
         $this->expectException(InvalidArgumentValueException::class);
         $this->expectExceptionMessage('Invalid argument value provided');
 
-        Weather::apiType('forecast')->apiKey()->ip('89.102.230.88')->forecastDays(0)->get();
-        Weather::apiType('forecast')->apiKey()->autoIp()->forecastDays(125)->get();
-        Weather::apiType('history')->apiKey()->city('Brno')->forecastHistoryHour(-3)->get();
-        Weather::apiType('history')->apiKey()->city('Tokio')->forecastHistoryHour(37)->get();
+        Weather::api('forecast')->ip('89.102.230.88')->forecastDays(0)->get();
+        Weather::api('forecast')->autoIp()->forecastDays(125)->get();
+        Weather::api('history')->city('Brno')->forecastHistoryHour(-3)->get();
+        Weather::api('history')->city('Tokio')->forecastHistoryHour(37)->get();
+    }
+
+    /** @test */
+    public function test_getting_a_received_api_error_code_exception(): void
+    {
+        $weather = Weather::api()->get();
+
+        $this->assertThrows(fn() => $weather->current(), ReceivedApiErrorCodeException::class);
+    }
+
+    /** @test */
+    public function test_getting_a_received_api_error_code_exception_without_api_key(): void
+    {
+        $weather = Weather::api()->get();
+
+        $this->assertThrows(fn() => $weather->current(), ReceivedApiErrorCodeException::class);
     }
 }

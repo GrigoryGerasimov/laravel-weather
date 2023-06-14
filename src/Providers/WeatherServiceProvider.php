@@ -18,6 +18,10 @@ class WeatherServiceProvider extends ServiceProvider
         $this->app->singleton(WeatherServiceInterface::class, function() {
             return new WeatherService();
         });
+
+        $this->publishes([
+           __DIR__ . '/../../config/weather.php' => config_path('weather.php')
+        ]);
     }
 
     /**
