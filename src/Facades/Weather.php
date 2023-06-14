@@ -9,8 +9,7 @@ use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method self apiType(string $type = 'current')
- * @method self apiKey(string $key = '52bc4de23bad4639861233754230306')
+ * @method self api(string $type = 'current')
  * @method self coords(float $lat, float $lon)
  * @method self city(string $city)
  * @method self zip(string $zipCode)

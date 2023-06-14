@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Exceptions;
 
-class MissingApiMethodFieldException extends WeatherException
+class MissingApiFieldException extends WeatherException
 {
     /**
      * @var string
