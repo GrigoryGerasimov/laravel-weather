@@ -14,8 +14,9 @@ class WeatherController extends Controller
     {
         $weather = Weather::api()->city('Prague')->get();
         $weatherCurrent = $weather->current();
+        $weatherCurrentAQI = $weather->airQuality();
 
-        return view('vendor.laravel-weather.components.current', compact('weatherCurrent'));
+        return view('vendor.laravel-weather.components.current', compact('weatherCurrent', 'weatherCurrentAQI'));
     }
 
     public function forecastIndex(): View

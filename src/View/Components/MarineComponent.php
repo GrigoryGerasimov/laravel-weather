@@ -9,10 +9,24 @@ use Illuminate\Support\Collection;
 
 class MarineComponent extends Component
 {
+    /**
+     * @param Collection $weatherMarine
+     */
     public function __construct(
         public Collection $weatherMarine
     ) {}
 
+    /**
+     * @return bool
+     */
+    public function shouldRender(): bool
+    {
+        return !is_null($this->weatherMarine);
+    }
+
+    /**
+     * @return View
+     */
     public function render(): View
     {
         return view('components.marine');

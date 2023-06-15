@@ -6,14 +6,18 @@ namespace GrigoryGerasimov\Weather\Providers;
 
 use GrigoryGerasimov\Weather\Services\WeatherService;
 use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
-use GrigoryGerasimov\Weather\View\Components\AstronomyComponent;
-use GrigoryGerasimov\Weather\View\Components\CurrentComponent;
-use GrigoryGerasimov\Weather\View\Components\ForecastComponent;
-use GrigoryGerasimov\Weather\View\Components\IpLookupComponent;
-use GrigoryGerasimov\Weather\View\Components\MarineComponent;
-use GrigoryGerasimov\Weather\View\Components\SearchComponent;
-use GrigoryGerasimov\Weather\View\Components\SportsComponent;
-use GrigoryGerasimov\Weather\View\Components\TimezoneComponent;
+use GrigoryGerasimov\Weather\View\Components\{
+    AlertComponent,
+    AstronomyComponent,
+    CurrentComponent,
+    ForecastComponent,
+    IpLookupComponent,
+    LocationComponent,
+    MarineComponent,
+    SearchComponent,
+    SportsComponent,
+    TimezoneComponent
+};
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -53,5 +57,7 @@ class WeatherServiceProvider extends ServiceProvider
         Blade::component('weather-search', SearchComponent::class);
         Blade::component('weather-sports', SportsComponent::class);
         Blade::component('weather-timezone', TimezoneComponent::class);
+        Blade::component('weather-location', LocationComponent::class);
+        Blade::component('weather-alerts', AlertComponent::class);
     }
 }

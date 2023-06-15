@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\View\Components;
 
-use GrigoryGerasimov\Weather\Objects\Timezone;
 use Illuminate\View\{Component, View};
+use GrigoryGerasimov\Weather\Objects\GPS\Location;
 
-class TimezoneComponent extends Component
+class LocationComponent extends Component
 {
     /**
-     * @param Timezone $weatherTimezone
+     * @param Location $weatherLocation
      */
     public function __construct(
-        public Timezone $weatherTimezone
+        public Location $weatherLocation
     ) {}
 
     /**
@@ -21,7 +21,7 @@ class TimezoneComponent extends Component
      */
     public function shouldRender(): bool
     {
-        return !is_null($this->weatherTimezone);
+        return !is_null($this->weatherLocation);
     }
 
     /**
@@ -29,6 +29,6 @@ class TimezoneComponent extends Component
      */
     public function render(): View
     {
-        return view('components.timezone');
+        return view('components.location');
     }
 }

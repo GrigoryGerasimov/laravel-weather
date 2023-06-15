@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\View\Components;
 
-use GrigoryGerasimov\Weather\Objects\Timezone;
 use Illuminate\View\{Component, View};
+use Illuminate\Support\Collection;
 
-class TimezoneComponent extends Component
+class AlertComponent extends Component
 {
     /**
-     * @param Timezone $weatherTimezone
+     * @param Collection $weatherAlert
      */
     public function __construct(
-        public Timezone $weatherTimezone
+        public Collection $weatherAlert
     ) {}
 
     /**
@@ -21,7 +21,7 @@ class TimezoneComponent extends Component
      */
     public function shouldRender(): bool
     {
-        return !is_null($this->weatherTimezone);
+        return !is_null($this->weatherAlert);
     }
 
     /**
@@ -29,6 +29,6 @@ class TimezoneComponent extends Component
      */
     public function render(): View
     {
-        return view('components.timezone');
+        return view('components.alert');
     }
 }
