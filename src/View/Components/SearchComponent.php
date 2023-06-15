@@ -10,7 +10,7 @@ use Illuminate\View\{Component, View};
 class SearchComponent extends Component
 {
     public function __construct(
-        public Search $search
+        public Search $weatherSearch
     ) {}
 
     public function render(): View

@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 class ForecastComponent extends Component
 {
     public function __construct(
-        public Collection $forecast
+        public Collection $weatherForecast
     ) {}
 
     public function render(): View

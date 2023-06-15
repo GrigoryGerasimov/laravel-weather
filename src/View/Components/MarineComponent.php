@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 class MarineComponent extends Component
 {
     public function __construct(
-        public Collection $marine
+        public Collection $weatherMarine
     ) {}
 
     public function render(): View

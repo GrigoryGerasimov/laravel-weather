@@ -10,7 +10,7 @@ use Illuminate\View\{Component, View};
 class IpLookupComponent extends Component
 {
     public function __construct(
-        public IpLookup $ipLookup
+        public IpLookup $weatherIpLookup
     ) {}
 
     public function render(): View

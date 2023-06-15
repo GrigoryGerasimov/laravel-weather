@@ -10,7 +10,7 @@ use Illuminate\View\{Component, View};
 class AstronomyComponent extends Component
 {
     public function __construct(
-        public Astronomy $astronomy
+        public Astronomy $weatherAstro
     ) {}
 
     public function render(): View
