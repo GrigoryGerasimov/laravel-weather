@@ -10,7 +10,6 @@ Route::controller(WeatherController::class)->group(function() {
     Route::get('/weather/forecast', 'forecastIndex')->name('weather.index.forecast');
     Route::get('/weather/search', 'searchIndex')->name('weather.index.search');
     Route::get('/weather/marine', 'marineIndex')->name('weather.index.marine');
-    Route::get('/weather/future', 'futureIndex')->name('weather.index.future');
     Route::get('/weather/timezone', 'timezoneIndex')->name('weather.index.timezone');
     Route::get('/weather/sports', 'sportsIndex')->name('weather.index.sports');
     Route::get('/weather/astronomy', 'astronomyIndex')->name('weather.index.astronomy');

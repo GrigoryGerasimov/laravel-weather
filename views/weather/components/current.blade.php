@@ -6,6 +6,9 @@
     <li>Actual Fahrenheit: {{ $weatherCurrent->getActualFahrenheit() }}</li>
     <li>Feels-like Fahrenheit: {{ $weatherCurrent->getFeelsLikeFahrenheit() }}</li>
     <li>Weather condition text: {{ $weatherCurrent->getWeatherCondition()->getText() }}</li>
+    <li>Weather condition icon:
+        <img src='{{ $weatherCurrent->getWeatherCondition()->getIconUrl() }}' alt='weather-icon'/>
+    </li>
     <li>Weather condition icon url: {{ $weatherCurrent->getWeatherCondition()->getIconUrl() }}</li>
     <li>Weather condition code: {{ $weatherCurrent->getWeatherCondition()->getCode() }}</li>
     <li>Wind speed in miles: {{ $weatherCurrent->getWindSpeedInMiles() }}</li>

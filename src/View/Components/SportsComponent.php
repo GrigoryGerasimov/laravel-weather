@@ -10,7 +10,7 @@ use Illuminate\View\{Component, View};
 class SportsComponent extends Component
 {
     public function __construct(
-        public Sports $sports
+        public Sports $weatherSports
     ) {}
 
     public function render(): View

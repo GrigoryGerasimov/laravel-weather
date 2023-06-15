@@ -10,7 +10,7 @@ use Illuminate\View\{Component, View};
 class TimezoneComponent extends Component
 {
     public function __construct(
-        public Timezone $timezone
+        public Timezone $weatherTimezone
     ) {}
 
     public function render(): View
