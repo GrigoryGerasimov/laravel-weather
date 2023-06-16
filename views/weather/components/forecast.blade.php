@@ -6,15 +6,13 @@
     <x-current :weatherCurrent='$weatherForecastCurrent'/>
 @endif
 
+<strong>Weather Forecast</strong>
+
 @foreach($weatherForecast as $weatherForecastItem)
     <ul>
         @if(is_null($weatherForecastItem))
             <li>No weather forecast data available</li>
         @endif
-
-        <li>
-            <strong>Weather Forecast</strong>
-        </li>
 
         @if(!is_null($weatherForecastItem->common()))
             <li>Forecast date: {{ $weatherForecastItem->common()->getDate() }}</li>

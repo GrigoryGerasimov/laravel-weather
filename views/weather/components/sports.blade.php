@@ -1,3 +1,5 @@
+<strong>Sports Data</strong>
+
 @foreach($weatherSports as $weatherSportsItem)
     @if(is_null($weatherSportsItem))
         <li>No sports data available</li>

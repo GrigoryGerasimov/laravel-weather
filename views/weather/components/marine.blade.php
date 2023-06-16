@@ -2,15 +2,13 @@
     <x-location :weatherLocation='$weatherMarineLocation'/>
 @endif
 
+<strong>Weather Marine Forecast</strong>
+
 @foreach($weatherMarine as $weatherMarineItem)
     <ul>
         @if(is_null($weatherMarineItem))
             <li>No weather forecast data available</li>
         @endif
-
-        <li>
-            <strong>Weather Marine Forecast</strong>
-        </li>
 
         @if(!is_null($weatherMarineItem->common()))
             <li>Forecast date: {{ $weatherMarineItem->common()->getDate() }}</li>

@@ -3,6 +3,9 @@
 @endif
 
 <ul>
+    <li>
+        <strong>Astronomy Data</strong>
+    </li>
     <li>Sunrise time: {{ $weatherAstro->getSunriseTime() }}</li>
     <li>Sunset time: {{ $weatherAstro->getSunsetTime() }}</li>
     <li>Moonrise time: {{ $weatherAstro->getMoonriseTime() }}</li>

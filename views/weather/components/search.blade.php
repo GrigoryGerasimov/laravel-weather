@@ -1,3 +1,5 @@
+<strong>Search Data</strong>
+
 @foreach($weatherSearch as $weatherSearchItem)
     @if(is_null($weatherSearchItem))
         <li>No weather search data available</li>
