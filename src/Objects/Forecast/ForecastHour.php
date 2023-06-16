@@ -90,7 +90,7 @@ final readonly class ForecastHour implements WeatherObjectInterface, WeatherComm
     }
 
     /**
-     * Wind direction as 16 point compass. e.g.: NSW.
+     * Wind direction as 16 point compass. e.g.: NSW
      *
      * @return string|null
      */
