@@ -9,7 +9,7 @@ use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 final readonly class AirQuality implements WeatherObjectInterface
 {
     /**
-     * @var array
+     * @var array<\stdClass>
      */
     private array $aqi;
 
@@ -69,15 +69,18 @@ final readonly class AirQuality implements WeatherObjectInterface
     }
 
     /**
-     * US - EPA standard.
+     * US - EPA standard
      *
-     * 1 means Good,
-     * 2 means Moderate,
-     * 3 means Unhealthy for sensitive group,
-     * 4 means Unhealthy,
-     * 5 means Very Unhealthy,
-     * 6 means Hazardous.
+     * 1 means Good
+     * 2 means Moderate
+     * 3 means Unhealthy for sensitive group
+     * 4 means Unhealthy
+     * 5 means Very Unhealthy
+     * 6 means Hazardous
      *
+     * For further details please refer to the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @return int|null
      */
     public function getUSEPAStandard(): ?int
@@ -86,15 +89,16 @@ final readonly class AirQuality implements WeatherObjectInterface
     }
 
     /**
-     * UK Defra Index.
+     * UK Defra Index
      *
-     * 1-3 mean Low,
-     * 4-6 mean Moderate,
-     * 7-9 mean High,
-     * 10 means Very High.
+     * 1-3 mean Low
+     * 4-6 mean Moderate
+     * 7-9 mean High
+     * 10 means Very High
      *
-     * For further details please refer to the official WeatherApi doc: https://www.weatherapi.com/docs/
+     * For further details please refer to the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @return int|null
      */
     public function getUKDefraIndex(): ?int

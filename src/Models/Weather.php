@@ -17,7 +17,7 @@ class Weather
     use WithExceptionHandler;
 
     /**
-     * @param \stdClass|array $weatherData
+     * @param \stdClass|array<\stdClass> $weatherData
      */
     public function __construct(
         protected \stdClass|array $weatherData
@@ -25,8 +25,9 @@ class Weather
 
     /**
      * The Weather model Current method serves for the Current API method only
-     * and cannot be combined with any other API method.
+     * and cannot be combined with any other API method
      *
+     * @link https://www.weatherapi.com/docs/
      * @return Current|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
@@ -84,8 +85,9 @@ class Weather
 
     /**
      * The Weather model IpLookup method serves for the IP Lookup API method only
-     * and cannot be combined with any other API method.
+     * and cannot be combined with any other API method
      *
+     * @link https://www.weatherapi.com/docs/
      * @return IpLookup|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
@@ -104,8 +106,9 @@ class Weather
 
     /**
      * The Weather model Search method serves for the Search API method only
-     * and cannot be combined with any other API method.
+     * and cannot be combined with any other API method
      *
+     * @link https://www.weatherapi.com/docs/
      * @return Collection<Search>|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
@@ -138,9 +141,11 @@ class Weather
 
     /**
      * The Weather model AirQuality method serves for the Current API method only
-     * and cannot be combined with any other API method.
-     * For Forecast API please use the appropriate ForecastDay and ForecastHour GetAirQuality method.
+     * and cannot be combined with any other API method
      *
+     * For Forecast API please use the appropriate ForecastDay and ForecastHour GetAirQuality method
+     *
+     * @link https://www.weatherapi.com/docs/
      * @return AirQuality|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
@@ -170,9 +175,11 @@ class Weather
 
     /**
      * The Weather model Astro method serves for the Astronomy API method only
-     * and cannot be combined with any other API method.
-     * For Forecast API please use the appropriate Forecast Astro method.
+     * and cannot be combined with any other API method
      *
+     * For Forecast API please use the appropriate Forecast Astro method
+     *
+     * @link https://www.weatherapi.com/docs/
      * @return Astronomy|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
@@ -188,8 +195,9 @@ class Weather
 
     /**
      * The Weather model Sports method serves for the Sport API method only
-     * and cannot be combined with any other API method.
+     * and cannot be combined with any other API method
      *
+     * @link https://www.weatherapi.com/docs/
      * @return Collection|null
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
