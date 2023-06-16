@@ -34,7 +34,7 @@ class WeatherServiceProvider extends ServiceProvider
 
         $this->publishes([
            __DIR__ . '/../../config/weather.php' => config_path('weather.php')
-        ]);
+        ], 'laravel-weather');
     }
 
     /**
@@ -43,11 +43,10 @@ class WeatherServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
-
         $this->loadViewsFrom(__DIR__ . '/../../views/weather', 'laravel-weather');
         $this->publishes([
             __DIR__ . '/../../views/weather' => resource_path('views/vendor/laravel-weather')
-        ]);
+        ], 'laravel-weather');
 
         Blade::component('weather-astronomy', AstronomyComponent::class);
         Blade::component('weather-current', CurrentComponent::class);
