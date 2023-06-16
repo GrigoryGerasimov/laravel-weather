@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\View\Components;
 
+use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
 use Illuminate\View\{Component, View};
 use Illuminate\Support\Collection;
 
 class ForecastComponent extends Component
 {
     /**
-     * @param Collection $weatherForecast
+     * @param Collection<Forecast> $weatherForecast
      */
     public function __construct(
         public Collection $weatherForecast

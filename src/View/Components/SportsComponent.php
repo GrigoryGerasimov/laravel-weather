@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\View\Components;
 
-use GrigoryGerasimov\Weather\Objects\Sports;
 use Illuminate\View\{Component, View};
+use Illuminate\Support\Collection;
 
 class SportsComponent extends Component
 {
     /**
-     * @param Sports $weatherSports
+     * @param Collection $weatherSports
      */
     public function __construct(
-        public Sports $weatherSports
+        public Collection $weatherSports
     ) {}
 
     /**
