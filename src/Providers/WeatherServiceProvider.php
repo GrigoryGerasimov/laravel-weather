@@ -48,15 +48,17 @@ class WeatherServiceProvider extends ServiceProvider
             __DIR__ . '/../../views/weather' => resource_path('views/vendor/laravel-weather')
         ], 'laravel-weather');
 
-        Blade::component('weather-astronomy', AstronomyComponent::class);
-        Blade::component('weather-current', CurrentComponent::class);
-        Blade::component('weather-forecast', ForecastComponent::class);
-        Blade::component('weather-ip', IpLookupComponent::class);
-        Blade::component('weather-marine', MarineComponent::class);
-        Blade::component('weather-search', SearchComponent::class);
-        Blade::component('weather-sports', SportsComponent::class);
-        Blade::component('weather-timezone', TimezoneComponent::class);
-        Blade::component('weather-location', LocationComponent::class);
-        Blade::component('weather-alerts', AlertComponent::class);
+        Blade::components([
+            'weather-astronomy' => AstronomyComponent::class,
+            'weather-current' => CurrentComponent::class,
+            'weather-forecast' => ForecastComponent::class,
+            'weather-ip' => IpLookupComponent::class,
+            'weather-marine' => MarineComponent::class,
+            'weather-search' => SearchComponent::class,
+            'weather-sports' => SportsComponent::class,
+            'weather-timezone' => TimezoneComponent::class,
+            'weather-location' => LocationComponent::class,
+            'weather-alerts' => AlertComponent::class
+        ]);
     }
 }

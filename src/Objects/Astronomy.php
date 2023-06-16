@@ -48,17 +48,17 @@ final readonly class Astronomy implements WeatherObjectInterface
     }
 
     /**
-     * Moon phases.
+     * Moon phases
      *
      * Value returned:
-     * New Moon,
-     * Waxing Crescent,
-     * First Quarter,
-     * Waxing Gibbous,
-     * Full Moon,
-     * Waning Gibbous,
-     * Last Quarter,
-     * Waning Crescent,
+     * New Moon
+     * Waxing Crescent
+     * First Quarter
+     * Waxing Gibbous
+     * Full Moon
+     * Waning Gibbous
+     * Last Quarter
+     * Waning Crescent
      *
      * More details in the official WeatherAPI documentation
      *
