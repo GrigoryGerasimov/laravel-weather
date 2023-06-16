@@ -147,7 +147,7 @@ class Weather
      */
     public function airQuality(): ?AirQuality
     {
-        if (!$this->validateWeatherData('current')) {
+        if (!$this->validateWeatherData('current', 'air_quality')) {
             return null;
         }
 

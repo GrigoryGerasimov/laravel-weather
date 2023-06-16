@@ -33,7 +33,7 @@
             <li>UV Index: {{ $weatherMarineItem->day()->getUVIndex() }}</li>
 
             @if(!is_null($weatherMarineItem->day()->getWeatherCondition()))
-                @include('layouts.weathercondition', ['weatherCondition' => $weatherMarineItem->day()->getWeatherCondition()])
+                @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $weatherMarineItem->day()->getWeatherCondition()])
             @endif
         @endif
 
@@ -52,7 +52,7 @@
             <li>Temperature in Fahrenheit: {{ $forecastMarineHour->getActualFahrenheit() }}</li>
 
             @if(!is_null($forecastMarineHour->getWeatherCondition()))
-                @include('layouts.weathercondition', ['weatherCondition' => $forecastMarineHour->getWeatherCondition()])
+                @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $forecastMarineHour->getWeatherCondition()])
             @endif
 
             <li>Maximum wind speed in miles per hour: {{ $forecastMarineHour->getWindSpeedInMiles() }}</li>

@@ -7,7 +7,7 @@
     <li>Feels like temperature in Fahrenheit: {{ $weatherCurrent->getFeelsLikeFahrenheit() }}</li>
 
     @if(!is_null($weatherCurrent->getWeatherCondition()))
-        @include('layouts.weathercondition', ['weatherCondition' => $weatherCurrent->getWeatherCondition()])
+        @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $weatherCurrent->getWeatherCondition()])
     @endif
 
     <li>Wind speed in miles per hour: {{ $weatherCurrent->getWindSpeedInMiles() }}</li>
@@ -25,6 +25,6 @@
     <li>UV Index: {{ $weatherCurrent->getUVIndex() }}</li>
 
     @if(!is_null($weatherCurrentAQI))
-        @include('layouts.airquality', ['weatherAQI' => $weatherCurrentAQI])
+        @include('vendor.laravel-weather.layouts.airquality', ['weatherAQI' => $weatherCurrentAQI])
     @endif
 </ul>
