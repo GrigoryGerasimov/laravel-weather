@@ -1,3 +1,5 @@
+<strong>Alerts</strong>
+
 @foreach($weatherAlert as $alertItem)
     <ul>
         <li>Alert headline: {{ $weatherAlert->getHeadline() }}</li>

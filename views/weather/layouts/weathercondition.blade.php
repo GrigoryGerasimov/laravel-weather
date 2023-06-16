@@ -1,8 +1,13 @@
-<li>Weather condition text: {{ $weatherCondition->getText() }}</li>
-<li>Weather condition icon:
-    <img src='{{ $weatherCondition->getIconUrl() }}'
-         alt='weather-icon'/>
-</li>
-<li>Weather condition icon
-    url: {{ $weatherCondition->getIconUrl() }}</li>
-<li>Weather condition code: {{ $weatherCondition->getCode() }}</li>
+<ul>
+    <li>
+        <strong>Weather Conditions</strong>
+    </li>
+    <li>Weather condition text: {{ $weatherCondition->getText() }}</li>
+    <li>Weather condition icon:
+        <img src='{{ $weatherCondition->getIconUrl() }}'
+             alt='weather-icon'/>
+    </li>
+    <li>Weather condition icon
+        url: {{ $weatherCondition->getIconUrl() }}</li>
+    <li>Weather condition code: {{ $weatherCondition->getCode() }}</li>
+</ul>

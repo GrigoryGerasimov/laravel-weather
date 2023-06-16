@@ -1,4 +1,11 @@
+@if(!is_null($weatherCurrentLocation))
+    <x-location :weatherLocation='$weatherCurrentLocation'/>
+@endif
+
 <ul>
+    <li>
+        <strong>Current Weather Forecast</strong>
+    </li>
     <li>Last updated: {{ $weatherCurrent->getLastUpdated() }}</li>
     <li>Last updated timestamp: {{ $weatherCurrent->getLastUpdatedTimestamp() }}</li>
     <li>Temperature in Celsius: {{ $weatherCurrent->getActualCelsius() }}</li>

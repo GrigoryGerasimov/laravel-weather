@@ -1,4 +1,7 @@
 <ul>
+    <li>
+        <strong>Ip Lookup</strong>
+    </li>
     <li>IP address: {{ $weatherIpLookup->getIp() }}</li>
     <li>IP type (ipv4 or ipv6): {{ $weatherIpLookup->getIpType() }}</li>
     <li>Continent code: {{ $weatherIpLookup->getContinentCode() }}</li>

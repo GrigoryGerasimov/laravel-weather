@@ -29,9 +29,10 @@ class WeatherController extends Controller
             ->get();
 
         $weatherCurrent = $weather->current();
+        $weatherCurrentLocation = $weather->location();
         $weatherCurrentAQI = $weather->airQuality();
 
-        return view('vendor.laravel-weather.components.current', compact('weatherCurrent', 'weatherCurrentAQI'));
+        return view('vendor.laravel-weather.components.current', compact('weatherCurrent', 'weatherCurrentAQI', 'weatherCurrentLocation'));
     }
 
     /**
@@ -52,8 +53,11 @@ class WeatherController extends Controller
             ->get();
 
         $weatherForecast = $weather->forecast();
+        $weatherForecastLocation = $weather->location();
+        $weatherForecastCurrent = $weather->current();
+        $weatherForecastAlert = $weather->alerts();
 
-        return view('vendor.laravel-weather.components.forecast', compact('weatherForecast'));
+        return view('vendor.laravel-weather.components.forecast', compact('weatherForecast', 'weatherForecastLocation', 'weatherForecastCurrent', 'weatherForecastAlert'));
     }
 
     /**
@@ -96,8 +100,9 @@ class WeatherController extends Controller
             ->get();
 
         $weatherMarine = $weather->marine();
+        $weatherMarineLocation = $weather->location();
 
-        return view('vendor.laravel-weather.components.marine', compact('weatherMarine'));
+        return view('vendor.laravel-weather.components.marine', compact('weatherMarine', 'weatherMarineLocation'));
     }
 
     /**
@@ -118,8 +123,9 @@ class WeatherController extends Controller
             ->get();
 
         $weatherTimezone = $weather->timezone();
+        $weatherTimezoneLocation = $weather->location();
 
-        return view('vendor.laravel-weather.components.timezone', compact('weatherTimezone'));
+        return view('vendor.laravel-weather.components.timezone', compact('weatherTimezone', 'weatherTimezoneLocation'));
     }
 
     /**
@@ -162,21 +168,22 @@ class WeatherController extends Controller
             ->get();
 
         $weatherAstro = $weather->astro();
+        $weatherAstroLocation = $weather->location();
 
-        return view('vendor.laravel-weather.components.astronomy', compact('weatherAstro'));
+        return view('vendor.laravel-weather.components.astronomy', compact('weatherAstro', 'weatherAstroLocation'));
     }
 
     /**
-     * @param string $city
+     * @param string $ip
      * @param string $lang
      * @return View
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    public function ipLookupIndex(string $city, string $lang = 'en'): View
+    public function ipLookupIndex(string $ip, string $lang = 'en'): View
     {
         $weather = Weather::api('ip')
-            ->city($city)
+            ->ip($ip)
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)

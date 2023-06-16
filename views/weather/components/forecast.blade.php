@@ -1,3 +1,13 @@
+@if(!is_null($weatherForecastLocation))
+    <x-location :weatherLocation='$weatherForecastLocation'/>
+@endif
+
+@if(!is_null($weatherForecastCurrent))
+    <x-current :weatherCurrent='$weatherForecastCurrent'/>
+@endif
+
+<strong>Weather Forecast</strong>
+
 @foreach($weatherForecast as $weatherForecastItem)
     <ul>
         @if(is_null($weatherForecastItem))
@@ -95,3 +105,6 @@
     </ul>
 @endforeach
 
+@if(!is_null($weatherForecastAlert))
+    <x-alert :weatherAlert='$weatherForecastAlert'/>
+@endif
