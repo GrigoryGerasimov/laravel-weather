@@ -6,14 +6,15 @@ namespace GrigoryGerasimov\Weather\View\Components;
 
 use GrigoryGerasimov\Weather\Objects\GPS\Search;
 use Illuminate\View\{Component, View};
+use Illuminate\Support\Collection;
 
 class SearchComponent extends Component
 {
     /**
-     * @param Search $weatherSearch
+     * @param Collection<Search> $weatherSearch
      */
     public function __construct(
-        public Search $weatherSearch
+        public Collection $weatherSearch
     ) {}
 
     /**
