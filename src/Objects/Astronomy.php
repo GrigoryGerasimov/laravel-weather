@@ -60,8 +60,9 @@ final readonly class Astronomy implements WeatherObjectInterface
      * Last Quarter,
      * Waning Crescent,
      *
-     * More details here: https://www.weatherapi.com/docs/
+     * More details in the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @return string|null
      */
     public function getMoonPhase(): ?string

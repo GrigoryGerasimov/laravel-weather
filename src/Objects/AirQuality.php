@@ -9,7 +9,7 @@ use GrigoryGerasimov\Weather\Contracts\WeatherObjectInterface;
 final readonly class AirQuality implements WeatherObjectInterface
 {
     /**
-     * @var array
+     * @var array<\stdClass>
      */
     private array $aqi;
 
@@ -78,6 +78,9 @@ final readonly class AirQuality implements WeatherObjectInterface
      * 5 means Very Unhealthy,
      * 6 means Hazardous.
      *
+     * For further details please refer to the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @return int|null
      */
     public function getUSEPAStandard(): ?int
@@ -93,8 +96,9 @@ final readonly class AirQuality implements WeatherObjectInterface
      * 7-9 mean High,
      * 10 means Very High.
      *
-     * For further details please refer to the official WeatherApi doc: https://www.weatherapi.com/docs/
+     * For further details please refer to the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @return int|null
      */
     public function getUKDefraIndex(): ?int

@@ -43,11 +43,13 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Type of your request to the API which defines the appropriate API method.
-     * You can find the list of the available types in the constant API_METHOD_TYPES.
-     * The default value is "current" which is used for current weather data requests.
-     * More details on various API method types can be found here: https://www.weatherapi.com/docs/
+     * Type of your request to the API which defines the appropriate API method
      *
+     * You can find the list of the available types in the constant API_METHOD_TYPES
+     * The default value is "current" which is used for current weather data requests
+     * More details on various API method types can be found in the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @param string $type
      * @return $this
      * @throws WeatherException
@@ -72,7 +74,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * GPS coordinates in decimal degree (as latitude and longitude).
+     * GPS coordinates in decimal degree (as latitude and longitude)
      *
      * @param float|string $lat
      * @param float|string $lon
@@ -117,7 +119,7 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Here you are free to provide any US zip / UK post / Canada postal codes.
+     * Here you are free to provide any US zip / UK post / Canada postal codes
      *
      * @param string $zipCode
      * @return $this
@@ -141,7 +143,7 @@ class WeatherService implements WeatherServiceInterface
 
     /**
      * The METAR code provides the direction of the wind relative to true north,
-     * as well as the average wind speed expressed in knots.
+     * as well as the average wind speed expressed in knots
      *
      * @param string $metarCode
      * @return $this
@@ -165,7 +167,7 @@ class WeatherService implements WeatherServiceInterface
 
     /**
      * An IATA airport code is a three-letter geocode designating many airports and metropolitan areas
-     * around the world, defined by the International Air Transport Association (IATA).
+     * around the world, defined by the International Air Transport Association (IATA)
      *
      * @param string $iataCode
      * @return $this
@@ -229,8 +231,9 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Required only with forecast API method.
-     * ForecastCommon days range: 1-14.
+     * Required only with forecast API method
+     *
+     * ForecastCommon days range: 1-14
      *
      * @param int $days
      * @return $this
@@ -256,15 +259,15 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Required for History and Future API method.
-     * Restricts date output for Forecast and History API method.
+     * Required for History and Future API method, restricts date output for Forecast and History API method
      *
-     * For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01).
-     * For forecast API 'dt' should be between today and next 14 day in yyyy-MM-dd format (i.e. dt=2010-01-01).
-     * For future API 'dt' should be between 14 days and 300 days from today in the future in yyyy-MM-dd format (i.e. dt=2023-01-01).
+     * For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01)
+     * For forecast API 'dt' should be between today and next 14 day in yyyy-MM-dd format (i.e. dt=2010-01-01)
+     * For future API 'dt' should be between 14 days and 300 days from today in the future in yyyy-MM-dd format (i.e. dt=2023-01-01)
      *
-     * More details here: https://www.weatherapi.com/docs/
+     * More details in the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @param string $date
      * @return $this
      * @throws WeatherException
@@ -286,14 +289,15 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Restrict date output for History API method.
+     * Restrict date output for History API method
      *
      * For history API 'end_dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01),
-     * 'end_dt' should be greater than 'dt' parameter and difference should not be more than 30 days between the two dates.
-     * For this query option, your API key should refer to only Pro plan and above.
+     * 'end_dt' should be greater than 'dt' parameter and difference should not be more than 30 days between the two dates
+     * For this query option, your API key should refer to only Pro plan and above
      *
-     * More details here: https://www.weatherapi.com/docs/
+     * More details in the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @param string $date
      * @return $this
      * @throws WeatherException
@@ -315,13 +319,14 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Unix Timestamp used by Forecast and History API method.
+     * Unix Timestamp used by Forecast and History API method
      *
-     * unixdt has same restriction as 'dt' parameter.
-     * Please either pass 'dt' or 'unixdt' and not both in same request.
+     * unixdt has same restriction as 'dt' parameter
+     * Please either pass 'dt' or 'unixdt' and not both in same request
      *
-     * More details here: https://www.weatherapi.com/docs/
+     * More details in the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @param string|int $timestamp
      * @return $this
      * @throws WeatherException
@@ -343,13 +348,14 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Unix Timestamp used by History API method.
+     * Unix Timestamp used by History API method
      *
-     * unixend_dt has same restriction as 'end_dt' parameter.
-     * Please either pass 'end_dt' or 'unixend_dt' and not both in same request.
+     * unixend_dt has same restriction as 'end_dt' parameter
+     * Please either pass 'end_dt' or 'unixend_dt' and not both in same request
      *
-     * More details here: https://www.weatherapi.com/docs/
+     * More details in the official WeatherAPI documentation
      *
+     * @link https://www.weatherapi.com/docs/
      * @param string|int $timestamp
      * @return $this
      * @throws WeatherException
@@ -371,10 +377,13 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Restricting forecast or history output to a specific hour in a given day.
-     * Must be in 24 hour. For example 5 pm should be hour=17, 6 am as hour=6
-     * More details here: https://www.weatherapi.com/docs/
+     * Restricting forecast or history output to a specific hour in a given day
      *
+     * Must be in 24 hour: for example 5 pm should be hour=17, 6 am as hour=6
+     *
+     * More details in the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @param int $hour
      * @return $this
      * @throws WeatherException
@@ -399,9 +408,11 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Should receive alerts in Forecast API output.
-     * Further details to alerts can be found in the official WeatherApi doc: https://www.weatherapi.com/docs/
+     * Should receive alerts in Forecast API output
      *
+     * Further details to alerts can be found in the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @param bool $shouldAlert
      * @return $this
      * @throws WeatherException
@@ -424,9 +435,11 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Should receive the Air Quality data in Forecast API output.
-     * Further details to AQI can be found in the official WeatherApi doc: https://www.weatherapi.com/docs/
+     * Should receive the Air Quality data in Forecast API output
      *
+     * Further details to AQI can be found in the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @param bool $ifAqi
      * @return $this
      * @throws WeatherException
@@ -449,8 +462,9 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Should receive the Tide data in Marine API output.
+     * Should receive the Tide data in Marine API output
      *
+     * @link https://www.weatherapi.com/docs/
      * @param bool $ifTides
      * @return $this
      * @throws WeatherException
@@ -473,9 +487,11 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Get 15 min interval data for Forecast and History API.
-     * Please note that this option is available for Enterprise plan only.
+     * Get 15 min interval data for Forecast and History API
      *
+     * Please note that this option is available for Enterprise plan only
+     *
+     * @link https://www.weatherapi.com/docs/
      * @return $this
      * @throws WeatherException
      * @throws \Throwable
@@ -496,9 +512,11 @@ class WeatherService implements WeatherServiceInterface
     }
 
     /**
-     * Returns 'condition:text' field in API in the desired language.
-     * For the precise lang codes list please refer to the official WeatherApi doc: https://www.weatherapi.com/docs/
+     * Returns 'condition:text' field in API in the desired language
      *
+     * For the precise lang codes list please refer to the official WeatherAPI documentation
+     *
+     * @link https://www.weatherapi.com/docs/
      * @param string $langCode
      * @return $this
      * @throws WeatherException
