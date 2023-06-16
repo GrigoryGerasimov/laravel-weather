@@ -1,8 +1,16 @@
+@if(!is_null($weatherForecastLocation))
+    <x-location :weatherLocation='$weatherMarineLocation'/>
+@endif
+
 @foreach($weatherMarine as $weatherMarineItem)
     <ul>
         @if(is_null($weatherMarineItem))
             <li>No weather forecast data available</li>
         @endif
+
+        <li>
+            <strong>Weather Marine Forecast</strong>
+        </li>
 
         @if(!is_null($weatherMarineItem->common()))
             <li>Forecast date: {{ $weatherMarineItem->common()->getDate() }}</li>
@@ -91,9 +99,9 @@
                 <li>No marine tides data available</li>
             @endif
 
-                <li>Local tide time: {{ $forecastMarineTides->getLocalTideTime() }}</li>
-                <li>Tide height in mt: {{ $forecastMarineTides->getTideHeight() }}</li>
-                <li>Tide type (high/low): {{ $forecastMarineTides->getTideType() }}</li>
+            <li>Local tide time: {{ $forecastMarineTides->getLocalTideTime() }}</li>
+            <li>Tide height in mt: {{ $forecastMarineTides->getTideHeight() }}</li>
+            <li>Tide type (high/low): {{ $forecastMarineTides->getTideType() }}</li>
         @endforeach
 
     </ul>

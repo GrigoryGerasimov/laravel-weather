@@ -1,4 +1,7 @@
 <ul>
+    <li>
+        <strong>Air Quality</strong>
+    </li>
     <li>Carbon Monoxide
         (μg/m3): {{ $weatherAQI->getCarbonMonoxide() }}</li>
     <li>Ozone (μg/m3): {{ $weatherAQI->getOzone() }}</li>

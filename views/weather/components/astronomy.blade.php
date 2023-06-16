@@ -1,3 +1,7 @@
+@if(!is_null($weatherAstroLocation))
+    <x-location :weatherLocation='$weatherAstroLocation'/>
+@endif
+
 <ul>
     <li>Sunrise time: {{ $weatherAstro->getSunriseTime() }}</li>
     <li>Sunset time: {{ $weatherAstro->getSunsetTime() }}</li>
