@@ -12,7 +12,7 @@ class WeatherController extends Controller
 {
     public function currentIndex(): View
     {
-        $weather = Weather::api()->city('Prague')->get();
+        $weather = Weather::api()->city('Prague')->requireAQI(true)->get();
         $weatherCurrent = $weather->current();
         $weatherCurrentAQI = $weather->airQuality();
 

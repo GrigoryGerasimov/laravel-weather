@@ -33,11 +33,11 @@
             <li>UV Index: {{ $weatherForecastItem->day()->getUVIndex() }}</li>
 
             @if(!is_null($weatherForecastItem->day()->getWeatherCondition()))
-                @include('layouts.weathercondition', ['weatherCondition' => $weatherForecastItem->day()->getWeatherCondition()])
+                @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $weatherForecastItem->day()->getWeatherCondition()])
             @endif
 
             @if(!is_null($weatherForecastItem->day()->getAirQuality()))
-                @include('layouts.airquality', ['weatherAQI' => $weatherForecastItem->day()->getAirQuality()])
+                @include('vendor.laravel-weather.layouts.airquality', ['weatherAQI' => $weatherForecastItem->day()->getAirQuality()])
             @endif
         @endif
 
@@ -56,7 +56,7 @@
             <li>Temperature in Fahrenheit: {{ $forecastHour->getActualFahrenheit() }}</li>
 
             @if(!is_null($forecastHour->getWeatherCondition()))
-                @include('layouts.weathercondition', ['weatherCondition' => $forecastHour->getWeatherCondition()])
+                @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $forecastHour->getWeatherCondition()])
             @endif
 
             <li>Maximum wind speed in miles per hour: {{ $forecastHour->getWindSpeedInMiles() }}</li>
@@ -89,7 +89,7 @@
             <li>UV Index: {{ $forecastHour->getUVIndex() }}</li>
 
             @if(!is_null($forecastHour->getAirQuality()))
-                @include('layouts.airquality', ['weatherAQI' => $forecastHour->getAirQuality()])
+                @include('vendor.laravel-weather.layouts.airquality', ['weatherAQI' => $forecastHour->getAirQuality()])
             @endif
         @endforeach
     </ul>
