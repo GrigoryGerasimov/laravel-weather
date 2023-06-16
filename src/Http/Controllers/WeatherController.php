@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Http\Controllers;
 
+use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 
 class WeatherController extends Controller
 {
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function currentIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api()
@@ -26,6 +34,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.current', compact('weatherCurrent', 'weatherCurrentAQI'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function forecastIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('forecast')
@@ -41,6 +56,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.forecast', compact('weatherForecast'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function searchIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('search')
@@ -56,6 +78,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.search', compact('weatherSearch'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function marineIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('marine')
@@ -71,6 +100,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.marine', compact('weatherMarine'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function timezoneIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('timezone')
@@ -86,6 +122,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.timezone', compact('weatherTimezone'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function sportsIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('sports')
@@ -101,6 +144,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.sports', compact('weatherSports'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function astronomyIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('astronomy')
@@ -116,6 +166,13 @@ class WeatherController extends Controller
         return view('vendor.laravel-weather.components.astronomy', compact('weatherAstro'));
     }
 
+    /**
+     * @param string $city
+     * @param string $lang
+     * @return View
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function ipLookupIndex(string $city, string $lang = 'en'): View
     {
         $weather = Weather::api('ip')
