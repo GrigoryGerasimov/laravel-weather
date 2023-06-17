@@ -47,7 +47,8 @@ class WeatherServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../../views/weather', 'laravel-weather');
         $this->publishes([
-            __DIR__ . '/../../views/weather' => resource_path('views/vendor/laravel-weather')
+            __DIR__ . '/../../views/weather' => resource_path('views/vendor/laravel-weather'),
+            __DIR__ . '/../../docs' => public_path('vendor/laravel-weather/docs')
         ], 'laravel-weather');
 
         Blade::components([

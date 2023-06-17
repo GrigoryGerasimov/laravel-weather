@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\Tests\Feature;
 
+use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
 use GrigoryGerasimov\Weather\Models\Weather as WeatherModel;
 use GrigoryGerasimov\Weather\Tests\TestCase;
@@ -14,7 +15,12 @@ class WeatherTest extends TestCase
 {
     use InteractsWithExceptionHandling;
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_current_weather_location_object(): void
     {
         $this->withoutExceptionHandling();
@@ -30,7 +36,12 @@ class WeatherTest extends TestCase
         $this->assertisObject($location);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_forecast_collection(): void
     {
         $this->withoutExceptionHandling();
@@ -46,7 +57,12 @@ class WeatherTest extends TestCase
         $this->assertCount(3, $forecastArray);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_marine_collection(): void
     {
         $this->withoutExceptionHandling();
@@ -62,7 +78,12 @@ class WeatherTest extends TestCase
         $this->assertCount(5, $marineArray);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_weather_search_object(): void
     {
         $this->withoutExceptionHandling();
@@ -73,7 +94,12 @@ class WeatherTest extends TestCase
         $this->assertTrue($weather->search() instanceof Collection);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_timezone_object(): void
     {
         $this->withoutExceptionHandling();
@@ -89,7 +115,12 @@ class WeatherTest extends TestCase
         $this->assertisObject($timezone);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_sports_object(): void
     {
         $this->withoutExceptionHandling();
@@ -105,7 +136,12 @@ class WeatherTest extends TestCase
         $this->assertisObject($sports);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_astronomy_object(): void
     {
         $this->withoutExceptionHandling();
@@ -121,7 +157,12 @@ class WeatherTest extends TestCase
         $this->assertisObject($astronomy);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_a_valid_iplookup_object(): void
     {
         $this->withoutExceptionHandling();

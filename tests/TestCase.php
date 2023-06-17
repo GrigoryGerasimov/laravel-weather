@@ -9,6 +9,10 @@ use \Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
+    /**
+     * @param $app
+     * @return string[]
+     */
     protected function getPackageProviders($app): array
     {
         return [

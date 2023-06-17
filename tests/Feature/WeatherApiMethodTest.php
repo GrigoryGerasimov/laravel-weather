@@ -6,9 +6,9 @@ namespace GrigoryGerasimov\Weather\Tests\Feature;
 
 use GrigoryGerasimov\Weather\Exceptions\ReceivedApiErrorCodeException;
 use GrigoryGerasimov\Weather\Facades\Weather;
-use GrigoryGerasimov\Weather\Objects\{Astronomy, Condition, GPS\IpLookup, Sports, Timezone};
+use GrigoryGerasimov\Weather\Objects\{Astronomy, Condition, Sports, Timezone};
 use GrigoryGerasimov\Weather\Objects\Forecast\Forecast;
-use GrigoryGerasimov\Weather\Objects\GPS\Search;
+use GrigoryGerasimov\Weather\Objects\GPS\{Search, IpLookup};
 use GrigoryGerasimov\Weather\Objects\Marine\{Marine, MarineHour, MarineTide};
 use GrigoryGerasimov\Weather\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
@@ -18,6 +18,12 @@ class WeatherApiMethodTest extends TestCase
 {
     use InteractsWithExceptionHandling;
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_data(): void
     {
         $this->withoutExceptionHandling();
@@ -34,6 +40,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsInt($weather->current()->getDayNightConditionIcon());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_current_weather_data(): void
     {
         $forecastMarine = Weather::api('marine')->city('Warsaw')->get();
@@ -43,6 +55,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($search->current());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_data(): void
     {
         $this->withoutExceptionHandling();
@@ -67,6 +85,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsInt($forecastAstro->getCommonAstronomyParams()->isSunUp());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_forecast_weather_data(): void
     {
         $sports = Weather::api('sports')->ip('137.1.255.255')->get();
@@ -76,6 +100,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($search->forecast());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_search_weather_data(): void
     {
         $this->withoutExceptionHandling();
@@ -97,6 +127,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsString($search->first()->getUrl());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_search_weather_data(): void
     {
         $sports = Weather::api('sports')->city('Tallinn')->get();
@@ -106,8 +142,13 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($future->search());
     }
 
-    /*
-     * The default Free plan API key is limited to get history data.
+    /**
+     * The default Free plan API key is limited to get history data
+     *
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
      */
     public function test_getting_a_received_api_error_code_exception_instead_of_invalid_history_weather_data(): void
     {
@@ -118,6 +159,12 @@ class WeatherApiMethodTest extends TestCase
         $weather->forecast();
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_marine_weather_data(): void
     {
         $this->withoutExceptionHandling();
@@ -160,6 +207,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsString($forecastMarineTides->last()->getTideType());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_marine_weather_data(): void
     {
         $weather = Weather::api('marine')->city('Dover')->historyFutureDate('2012-02-12')->get();
@@ -167,6 +220,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertEmpty($weather->marine());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_future_forecast_weather_data(): void
     {
         $this->withoutExceptionHandling();
@@ -208,6 +267,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertInstanceOf(Timezone::class, $forecastFutureLocation->getCommonTimezoneParams());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_future_forecast_weather_data(): void
     {
         $weather = Weather::api('search')->city('Vilnius')->historyFutureDate('2024-03-18')->get();
@@ -217,8 +282,13 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($ip->forecast());
     }
 
-    /*
-     * Retrieving AirQuality data is only feasible for Forecast API method.
+    /**
+     * Retrieving AirQuality data is only feasible for Forecast API method
+     *
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
      */
     public function test_receiving_null_air_quality_while_requesting_future_forecast_weather_data(): void
     {
@@ -231,6 +301,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($forecastFuture->first()->day()->getAirQuality());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_timezone_data(): void
     {
         $this->withoutExceptionHandling();
@@ -246,6 +322,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsString($timezone->getDateTime());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_timezone_data(): void
     {
         $weather = Weather::api('sports')->city('Madrid')->get();
@@ -255,6 +337,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($search->timezone());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_sports_data(): void
     {
         $this->withoutExceptionHandling();
@@ -277,6 +365,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsString($football->first()->getMatch());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_sports_data(): void
     {
         $weather = Weather::api('search')->city('Barcelona')->get();
@@ -284,6 +378,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($weather->sports());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_astronomy_data(): void
     {
         $this->withoutExceptionHandling();
@@ -304,6 +404,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsInt($astro->isSunUp());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_astronomy_data(): void
     {
         $weather = Weather::api('forecast')->city('Roznov')->get();
@@ -313,6 +419,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertNull($search->astro());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_iplookup_data(): void
     {
         $this->withoutExceptionHandling();
@@ -340,6 +452,12 @@ class WeatherApiMethodTest extends TestCase
         $this->assertIsInt($ipLookup->getCommonTimezoneParams()->getTimestamp());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_insteadof_invalid_iplookup_data(): void
     {
         $weather = Weather::api('search')->ip('46.13.156.111')->get();

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace GrigoryGerasimov\Weather\Tests\Unit;
 
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
-use GrigoryGerasimov\Weather\Exceptions\{InvalidApiTypeException,
+use GrigoryGerasimov\Weather\Exceptions\{
+    InvalidApiTypeException,
     InvalidArgumentValueException,
     MissingApiFieldException,
-    ReceivedApiErrorCodeException};
+    ReceivedApiErrorCodeException
+};
 use GrigoryGerasimov\Weather\Facades\Weather;
 use GrigoryGerasimov\Weather\Tests\TestCase;
 
@@ -16,13 +18,19 @@ class WeatherServiceExceptionsTest extends TestCase
 {
     use InteractsWithExceptionHandling;
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_an_invalid_api_type_exception(): void
     {
         $this->assertThrows(fn() => Weather::api('some_invalid_type'), InvalidApiTypeException::class, 'Invalid type of api method provided');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_a_missing_api_type_exception(): void
     {
         $this->expectException(MissingApiFieldException::class);
@@ -31,7 +39,10 @@ class WeatherServiceExceptionsTest extends TestCase
         Weather::city('Prague')->get();
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_an_invalid_argument_value_exception(): void
     {
         $this->expectException(InvalidArgumentValueException::class);
@@ -43,7 +54,10 @@ class WeatherServiceExceptionsTest extends TestCase
         Weather::api('history')->city('Tokio')->forecastHistoryHour(37)->get();
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_a_received_api_error_code_exception(): void
     {
         $weather = Weather::api()->get();
@@ -51,7 +65,10 @@ class WeatherServiceExceptionsTest extends TestCase
         $this->assertThrows(fn() => $weather->current(), ReceivedApiErrorCodeException::class);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_a_received_api_error_code_exception_without_api_key(): void
     {
         $weather = Weather::api()->get();

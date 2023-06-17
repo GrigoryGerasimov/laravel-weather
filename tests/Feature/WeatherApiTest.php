@@ -13,7 +13,10 @@ class WeatherApiTest extends TestCase
 {
     use InteractsWithExceptionHandling;
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_receiving_an_error_without_api_key(): void
     {
         $this
@@ -23,7 +26,10 @@ class WeatherApiTest extends TestCase
             ->assertJsonStructure(['message']);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_receiving_an_error_with_an_invalid_api_key(): void
     {
         $this
@@ -33,7 +39,10 @@ class WeatherApiTest extends TestCase
             ->assertJsonStructure(['message']);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_receiving_an_error_with_an_invalid_location_query(): void
     {
         $this
@@ -43,7 +52,10 @@ class WeatherApiTest extends TestCase
             ->assertJsonStructure(['message']);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_a_failed_fetch_data_exception(): void
     {
         function mockDataFetch(): void
@@ -63,6 +75,10 @@ class WeatherApiTest extends TestCase
         mockDataFetch();
     }
 
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_an_invalid_json_response_exception_on_empty_response(): void
     {
         function mockDataFetchAsEmptyString(): void
@@ -82,6 +98,10 @@ class WeatherApiTest extends TestCase
         mockDataFetchAsEmptyString();
     }
 
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_an_invalid_json_response_exception_on_html_response(): void
     {
         function mockDataFetchAsHTML(): void
