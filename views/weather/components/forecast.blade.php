@@ -1,11 +1,3 @@
-@if(!is_null($weatherForecastLocation))
-    <x-location :weatherLocation='$weatherForecastLocation'/>
-@endif
-
-@if(!is_null($weatherForecastCurrent))
-    <x-current :weatherCurrent='$weatherForecastCurrent'/>
-@endif
-
 <strong>Weather Forecast</strong>
 
 @foreach($weatherForecast as $weatherForecastItem)
@@ -52,7 +44,7 @@
         @endif
 
         @if(!is_null($weatherForecastItem->astro()) && !is_null($weatherForecastItem->astro()->getCommonAstronomyParams()))
-            <x-astronomy :weatherAstro='$weatherForecastItem->astro()->getCommonAstronomyParams()'/>
+            <x-weather-astronomy :weatherAstro='$weatherForecastItem->astro()->getCommonAstronomyParams()'/>
         @endif
 
         @foreach($weatherForecastItem->hour() as $forecastHour)
@@ -104,7 +96,3 @@
         @endforeach
     </ul>
 @endforeach
-
-@if(!is_null($weatherForecastAlert))
-    <x-alert :weatherAlert='$weatherForecastAlert'/>
-@endif

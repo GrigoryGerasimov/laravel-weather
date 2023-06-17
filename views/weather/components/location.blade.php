@@ -1,7 +1,6 @@
+<strong>Location</strong>
+
 <ul>
-    <li>
-        <strong>Location</strong>
-    </li>
     <li>Location city: {{ $weatherLocation->getCity() }}</li>
     <li>Region/state: {{ $weatherLocation->getRegion() }}</li>
     <li>Location country: {{ $weatherLocation->getCountry() }}</li>
@@ -9,6 +8,6 @@
     <li>Longitude in decimal degree: {{ $weatherLocation->getLongitude() }}</li>
 
     @if(!is_null($weatherLocation->getCommonTimezoneParams()))
-        <x-timezone :weatherTimezone='$weatherLocation->getCommonTimezoneParams()' />
+        <x-weather-timezone :weatherTimezone='$weatherLocation->getCommonTimezoneParams()' />
     @endif
 </ul>

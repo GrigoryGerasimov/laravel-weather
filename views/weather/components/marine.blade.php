@@ -1,7 +1,3 @@
-@if(!is_null($weatherForecastLocation))
-    <x-location :weatherLocation='$weatherMarineLocation'/>
-@endif
-
 <strong>Weather Marine Forecast</strong>
 
 @foreach($weatherMarine as $weatherMarineItem)
@@ -44,7 +40,7 @@
         @endif
 
         @if(!is_null($weatherMarineItem->astro()) && !is_null($weatherMarineItem->astro()->getCommonAstronomyParams()))
-            <x-astronomy :weatherAstro='$weatherMarineItem->astro()->getCommonAstronomyParams()'/>
+            <x-weather-astronomy :weatherAstro='$weatherMarineItem->astro()->getCommonAstronomyParams()'/>
         @endif
 
         @foreach($weatherMarineItem->hour() as $forecastMarineHour)

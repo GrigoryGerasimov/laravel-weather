@@ -6,18 +6,15 @@ namespace GrigoryGerasimov\Weather\View\Components;
 
 use GrigoryGerasimov\Weather\Objects\{AirQuality, Current};
 use Illuminate\View\{Component, View};
-use GrigoryGerasimov\Weather\Objects\GPS\Location;
 
 class CurrentComponent extends Component
 {
     /**
      * @param Current $weatherCurrent
-     * @param Location|null $weatherCurrentLocation
      * @param AirQuality|null $weatherCurrentAQI
      */
     public function __construct(
         public Current $weatherCurrent,
-        public ?Location $weatherCurrentLocation = null,
         public ?AirQuality $weatherCurrentAQI = null
     ) {}
 
@@ -34,6 +31,6 @@ class CurrentComponent extends Component
      */
     public function render(): View
     {
-        return view('components.current');
+        return view('vendor.laravel-weather.components.current');
     }
 }

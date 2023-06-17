@@ -29,6 +29,6 @@ class IpLookupComponent extends Component
      */
     public function render(): View
     {
-        return view('components.ip');
+        return view('vendor.laravel-weather.components.ip');
     }
 }

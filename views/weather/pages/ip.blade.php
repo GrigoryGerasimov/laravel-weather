@@ -1,5 +1,5 @@
-@extends('weather.layouts.index')
+@extends('vendor.laravel-weather.layouts.index')
 
 @section('content')
-    <x-ip :$weatherIpLookup/>
+    <x-weather-ip :$weatherIpLookup/>
 @endsection

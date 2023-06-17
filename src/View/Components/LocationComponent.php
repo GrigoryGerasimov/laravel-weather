@@ -29,6 +29,6 @@ class LocationComponent extends Component
      */
     public function render(): View
     {
-        return view('components.location');
+        return view('vendor.laravel-weather.components.location');
     }
 }

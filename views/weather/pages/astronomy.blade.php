@@ -1,5 +1,9 @@
-@extends('weather.layouts.index')
+@extends('vendor.laravel-weather.layouts.index')
 
 @section('content')
-    <x-astronomy :$weatherAstro/>
+    @if(!is_null($weatherAstroLocation))
+        <x-weather-location :weatherLocation='$weatherAstroLocation'/>
+    @endif
+
+    <x-weather-astronomy :$weatherAstro/>
 @endsection

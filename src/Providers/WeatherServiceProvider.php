@@ -58,7 +58,7 @@ class WeatherServiceProvider extends ServiceProvider
             'weather-sports' => SportsComponent::class,
             'weather-timezone' => TimezoneComponent::class,
             'weather-location' => LocationComponent::class,
-            'weather-alerts' => AlertComponent::class
+            'weather-alert' => AlertComponent::class
         ]);
     }
 }

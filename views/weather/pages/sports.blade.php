@@ -1,5 +1,5 @@
-@extends('weather.layouts.index')
+@extends('vendor.laravel-weather.layouts.index')
 
 @section('content')
-    <x-sports :$weatherSports/>
+    <x-weather-sports :$weatherSports/>
 @endsection

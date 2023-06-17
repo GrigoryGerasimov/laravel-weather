@@ -1,5 +1,9 @@
-@extends('weather.layouts.index')
+@extends('vendor.laravel-weather.layouts.index')
 
 @section('content')
-    <x-timezone :$weatherTimezone/>
+    @if(!is_null($weatherTimezoneLocation))
+        <x-weather-location :weatherLocation='$weatherTimezoneLocation'/>
+    @endif
+
+    <x-weather-timezone :$weatherTimezone/>
 @endsection
