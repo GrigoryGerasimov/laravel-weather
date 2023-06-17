@@ -1,4 +1,4 @@
-<strong>Ip Lookup</strong>
+<h4>Ip Lookup</h4>
 
 <ul>
     <li>IP address: {{ $weatherIpLookup->getIp() }}</li>

@@ -49,15 +49,17 @@ class WeatherController extends Controller
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)
+            ->forecastDays(5)
             ->lang($lang)
             ->get();
 
         $weatherForecast = $weather->forecast();
         $weatherForecastLocation = $weather->location();
         $weatherForecastCurrent = $weather->current();
+        $weatherForecastCurrentAQI = $weather->airQuality();
         $weatherForecastAlert = $weather->alerts();
 
-        return view('vendor.laravel-weather.pages.forecast', compact('weatherForecast', 'weatherForecastLocation', 'weatherForecastCurrent', 'weatherForecastAlert'));
+        return view('vendor.laravel-weather.pages.forecast', compact('weatherForecast', 'weatherForecastLocation', 'weatherForecastCurrent', 'weatherForecastCurrentAQI', 'weatherForecastAlert'));
     }
 
     /**

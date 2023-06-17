@@ -1,4 +1,4 @@
-<strong>Alerts</strong>
+<h4>Alerts</h4>
 
 @foreach($weatherAlert as $alertItem)
     <ul>

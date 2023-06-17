@@ -6,7 +6,7 @@
     @endif
 
     @if(!is_null($weatherForecastCurrent))
-        <x-weather-current :weatherCurrent='$weatherForecastCurrent'/>
+        <x-weather-current :weatherCurrent='$weatherForecastCurrent' :weatherCurrentAQI='$weatherForecastCurrentAQI'/>
     @endif
 
     <x-weather-forecast :$weatherForecast/>

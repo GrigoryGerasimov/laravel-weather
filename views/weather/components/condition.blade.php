@@ -1,7 +1,6 @@
+<h4>Weather Condition</h4>
+
 <ul>
-    <li>
-        <strong>Weather Conditions</strong>
-    </li>
     <li>Weather condition text: {{ $weatherCondition->getText() }}</li>
     <li>Weather condition icon:
         <img src='{{ $weatherCondition->getIconUrl() }}'

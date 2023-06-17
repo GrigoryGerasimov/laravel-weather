@@ -1,4 +1,4 @@
-<strong>Location</strong>
+<h4>Location</h4>
 
 <ul>
     <li>Location city: {{ $weatherLocation->getCity() }}</li>
