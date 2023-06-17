@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\View\Components;
 
-use GrigoryGerasimov\Weather\Objects\GPS\Location;
 use GrigoryGerasimov\Weather\Objects\Marine\Marine;
 use Illuminate\View\{Component, View};
 use Illuminate\Support\Collection;
@@ -15,8 +14,7 @@ class MarineComponent extends Component
      * @param Collection<Marine> $weatherMarine
      */
     public function __construct(
-        public Collection $weatherMarine,
-        public ?Location $weatherMarineLocation = null
+        public Collection $weatherMarine
     ) {}
 
     /**
@@ -32,6 +30,6 @@ class MarineComponent extends Component
      */
     public function render(): View
     {
-        return view('components.marine');
+        return view('vendor.laravel-weather.components.marine');
     }
 }

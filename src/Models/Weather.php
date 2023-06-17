@@ -136,7 +136,7 @@ class Weather
             return null;
         }
 
-        return new Location($this->weatherData);
+        return new Location($this->weatherData->location);
     }
 
     /**

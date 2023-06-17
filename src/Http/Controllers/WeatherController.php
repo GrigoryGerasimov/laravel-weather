@@ -32,7 +32,7 @@ class WeatherController extends Controller
         $weatherCurrentLocation = $weather->location();
         $weatherCurrentAQI = $weather->airQuality();
 
-        return view('vendor.laravel-weather.components.current', compact('weatherCurrent', 'weatherCurrentAQI', 'weatherCurrentLocation'));
+        return view('vendor.laravel-weather.pages.current', compact('weatherCurrent', 'weatherCurrentAQI', 'weatherCurrentLocation'));
     }
 
     /**
@@ -57,7 +57,7 @@ class WeatherController extends Controller
         $weatherForecastCurrent = $weather->current();
         $weatherForecastAlert = $weather->alerts();
 
-        return view('vendor.laravel-weather.components.forecast', compact('weatherForecast', 'weatherForecastLocation', 'weatherForecastCurrent', 'weatherForecastAlert'));
+        return view('vendor.laravel-weather.pages.forecast', compact('weatherForecast', 'weatherForecastLocation', 'weatherForecastCurrent', 'weatherForecastAlert'));
     }
 
     /**
@@ -79,7 +79,7 @@ class WeatherController extends Controller
 
         $weatherSearch = $weather->search();
 
-        return view('vendor.laravel-weather.components.search', compact('weatherSearch'));
+        return view('vendor.laravel-weather.pages.search', compact('weatherSearch'));
     }
 
     /**
@@ -102,7 +102,7 @@ class WeatherController extends Controller
         $weatherMarine = $weather->marine();
         $weatherMarineLocation = $weather->location();
 
-        return view('vendor.laravel-weather.components.marine', compact('weatherMarine', 'weatherMarineLocation'));
+        return view('vendor.laravel-weather.pages.marine', compact('weatherMarine', 'weatherMarineLocation'));
     }
 
     /**
@@ -125,7 +125,7 @@ class WeatherController extends Controller
         $weatherTimezone = $weather->timezone();
         $weatherTimezoneLocation = $weather->location();
 
-        return view('vendor.laravel-weather.components.timezone', compact('weatherTimezone', 'weatherTimezoneLocation'));
+        return view('vendor.laravel-weather.pages.timezone', compact('weatherTimezone', 'weatherTimezoneLocation'));
     }
 
     /**
@@ -147,7 +147,7 @@ class WeatherController extends Controller
 
         $weatherSports = $weather->sports();
 
-        return view('vendor.laravel-weather.components.sports', compact('weatherSports'));
+        return view('vendor.laravel-weather.pages.sports', compact('weatherSports'));
     }
 
     /**
@@ -170,7 +170,7 @@ class WeatherController extends Controller
         $weatherAstro = $weather->astro();
         $weatherAstroLocation = $weather->location();
 
-        return view('vendor.laravel-weather.components.astronomy', compact('weatherAstro', 'weatherAstroLocation'));
+        return view('vendor.laravel-weather.pages.astronomy', compact('weatherAstro', 'weatherAstroLocation'));
     }
 
     /**
@@ -192,6 +192,6 @@ class WeatherController extends Controller
 
         $weatherIpLookup = $weather->ipLookup();
 
-        return view('vendor.laravel-weather.components.ip', compact('weatherIpLookup'));
+        return view('vendor.laravel-weather.pages.ip', compact('weatherIpLookup'));
     }
 }

@@ -14,7 +14,7 @@ final readonly class Location extends Gps
     public function __construct(
         private \stdClass $location
     ) {
-        parent::__construct($location->location);
+        parent::__construct($location);
     }
 
     /**
@@ -22,6 +22,6 @@ final readonly class Location extends Gps
      */
     public function getCommonTimezoneParams(): ?Timezone
     {
-        return isset($this->location->location) ? new Timezone($this->location->location) : null;
+        return isset($this->location) ? new Timezone($this->location) : null;
     }
 }

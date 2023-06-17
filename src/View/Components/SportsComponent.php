@@ -29,6 +29,6 @@ class SportsComponent extends Component
      */
     public function render(): View
     {
-        return view('components.sports');
+        return view('vendor.laravel-weather.components.sports');
     }
 }

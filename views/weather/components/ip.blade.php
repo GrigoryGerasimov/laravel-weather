@@ -1,7 +1,6 @@
+<strong>Ip Lookup</strong>
+
 <ul>
-    <li>
-        <strong>Ip Lookup</strong>
-    </li>
     <li>IP address: {{ $weatherIpLookup->getIp() }}</li>
     <li>IP type (ipv4 or ipv6): {{ $weatherIpLookup->getIpType() }}</li>
     <li>Continent code: {{ $weatherIpLookup->getContinentCode() }}</li>
@@ -16,7 +15,7 @@
     <li>Longitude in decimal degree: {{ $weatherIpLookup->getLongitude() }}</li>
 
     @if(!is_null($weatherIpLookup->getCommonTimezoneParams()))
-        <x-timezone :weatherTimezone='$weatherIpLookup->getCommonTimezoneParams()' />
+        <x-weather-timezone :weatherTimezone='$weatherIpLookup->getCommonTimezoneParams()' />
     @endif
 </ul>
 

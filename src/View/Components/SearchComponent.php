@@ -30,6 +30,6 @@ class SearchComponent extends Component
      */
     public function render(): View
     {
-        return view('components.search');
+        return view('vendor.laravel-weather.components.search');
     }
 }

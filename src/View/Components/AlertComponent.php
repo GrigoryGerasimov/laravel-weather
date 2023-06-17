@@ -30,6 +30,6 @@ class AlertComponent extends Component
      */
     public function render(): View
     {
-        return view('components.alert');
+        return view('vendor.laravel-weather.components.alert');
     }
 }
