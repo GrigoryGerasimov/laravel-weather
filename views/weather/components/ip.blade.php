@@ -7,7 +7,7 @@
     <li>Continent name: {{ $weatherIpLookup->getContinent() }}</li>
     <li>Country code: {{ $weatherIpLookup->getCountryCode() }}</li>
     <li>Country name: {{ $weatherIpLookup->getCountry() }}</li>
-    <li>Is in EU?: {{ $weatherIpLookup->isInEU() ? 'yes' : 'no' }}</li>
+    <li>Is in EU?: {{ $weatherIpLookup->isInEU() }}</li>
     <li>Geoname ID: {{ $weatherIpLookup->getGeonameID() }}</li>
     <li>City: {{ $weatherIpLookup->getCity() }}</li>
     <li>Region: {{ $weatherIpLookup->getRegion() }}</li>

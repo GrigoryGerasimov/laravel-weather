@@ -1,4 +1,4 @@
-<h4>Current Weather Forecast</h4>
+<h4>Current Weather</h4>
 
 <ul>
     <li>Last updated: {{ $weatherCurrent->getLastUpdated() }}</li>

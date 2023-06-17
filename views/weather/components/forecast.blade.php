@@ -6,6 +6,8 @@
             <li>No weather forecast data available</li>
         @endif
 
+        <h4>{{ $weatherForecastItem->common()->getDate() }}</h4>
+
         @if(!is_null($weatherForecastItem->common()))
             <li>Forecast date: {{ $weatherForecastItem->common()->getDate() }}</li>
             <li>Forecast timestamp: {{ $weatherForecastItem->common()->getDateTimestamp() }}</li>
@@ -51,6 +53,8 @@
             @if(is_null($forecastHour))
                 <li>No weather forecast data per hour available</li>
             @endif
+
+            <h4>{{ $forecastHour->getDateTime() }}</h4>
 
             <li>Timestamp: {{ $forecastHour->getTimestamp() }}</li>
             <li>Date and time: {{ $forecastHour->getDateTime() }}</li>
