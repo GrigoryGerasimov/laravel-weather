@@ -1,4 +1,4 @@
-<strong>Current Weather Forecast</strong>
+<h4>Current Weather Forecast</h4>
 
 <ul>
     <li>Last updated: {{ $weatherCurrent->getLastUpdated() }}</li>
@@ -9,7 +9,7 @@
     <li>Feels like temperature in Fahrenheit: {{ $weatherCurrent->getFeelsLikeFahrenheit() }}</li>
 
     @if(!is_null($weatherCurrent->getWeatherCondition()))
-        @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $weatherCurrent->getWeatherCondition()])
+        <x-weather-condition :weatherCondition='$weatherCurrent->getWeatherCondition()'/>
     @endif
 
     <li>Wind speed in miles per hour: {{ $weatherCurrent->getWindSpeedInMiles() }}</li>
@@ -27,6 +27,6 @@
     <li>UV Index: {{ $weatherCurrent->getUVIndex() }}</li>
 
     @if(!is_null($weatherCurrentAQI))
-        @include('vendor.laravel-weather.layouts.airquality', ['weatherAQI' => $weatherCurrentAQI])
+        <x-weather-air :weatherAQI='$weatherCurrentAQI'/>
     @endif
 </ul>

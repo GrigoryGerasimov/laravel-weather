@@ -1,4 +1,4 @@
-<strong>Weather Marine Forecast</strong>
+<h4>Weather Marine Forecast</h4>
 
 @foreach($weatherMarine as $weatherMarineItem)
     <ul>
@@ -35,7 +35,7 @@
             <li>UV Index: {{ $weatherMarineItem->day()->getUVIndex() }}</li>
 
             @if(!is_null($weatherMarineItem->day()->getWeatherCondition()))
-                @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $weatherMarineItem->day()->getWeatherCondition()])
+                <x-weather-condition :weatherCondition='$weatherMarineItem->day()->getWeatherCondition()'/>
             @endif
         @endif
 
@@ -54,7 +54,7 @@
             <li>Temperature in Fahrenheit: {{ $forecastMarineHour->getActualFahrenheit() }}</li>
 
             @if(!is_null($forecastMarineHour->getWeatherCondition()))
-                @include('vendor.laravel-weather.layouts.weathercondition', ['weatherCondition' => $forecastMarineHour->getWeatherCondition()])
+                <x-weather-condition :weatherCondition='$forecastMarineHour->getWeatherCondition()'/>
             @endif
 
             <li>Maximum wind speed in miles per hour: {{ $forecastMarineHour->getWindSpeedInMiles() }}</li>
@@ -97,7 +97,6 @@
             <li>Tide height in mt: {{ $forecastMarineTides->getTideHeight() }}</li>
             <li>Tide type (high/low): {{ $forecastMarineTides->getTideType() }}</li>
         @endforeach
-
     </ul>
 @endforeach
 

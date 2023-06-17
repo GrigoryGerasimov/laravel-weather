@@ -7,8 +7,10 @@ namespace GrigoryGerasimov\Weather\Providers;
 use GrigoryGerasimov\Weather\Services\WeatherService;
 use GrigoryGerasimov\Weather\Contracts\WeatherServiceInterface;
 use GrigoryGerasimov\Weather\View\Components\{
+    AirQualityComponent,
     AlertComponent,
     AstronomyComponent,
+    ConditionComponent,
     CurrentComponent,
     ForecastComponent,
     IpLookupComponent,
@@ -58,7 +60,9 @@ class WeatherServiceProvider extends ServiceProvider
             'weather-sports' => SportsComponent::class,
             'weather-timezone' => TimezoneComponent::class,
             'weather-location' => LocationComponent::class,
-            'weather-alert' => AlertComponent::class
+            'weather-alert' => AlertComponent::class,
+            'weather-air' => AirQualityComponent::class,
+            'weather-condition' => ConditionComponent::class
         ]);
     }
 }

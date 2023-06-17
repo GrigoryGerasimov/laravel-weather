@@ -1,4 +1,4 @@
-<strong>Astronomy Data</strong>
+<h4>Astronomy Data</h4>
 
 <ul>
     <li>Sunrise time: {{ $weatherAstro->getSunriseTime() }}</li>

@@ -1,4 +1,4 @@
-<strong>Timezone</strong>
+<h4>Timezone</h4>
 
 <ul>
     <li>Time zone name: {{ $weatherTimezone->getTimezoneName() }}</li>

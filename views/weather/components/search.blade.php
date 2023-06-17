@@ -1,4 +1,4 @@
-<strong>Search Data</strong>
+<h4>Search Data</h4>
 
 @foreach($weatherSearch as $weatherSearchItem)
     @if(is_null($weatherSearchItem))
