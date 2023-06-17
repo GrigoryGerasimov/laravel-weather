@@ -7,11 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Weather Info Example</title>
 </head>
-<body>
-@yield('content')
-Powered by
-<a target='_blank' href='https://www.weatherapi.com/' title='Free Weather API'>
-    <img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt='Weather data by WeatherAPI.com' border='0'/>
-</a>
+<body style='padding: 25px'>
+<main>
+    @yield('content')
+</main>
+<footer style='margin-top: 80px'>
+    Powered by
+    <a target='_blank' href='https://www.weatherapi.com/' title='Free Weather API'>
+        <img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt='Weather data by WeatherAPI.com'/>
+    </a>
+</footer>
 </body>
 </html>

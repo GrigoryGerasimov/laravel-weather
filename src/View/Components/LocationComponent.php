@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace GrigoryGerasimov\Weather\View\Components;
 
-use Illuminate\View\{Component, View};
 use GrigoryGerasimov\Weather\Objects\GPS\Location;
+use Illuminate\View\{Component, View};
 
 class LocationComponent extends Component
 {

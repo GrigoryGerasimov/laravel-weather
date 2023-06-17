@@ -22,7 +22,7 @@ class SearchComponent extends Component
      */
     public function shouldRender(): bool
     {
-        return !is_null($this->weatherSearch);
+        return !$this->weatherSearch->isEmpty();
     }
 
     /**

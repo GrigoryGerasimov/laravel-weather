@@ -2,10 +2,6 @@
 
 @foreach($weatherForecast as $weatherForecastItem)
     <ul>
-        @if(is_null($weatherForecastItem))
-            <li>No weather forecast data available</li>
-        @endif
-
         <h4>{{ $weatherForecastItem->common()->getDate() }}</h4>
 
         @if(!is_null($weatherForecastItem->common()))
@@ -50,10 +46,6 @@
         @endif
 
         @foreach($weatherForecastItem->hour() as $forecastHour)
-            @if(is_null($forecastHour))
-                <li>No weather forecast data per hour available</li>
-            @endif
-
             <h4>{{ $forecastHour->getDateTime() }}</h4>
 
             <li>Timestamp: {{ $forecastHour->getTimestamp() }}</li>

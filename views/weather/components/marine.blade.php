@@ -2,10 +2,6 @@
 
 @foreach($weatherMarine as $weatherMarineItem)
     <ul>
-        @if(is_null($weatherMarineItem))
-            <li>No weather forecast data available</li>
-        @endif
-
         <h4>{{ $weatherMarineItem->common()->getDate() }}</h4>
 
         @if(!is_null($weatherMarineItem->common()))
@@ -46,10 +42,6 @@
         @endif
 
         @foreach($weatherMarineItem->hour() as $forecastMarineHour)
-            @if(is_null($forecastMarineHour))
-                <li>No weather forecast data per hour available</li>
-            @endif
-
             <h4>{{ $forecastMarineHour->getCommonForecastHourParams()->getDateTime() }}</h4>
 
             <li>Timestamp: {{ $forecastMarineHour->getCommonForecastHourParams()->getTimestamp() }}</li>
@@ -127,10 +119,6 @@
         @endforeach
 
         @foreach($weatherMarineItem->tides() as $forecastMarineTides)
-            @if(is_null($forecastMarineTides))
-                <li>No marine tides data available</li>
-            @endif
-
             <h4>Tides Data by {{ $forecastMarineTides->getLocalTideTime() }}</h4>
 
             <li>Local tide time: {{ $forecastMarineTides->getLocalTideTime() }}</li>
