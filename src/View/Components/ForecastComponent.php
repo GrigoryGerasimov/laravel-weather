@@ -22,7 +22,7 @@ class ForecastComponent extends Component
      */
     public function shouldRender(): bool
     {
-        return !is_null($this->weatherForecast);
+        return !$this->weatherForecast->isEmpty();
     }
 
     /**

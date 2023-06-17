@@ -22,7 +22,7 @@ class MarineComponent extends Component
      */
     public function shouldRender(): bool
     {
-        return !is_null($this->weatherMarine);
+        return !$this->weatherMarine->isEmpty();
     }
 
     /**

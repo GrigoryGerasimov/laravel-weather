@@ -21,7 +21,7 @@ class SportsComponent extends Component
      */
     public function shouldRender(): bool
     {
-        return !is_null($this->weatherSports);
+        return !$this->weatherSports->isEmpty();
     }
 
     /**
