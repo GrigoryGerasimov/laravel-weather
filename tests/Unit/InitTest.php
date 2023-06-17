@@ -8,13 +8,19 @@ use GrigoryGerasimov\Weather\Tests\TestCase;
 
 class InitTest extends TestCase
 {
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_example_truthy(): void
     {
         $this->assertTrue(true);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @return void
+     */
     public function test_example_falsy(): void
     {
         $this->assertFalse(false);

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method self api(string $type = 'current')
- * @method self coords(float $lat, float $lon)
+ * @method self coords(float|string $lat, float|string $lon)
  * @method self city(string $city)
  * @method self zip(string $zipCode)
  * @method self metar(string $metarCode)

@@ -14,6 +14,4 @@ Route::controller(WeatherController::class)->group(function() {
     Route::get('/weather/sports/{city}/{lang?}', 'sportsIndex')->name('weather.index.sports');
     Route::get('/weather/astronomy/{city}/{lang?}', 'astronomyIndex')->name('weather.index.astronomy');
     Route::get('/weather/ip/{ip}/{lang?}', 'ipLookupIndex')->name('weather.index.ip');
-    Route::get('/weather/location/{city}/{lang?}', 'ipLookupIndex')->name('weather.index.ip');
-    Route::get('/weather/alerts/{city}/{lang?}', 'ipLookupIndex')->name('weather.index.ip');
 });

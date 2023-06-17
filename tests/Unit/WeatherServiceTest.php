@@ -18,6 +18,12 @@ class WeatherServiceTest extends TestCase
 {
     use InteractsWithExceptionHandling;
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_based_on_coords(): void
     {
         $this->withoutExceptionHandling();
@@ -28,6 +34,12 @@ class WeatherServiceTest extends TestCase
         $this->assertEquals('Russia', $weather->location()->getCountry());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_based_on_city(): void
     {
         $this->withoutExceptionHandling();
@@ -38,6 +50,12 @@ class WeatherServiceTest extends TestCase
         $this->assertEquals('Czech Republic', $weather->location()->getCountry());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_based_on_zip(): void
     {
         $this->withoutExceptionHandling();
@@ -48,6 +66,12 @@ class WeatherServiceTest extends TestCase
         $this->assertEquals('UK', $weather->location()->getCountry());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_based_on_metar(): void
     {
         $this->withoutExceptionHandling();
@@ -61,6 +85,12 @@ class WeatherServiceTest extends TestCase
         $this->assertEquals('Europe/London', $weather->timezone()->getTimezoneName());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_based_on_iata(): void
     {
         $this->withoutExceptionHandling();
@@ -74,6 +104,12 @@ class WeatherServiceTest extends TestCase
         $this->assertEquals('Asia/Dubai', $weather->timezone()->getTimezoneName());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_based_on_ip(): void
     {
         $this->withoutExceptionHandling();
@@ -87,6 +123,12 @@ class WeatherServiceTest extends TestCase
         $this->assertEquals('Europe/Prague', $weather->timezone()->getTimezoneName());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_based_on_forecast_days(): void
     {
         $this->withoutExceptionHandling();
@@ -105,6 +147,12 @@ class WeatherServiceTest extends TestCase
         $this->assertArrayHasKey($forecast->first()->common()->getDate(), $forecastArray);
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_based_on_forecast_history_date(): void
     {
         $this->withoutExceptionHandling();
@@ -118,6 +166,10 @@ class WeatherServiceTest extends TestCase
         $this->assertArrayHasKey($forecast->first()->common()->getDate(), $forecastArray);
     }
 
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_an_api_error_while_requesting_a_history_weather_object_based_on_forecast_history_date_with_free_plan_api_key(): void
     {
         $this->withoutExceptionHandling();
@@ -127,6 +179,12 @@ class WeatherServiceTest extends TestCase
         $this->assertThrows(fn() => $weather->forecast(), ReceivedApiErrorCodeException::class);
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_based_on_forecast_history_timestamp(): void
     {
         $this->withoutExceptionHandling();
@@ -140,6 +198,12 @@ class WeatherServiceTest extends TestCase
         $this->assertArrayHasKey($forecast->first()->common()->getDate(), $forecastArray);
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_based_on_forecast_history_hour(): void
     {
         $this->withoutExceptionHandling();
@@ -153,6 +217,12 @@ class WeatherServiceTest extends TestCase
         $this->assertArrayHasKey($forecast->first()->common()->getDate(), $forecastArray);
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_requiring_alerts(): void
     {
         $this->withoutExceptionHandling();
@@ -164,6 +234,12 @@ class WeatherServiceTest extends TestCase
         $this->assertInstanceOf(Collection::class, $forecastAlerts);
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_null_while_not_requiring_alerts(): void
     {
         $this->withoutExceptionHandling();
@@ -173,6 +249,12 @@ class WeatherServiceTest extends TestCase
         $this->assertNull($weather->alerts());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_requiring_air_quality_data(): void
     {
         $this->withoutExceptionHandling();
@@ -184,6 +266,12 @@ class WeatherServiceTest extends TestCase
         $this->assertNotNull($currentAQI->getCarbonMonoxide());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_requiring_air_quality_data(): void
     {
         $this->withoutExceptionHandling();
@@ -192,10 +280,16 @@ class WeatherServiceTest extends TestCase
 
         $forecastAQI = $weather->forecast();
         $this->assertInstanceOf(Collection::class, $forecastAQI);
-        $this->assertEquals(1, $forecastAQI->get(date('Y-m-d', time()))->day()->getAirQuality()->getUSEPAStandard());
-        $this->assertEquals(1, $forecastAQI->get(date('Y-m-d', time()))->hour()->get(17)->getAirQuality()->getUKDefraIndex());
+        $this->assertEquals(1, $forecastAQI->get(date('Y-m-d', time() + 172_800))->day()->getAirQuality()->getUSEPAStandard());
+        $this->assertEquals(1, $forecastAQI->get(date('Y-m-d', time() + 172_800))->hour()->get(17)->getAirQuality()->getUKDefraIndex());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_requiring_tides_data(): void
     {
         $this->withoutExceptionHandling();
@@ -205,10 +299,16 @@ class WeatherServiceTest extends TestCase
         $marineTidesData = $weather->marine();
 
         $this->assertInstanceOf(Collection::class, $marineTidesData);
-        $this->assertNotNull($marineTidesData->get(date('Y-m-d', time()))->tides()->count());
-        $this->assertNotNull($marineTidesData->get(date('Y-m-d', time()))->tides()->first()->getLocalTideTime());
+        $this->assertNotNull($marineTidesData->get(date('Y-m-d', time() + 172_800))->tides()->count());
+        $this->assertNotNull($marineTidesData->get(date('Y-m-d', time() + 172_800))->tides()->first()->getLocalTideTime());
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_current_weather_object_condition_text_in_Czech_lang(): void
     {
         $this->withoutExceptionHandling();
@@ -225,6 +325,12 @@ class WeatherServiceTest extends TestCase
         $this->assertTrue(round($expectedLang->detect($currentWeatherConditionText)['cs'], 1) >= $expectedLangThreshold);
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws ReceivedApiErrorCodeException
+     * @throws \Throwable
+     */
     public function test_receiving_forecast_weather_object_condition_text_in_German_lang(): void
     {
         $this->withoutExceptionHandling();
@@ -234,13 +340,17 @@ class WeatherServiceTest extends TestCase
 
         $weather = Weather::api('forecast')->city('Stockholm')->forecastDays(5)->lang('de')->get();
 
-        $forecastWeatherConditionText = $weather->forecast()->get(date('Y-m-d', time()))->day()->getWeatherCondition()->getText();
+        $forecastWeatherConditionText = $weather->forecast()->get(date('Y-m-d', time() + 172_800))->day()->getWeatherCondition()->getText();
 
         $this->assertIsString($forecastWeatherConditionText);
         $this->assertNotNull($expectedLang->detect($forecastWeatherConditionText)['de']);
         $this->assertTrue(round($expectedLang->detect($forecastWeatherConditionText)['de'], 1) >= $expectedLangThreshold);
     }
 
+    /**
+     * @test
+     * @return void
+     */
     public function test_getting_an_invalid_json_response_exception_due_to_invalid_request_syntax(): void
     {
         $this->expectException(InvalidJsonResponseException::class);
