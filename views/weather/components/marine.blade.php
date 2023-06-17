@@ -52,11 +52,6 @@
             <li>Date and time: {{ $forecastMarineHour->getDateTime() }}</li>
             <li>Temperature in Celsius: {{ $forecastMarineHour->getActualCelsius() }}</li>
             <li>Temperature in Fahrenheit: {{ $forecastMarineHour->getActualFahrenheit() }}</li>
-
-            @if(!is_null($forecastMarineHour->getWeatherCondition()))
-                <x-weather-condition :weatherCondition='$forecastMarineHour->getWeatherCondition()'/>
-            @endif
-
             <li>Maximum wind speed in miles per hour: {{ $forecastMarineHour->getWindSpeedInMiles() }}</li>
             <li>Maximum wind speed in kilometers per hour: {{ $forecastMarineHour->getWindSpeedInKm() }}</li>
             <li>Wind direction in degrees: {{ $forecastMarineHour->getWindDirectionInDegrees() }}</li>
@@ -86,6 +81,10 @@
             <li>Wind gust in miles per hour: {{ $forecastMarineHour->getWindGustInMiles() }}</li>
             <li>Wind gust in kilometers per hour: {{ $forecastMarineHour->getWindGustInKm() }}</li>
             <li>UV Index: {{ $forecastMarineHour->getUVIndex() }}</li>
+
+            @if(!is_null($forecastMarineHour->getWeatherCondition()))
+                <x-weather-condition :weatherCondition='$forecastMarineHour->getWeatherCondition()'/>
+            @endif
         @endforeach
 
         @foreach($weatherMarineItem->tides() as $forecastMarineTides)
