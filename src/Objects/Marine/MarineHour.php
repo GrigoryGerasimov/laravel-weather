@@ -65,9 +65,9 @@ final readonly class MarineHour implements WeatherObjectInterface
     /**
      * Swell direction in 16 point compass.
      *
-     * @return float|null
+     * @return float|string|null
      */
-    public function getSwellDirectionInPoints(): ?float
+    public function getSwellDirectionInPoints(): float|string|null
     {
         return $this->forecastMarineHour->swell_dir_16_point ?? null;
     }

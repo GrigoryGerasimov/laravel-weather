@@ -125,9 +125,8 @@ class WeatherController extends Controller
             ->get();
 
         $weatherTimezone = $weather->timezone();
-        $weatherTimezoneLocation = $weather->location();
 
-        return view('vendor.laravel-weather.pages.timezone', compact('weatherTimezone', 'weatherTimezoneLocation'));
+        return view('vendor.laravel-weather.pages.timezone', compact('weatherTimezone'));
     }
 
     /**

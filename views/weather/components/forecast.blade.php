@@ -6,6 +6,8 @@
             <li>No weather forecast data available</li>
         @endif
 
+        <h4>{{ $weatherForecastItem->common()->getDate() }}</h4>
+
         @if(!is_null($weatherForecastItem->common()))
             <li>Forecast date: {{ $weatherForecastItem->common()->getDate() }}</li>
             <li>Forecast timestamp: {{ $weatherForecastItem->common()->getDateTimestamp() }}</li>
@@ -52,15 +54,12 @@
                 <li>No weather forecast data per hour available</li>
             @endif
 
+            <h4>{{ $forecastHour->getDateTime() }}</h4>
+
             <li>Timestamp: {{ $forecastHour->getTimestamp() }}</li>
             <li>Date and time: {{ $forecastHour->getDateTime() }}</li>
             <li>Temperature in Celsius: {{ $forecastHour->getActualCelsius() }}</li>
             <li>Temperature in Fahrenheit: {{ $forecastHour->getActualFahrenheit() }}</li>
-
-            @if(!is_null($forecastHour->getWeatherCondition()))
-                <x-weather-condition :weatherCondition='$forecastHour->getWeatherCondition()'/>
-            @endif
-
             <li>Maximum wind speed in miles per hour: {{ $forecastHour->getWindSpeedInMiles() }}</li>
             <li>Maximum wind speed in kilometers per hour: {{ $forecastHour->getWindSpeedInKm() }}</li>
             <li>Wind direction in degrees: {{ $forecastHour->getWindDirectionInDegrees() }}</li>
@@ -89,6 +88,10 @@
             <li>Wind gust in miles per hour: {{ $forecastHour->getWindGustInMiles() }}</li>
             <li>Wind gust in kilometers per hour: {{ $forecastHour->getWindGustInKm() }}</li>
             <li>UV Index: {{ $forecastHour->getUVIndex() }}</li>
+
+            @if(!is_null($forecastHour->getWeatherCondition()))
+                <x-weather-condition :weatherCondition='$forecastHour->getWeatherCondition()'/>
+            @endif
 
             @if(!is_null($forecastHour->getAirQuality()))
                 <x-weather-air :weatherAQI='$forecastHour->getAirQuality()'/>
