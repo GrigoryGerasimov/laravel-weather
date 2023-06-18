@@ -64,19 +64,17 @@ class WeatherController extends Controller
 
     /**
      * @param string $city
-     * @param string $lang
      * @return View
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    public function searchIndex(string $city, string $lang = 'en'): View
+    public function searchIndex(string $city): View
     {
         $weather = Weather::api('search')
             ->city($city)
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)
-            ->lang($lang)
             ->get();
 
         $weatherSearch = $weather->search();
@@ -109,19 +107,17 @@ class WeatherController extends Controller
 
     /**
      * @param string $city
-     * @param string $lang
      * @return View
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    public function timezoneIndex(string $city, string $lang = 'en'): View
+    public function timezoneIndex(string $city): View
     {
         $weather = Weather::api('timezone')
             ->city($city)
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)
-            ->lang($lang)
             ->get();
 
         $weatherTimezone = $weather->timezone();
@@ -130,20 +126,17 @@ class WeatherController extends Controller
     }
 
     /**
-     * @param string $city
-     * @param string $lang
      * @return View
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    public function sportsIndex(string $city, string $lang = 'en'): View
+    public function sportsIndex(): View
     {
         $weather = Weather::api('sports')
-            ->city($city)
+            ->autoIp()
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)
-            ->lang($lang)
             ->get();
 
         $weatherSports = $weather->sports();
@@ -158,14 +151,13 @@ class WeatherController extends Controller
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    public function astronomyIndex(string $city, string $lang = 'en'): View
+    public function astronomyIndex(string $city): View
     {
         $weather = Weather::api('astronomy')
             ->city($city)
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)
-            ->lang($lang)
             ->get();
 
         $weatherAstro = $weather->astro();
@@ -181,14 +173,13 @@ class WeatherController extends Controller
      * @throws ReceivedApiErrorCodeException
      * @throws \Throwable
      */
-    public function ipLookupIndex(string $ip, string $lang = 'en'): View
+    public function ipLookupIndex(string $ip): View
     {
         $weather = Weather::api('ip')
             ->ip($ip)
             ->requireAQI(true)
             ->requireAlerts(true)
             ->requireTides(true)
-            ->lang($lang)
             ->get();
 
         $weatherIpLookup = $weather->ipLookup();
